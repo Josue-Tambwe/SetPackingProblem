@@ -1,0 +1,84 @@
+#------------------------------------------------------------------------------
+# SPP-Solver — A compact Set Packing solver blending MILP, heuristics,
+#              and efficient BitVector techniques.
+#------------------------------------------------------------------------------
+# Copyright (c) 2025 Josué Tambwe
+#               Nantes Université, France
+#------------------------------------------------------------------------------
+# This software is released under the MIT License.
+# See the LICENSE file for more details.
+#------------------------------------------------------------------------------
+
+# CPU number of physical cores
+
+option('NUMBER_PHYSICAL_CORES',
+        type : 'string',
+        value : '1',
+        description : 'Number of physical cores on the hardware')
+
+
+# MILP Solvers flags
+
+# GUROBI
+
+option('HAS_GUROBI',
+        type : 'boolean',
+        value : false,
+        description : 'Build with GUROBI milp solver backend')
+
+option('GUROBI_HOME',
+        type : 'string',
+        value : '',
+        description : 'Path to Gurobi installation')
+
+
+option('GUROBI_LIB_NAME',
+        type : 'string',
+        value : '',
+        description : 'Name of the Gurobi shared library')
+
+
+
+# HEXALY
+
+option('HAS_HEXALY',
+        type : 'boolean',
+        value : false,
+        description : 'Build with HEXALY milp solver backend')
+
+option('HEXALY_HOME',
+        type : 'string',
+        value : '',
+        description : 'Path to Hexaly installation')
+
+
+option('HEXALY_LIB_NAME',
+        type : 'string',
+        value : '',
+        description : 'Name of the Hexaly shared library')
+
+
+
+
+# HIGHS
+
+option('HAS_HIGHS',
+        type : 'boolean',
+        value : false,
+        description : 'Build with HiGHS milp solver backend')
+
+
+# BRANCH AND BOUND
+
+option('USE_BRANCH_AND_BOUND',
+        type : 'boolean',
+        value : false,
+        description : 'Allow the usage of the Branch and Bound algorithm')
+
+
+# MILP
+
+option('USE_MILP',
+        type : 'boolean',
+        value : false,
+        description : 'Allow the usage of MILP solvers')
