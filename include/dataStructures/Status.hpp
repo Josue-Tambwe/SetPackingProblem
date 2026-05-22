@@ -12,43 +12,26 @@
 
 
 /** 
- * @file Parameters.hpp
- * @class Params
- * @brief Stores options and flags defines by the user
+ * @file Status.hpp
+ * @brief defines the status of a solution for the Set Packing Problem
  * @author Josué Tambwe
- * @date 22 May 2026
+ * @date 23 May 2026
  */
 
- #pragma once 
+ #pragma once
 
- #include "configuration/GeneralConfig.hpp"
- #include "dataStructures/Algorithm.hpp"
- #include <string>
-
+ #include "configuration/OutputConfig.hpp"
+ #include <iostream>
 
  namespace spp{
 
-    struct Params{
+    enum Status{
 
-        // constructor
-        Params();
-
-        // destructor
-        ~Params() = default;
-
-        // general parameters
-        Algorithm algorithm; 
-        std::string instance_path;
-        bool verbose;
-        int nb_threads;
-
-        
-        bool use_time_limit;
-        bool use_max_iterations;
-        size_t nb_max_iterations;
-        double time_limit;
-
-
+        FEASIBLE,
+        INFEASIBLE,
+        OPTIMAL,
+        UNKNOWN,
     };
-    
+
+    std::ostream& operator<<(std::ostream &output_stream, const Status &status);
  }

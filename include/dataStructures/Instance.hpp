@@ -41,6 +41,7 @@
         size_t nb_constraints;
         size_t total_nonzeros; // in the constraint matrix
         size_t max_nonzeros_per_row; // in the constraint matrix
+        double density; // percentage of nonzeros in the constraint matrix
     };
 
 

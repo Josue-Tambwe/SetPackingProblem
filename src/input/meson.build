@@ -9,28 +9,6 @@
 # See the LICENSE file for more details.
 #------------------------------------------------------------------------------
 
-# subdirectories
 
-subdir('dataStructures')
-subdir('solver')
-subdir('output')
-subdir('input')
-
-
-
-
-
-# combining all source files
-
-all_sources = data_struc_sources + solver_sources + output_sources + input_sources
-
-
-
-# final binary file 
-
-executable('spp_solver',
-            all_sources,
-            include_directories : inc,
-            dependencies : [gurobi_dep, hexaly_dep, highs_dep],
-            install : true,
-            install_dir : 'bin')
+# all source files of the input subdirectory 
+input_sources = files('OptionParser.cpp')

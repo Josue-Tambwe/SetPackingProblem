@@ -2,8 +2,7 @@
 
 clear
 
-# detecting the Operating System (Linux or MacOS)
-# and the number of physical cores
+# detecting the Operating System (Linux or MacOS) and the number of physical cores
 
 KERNEL_NAME=$(uname -s)
 

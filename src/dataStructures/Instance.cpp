@@ -60,11 +60,14 @@
                 nonzeros_count += nonzeros_in_row;
             }
 
+            double density = (nonzeros_count * 100.0 )/ (nb_vars * nb_constraints);
 
+            // initialization of the instance statistics member
             this->stats = {nb_vars,
                            nb_constraints,
                            static_cast<size_t>(nonzeros_count),
-                           static_cast<size_t>(max_nonzeros_in_row)};
+                           static_cast<size_t>(max_nonzeros_in_row),
+                           density};
 
             
 
@@ -83,21 +86,32 @@
 
     void Instance::print() const{
 
-        std::cout << " nb vars : " << nb_vars << "\n"
-                  << " nb constraint : " << nb_constraints << " \n \n";
+        std::cout << "\n"
+                  << " number of  variables          : " << nb_vars << "\n"
+                  << " number of constraints         : " << nb_constraints << "\n"
+                  << " nonzeros count                : " << stats.total_nonzeros << "\n"
+                  << " max nonzeros per row          : " << stats.max_nonzeros_per_row << "\n"
+                  << " constraint matrix density (%) : " << std::setprecision(3) << stats.density
+                  << " \n \n \n";
 
-        std::cout << " profit vector : [";
+
+        std::cout << " Profit vector : \n \n ";
         for(int element : profit){std::cout << element << " ";}
-        std::cout << "] \n \n"
-                  << "constraint matrix : \n \n";
+
+
+        std::cout << " \n \n \n \n"
+                  << " Constraint matrix : \n \n";
+
 
         for(size_t i = 0; i < nb_constraints; i++){
 
+            std::cout << " row " << (i+1) << " : ";
             for(int element : constraint_matrix[i]){
                 std::cout  << element << " ";
             }
-            std::cout << "\n";
+            std::cout << "\n\n";
         }
+
     }
 
  }

@@ -10,5 +10,5 @@
 #------------------------------------------------------------------------------
 
 
-# all source files of the solver subdirectory 
+# all source files of the output subdirectory 
 output_sources = files('Logger.cpp')

@@ -19,17 +19,17 @@
    
    #include "configuration/GeneralConfig.hpp"
    #include "dataStructures/Parameters.hpp"
-   #include "dataStructures/Instance.hpp"
+   #include "input/OptionParser.hpp"
+   #include "dataStructures/Instance.hpp" // to remove
    #include <iostream> // to remove 
    
    using namespace spp; 
 
    int main(int argc, char** argv){
 
-      Params params;
-      params.instance_path = argv[1];
-      Instance instance(params);
-      instance.print();
+      Params params = parseOptions(argc, argv);
+      Instance instance(params); // to remove
+      instance.print(); // to remove
 
       
 

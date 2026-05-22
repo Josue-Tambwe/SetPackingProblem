@@ -23,6 +23,16 @@
 
     Params::Params(){
 
+        // general parameters
+        algorithm = Algorithm::Unknown;
         instance_path = "";
+        verbose = false;
+        nb_threads = NUMBER_PHYSICAL_CORES;
+
+
+        use_time_limit = false;
+        use_max_iterations = false;
+        nb_max_iterations = 5;
+        time_limit = 10.0;
     }
  }
