@@ -2,7 +2,7 @@
  * SPP-Solver — A compact Set Packing solver blending MILP, heuristics,
  *              and efficient BitVector techniques.
  *------------------------------------------------------------------------------
- * Copyright (c) 2025 Josué Tambwe
+ * Copyright (c) 2026 Josué Tambwe
  *               Nantes Université, France
  *------------------------------------------------------------------------------
  * This software is released under the MIT License.
@@ -51,7 +51,12 @@
                 file >> nonzeros_in_row;
 
                 constraint_matrix[i].resize(nonzeros_in_row);
-                for(int k = 0; k < nonzeros_in_row; k++){file >> constraint_matrix[i][k];}
+                for(int k = 0; k < nonzeros_in_row; k++){
+
+                    file >> constraint_matrix[i][k];
+                    // bringing index to 0-based indexing
+                    constraint_matrix[i][k] -= 1;
+                }
 
                 if(nonzeros_in_row > max_nonzeros_in_row){max_nonzeros_in_row = nonzeros_in_row;}
                 nonzeros_count += nonzeros_in_row;
