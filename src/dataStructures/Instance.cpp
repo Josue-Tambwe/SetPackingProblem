@@ -40,12 +40,9 @@
             // profit vector
             for(size_t j = 0; j < nb_vars; j++){file >> this->profit[j];}
 
-           
-
             // instance statitics 
             int nonzeros_count = 0;
             int max_nonzeros_in_row = 0;
-
 
             // constraint matrix 
             for(size_t i = 0; i < nb_constraints; i++){
@@ -69,10 +66,10 @@
                            static_cast<size_t>(max_nonzeros_in_row),
                            density};
 
-            
-
         }
     }
+
+    
 
     // getters 
     size_t Instance::getNbVars() const {return nb_vars;}
