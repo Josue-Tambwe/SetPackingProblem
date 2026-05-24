@@ -62,7 +62,7 @@
                 nonzeros_count += nonzeros_in_row;
             }
 
-            double density = (nonzeros_count * 100.0 )/ (nb_vars * nb_constraints);
+            float density = (nonzeros_count * 100.0f )/ ((nb_vars * nb_constraints) + epsilon);
 
             // initialization of the instance statistics member
             this->stats = {nb_vars,
@@ -109,7 +109,7 @@
 
             std::cout << " row " << (i+1) << " : ";
             for(int element : constraint_matrix[i]){
-                std::cout  << element << " ";
+                std::cout  << (element + 1) << " ";
             }
             std::cout << "\n\n";
         }

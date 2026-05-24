@@ -44,4 +44,4 @@
    #define USE_MILP false
  #endif
  
-const float epsilon = 1e-5; // to avoid division by zero
+const float epsilon = 1e-6f; // to avoid division by zero

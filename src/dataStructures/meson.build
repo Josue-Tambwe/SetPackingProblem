@@ -13,4 +13,6 @@
 # all source files of the solver subdirectory 
 data_struc_sources = files('Instance.cpp',
                            'Parameters.cpp',
-                           'Status.cpp')
+                           'Status.cpp',
+                           'BitVector.cpp',
+                           'Solution.cpp')
