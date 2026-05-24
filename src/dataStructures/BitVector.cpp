@@ -120,7 +120,7 @@
          * 
          * the mask 00001 is created and the bit 1 is moved form 'bit_index' positions to the left
          * 00001 -> 00100
-         * then the '~' inverses all bit within the mask : 00100 -> 11011
+         * then the '~' inverses all bits within the mask : 00100 -> 11011
          *
          * '&' operator :  10101
          *               & 11011
