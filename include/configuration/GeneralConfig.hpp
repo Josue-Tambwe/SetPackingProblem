@@ -24,6 +24,34 @@
     #define NUMBER_PHYSICAL_CORES 1 // default value (1 physical core)
  #endif
 
+ #ifndef HAS_X86
+    #define HAS_X86 false
+ #endif
+
+ #ifndef HAS_ARM
+    #define HAS_ARM false
+ #endif
+
+ #ifndef HAS_SSE2
+    #define HAS_SSE2 false
+ #endif
+
+ #ifndef HAS_AVX2
+    #define HAS_AVX2 false
+ #endif
+
+ #ifndef HAS_AVX512F
+    #define HAS_AVX512F false
+ #endif
+
+ #ifndef HAS_NEON
+    #define HAS_NEON false
+ #endif
+
+ #ifndef USE_SIMD
+    #define USE_SIMD false
+ #endif
+
  #ifndef HAS_GUROBI
     #define HAS_GUROBI false
  #endif

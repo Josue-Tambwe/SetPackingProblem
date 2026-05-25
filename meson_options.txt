@@ -17,6 +17,45 @@ option('NUMBER_PHYSICAL_CORES',
         description : 'Number of physical cores on the hardware')
 
 
+# SIMD extensions
+
+option('HAS_X86',
+        type : 'boolean',
+        value : false,
+        description : 'CPU ISA X86')
+
+option('HAS_ARM',
+        type : 'boolean',
+        value : false,
+        description : 'CPU ISA ARM')
+
+option('HAS_SSE2',
+        type : 'boolean',
+        value : false,
+        description : 'Enable SSE2 SIMD instructions')
+
+option('HAS_AVX2',
+        type : 'boolean',
+        value : false,
+        description : 'Enable AVX2 SIMD instructions')
+
+option('HAS_AVX512F',
+        type : 'boolean',
+        value : false,
+        description : 'Enable AVX512F SIMD instructions')
+
+option('HAS_NEON',
+        type : 'boolean',
+        value : false,
+        description : 'Enable NEON SIMD instructions')
+
+
+option('USE_SIMD',
+        type : 'boolean',
+        value : false,
+        description : 'Allow the usage of SIMD extensions')
+
+
 # MILP Solvers flags
 
 # GUROBI

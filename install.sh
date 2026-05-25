@@ -30,12 +30,15 @@ esac
 
 # CPU architecture (logical abstraction)
 
+HAS_X86=false
+HAS_ARM=false
+
 case "$ARCH_TYPE" in
     x86_64|amd64)
-        CPU_ARCH="x86"
+        HAS_X86=true
         ;;
     arm64|aarch64)
-        CPU_ARCH="ARM"
+        HAS_ARM=true
         ;;
     *)
         echo " Unsupported CPU architecture: $ARCH_TYPE"
@@ -43,6 +46,31 @@ case "$ARCH_TYPE" in
         ;;
 esac
 
+
+# SIMD extensions
+
+HAS_SSE2=false
+HAS_AVX2=false
+HAS_AVX512F=false
+HAS_NEON=false
+
+if [ "$HAS_X86" = true ]; then
+    lscpu | grep -qi sse2      && HAS_SSE2=true
+    lscpu | grep -qi avx2      && HAS_AVX2=true
+    lscpu | grep -qi avx512f   && HAS_AVX512F=true
+
+elif [ "$HAS_ARM" = true ]; then
+    lscpu | grep -qiE 'asimd|neon' && HAS_NEON=true
+fi
+
+
+
+# Reject ARMv7 or older
+
+if [ "$HAS_ARM" = true ] && [ "$ARCH_TYPE" != "aarch64" ] && [ "$ARCH_TYPE" != "arm64" ]; then
+    echo "ERROR: ARMv7 or older is not supported. ARMv8+ (aarch64 or arm64) required."
+    exit 1
+fi
 
 
 # MILP solvers flags
@@ -148,6 +176,13 @@ then
                       -DHEXALY_HOME="$HX_HOME" \
                       -DHEXALY_LIB_NAME="$HEXALY_LIB_NAME" \
                       -DHAS_HIGHS="$HAS_HIGHS" \
+                      -DHAS_X86="$HAS_X86" \
+                      -DHAS_ARM="$HAS_ARM" \
+                      -DHAS_X86="$HAS_X86" \
+                      -DHAS_SSE2="$HAS_SSE2" \
+                      -DHAS_AVX2="$HAS_AVX2" \
+                      -DHAS_AVX512F="$HAS_AVX512F" \
+                      -DHAS_NEON="$HAS_NEON" \
                       || exit 1
 else
 # when the folder build already exists
@@ -162,8 +197,17 @@ else
                 -DHEXALY_HOME="$HX_HOME" \
                 -DHEXALY_LIB_NAME="$HEXALY_LIB_NAME" \
                 -DHAS_HIGHS="$HAS_HIGHS" \
+                -DHAS_X86="$HAS_X86" \
+                -DHAS_ARM="$HAS_ARM" \
+                -DHAS_X86="$HAS_X86" \
+                -DHAS_SSE2="$HAS_SSE2" \
+                -DHAS_AVX2="$HAS_AVX2" \
+                -DHAS_AVX512F="$HAS_AVX512F" \
+                -DHAS_NEON="$HAS_NEON" \
                 || exit 1
 fi
+
+
 
 echo " "
 echo " --- project configuration..."
