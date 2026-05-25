@@ -80,8 +80,8 @@
 
 
 
-
     // getters
+
     size_t BitVector::getNbLogicalBits() const {return nb_logical_bits;}
     size_t BitVector::getNbWords() const {return data.size();}
 
@@ -232,9 +232,8 @@
 
 
 
-
-
     // setters
+
     void BitVector::activate(int index){
 
         int word_index = index / 64; 
