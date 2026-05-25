@@ -87,11 +87,7 @@
 
     }
 
-    //void Solution::consumeResource(int index) {consumed_resources.activate(index);}
-    //void Solution::freeResource(int index) {consumed_resources.deactivate(index);}
-
-    //void Solution::consumeResource(int index_var, const Instance &instance){}
-    //void Solution::freeResource(int index_var, const Instance &instance);
+    
 
     void Solution::computeObjectiveValue(const Instance &instance){
 
