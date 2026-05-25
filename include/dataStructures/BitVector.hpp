@@ -43,12 +43,18 @@
             // destructor 
             ~BitVector() = default; 
 
-            void print() const; 
+            void print() const;
+            void printNonZeroIndexes() const;
+            void printZeroIndexes() const; 
 
             // getters 
             size_t getNbLogicalBits() const;
             size_t getNbWords() const;
             size_t getNbNonZeroBits() const;
+            bool isNonZero(int index) const;
+            
+            std::vector<int> getNonZeroBitIndexes() const;
+            std::vector<int> getZeroBitIndexes() const;
 
             // setters 
             void activate(int index);

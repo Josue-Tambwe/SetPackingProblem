@@ -22,6 +22,7 @@
    #include "input/OptionParser.hpp"
    #include "dataStructures/Instance.hpp" // to remove
    #include <iostream> // to remove
+   #include <vector> // to remove
    #include "dataStructures/BitVector.hpp" // to remove 
    #include "dataStructures/Solution.hpp" // to remove 
    
@@ -30,8 +31,31 @@
    int main(int argc, char** argv){
 
       Params params = parseOptions(argc, argv);
-      Instance instance(params); // to remove
+      const Instance instance(params); // to remove
       instance.print(); // to remove
+
+      std::cout << " \n \n";
+      
+      if(USE_SIMD){std::cout << " Use SIMD \n";}
+      if(HAS_SSE2){std::cout << " Has SSE2 \n";}
+      if(HAS_AVX2){std::cout << " Has AVX2 \n";}
+      if(HAS_AVX512F){std::cout << " Has AVX512F \n";}
+      if(HAS_NEON){std::cout << " Has NEON \n";}
+
+      /*Solution sol(9, 7);
+      sol.activateVar(3, instance);
+      sol.activateVar(5, instance);
+      sol.print(instance);
+      sol.printConsumedResources();
+
+      std::cout << "\n index 6 deactivation \n\n";
+      sol.deactivateVar(5, instance);
+      sol.print(instance);
+      sol.printConsumedResources();*/
+      
+
+      //sol.activateVar(9);
+      //instance.printResourceRequirements();
 
       /*BitVector b1(70);
       b1.activate(2);
@@ -56,17 +80,16 @@
 
       std::cout << " nb activated bits : " << b1.getNbNonZeroBits() << "\n\n";
 
+      b1.printNonZeroIndexes();
+      b1.printZeroIndexes();
+
       //b1.deactivate(6);
       //std::cout << " deactivate 7 : ";
       //b1.print();
 
       //std::cout << " nb activated bits : " << b1.getNbNonZeroBits() << "\n";*/
 
-      Solution sol(10, 3);
-      sol.activateVar(3);
-      sol.activateVar(4);
-      sol.activateVar(9);
-      sol.printVars();
+      
 
 
 

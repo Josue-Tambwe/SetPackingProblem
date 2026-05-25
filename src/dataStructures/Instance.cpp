@@ -31,14 +31,23 @@
 
         else{
 
-            file >> nb_constraints;
+            file >> this->nb_constraints;
             this->constraint_matrix.resize(nb_constraints);
 
-            file >> nb_vars;
+            file >> this->nb_vars;
             this->profit.resize(nb_vars);
 
+            int max_profit = 0;
+            int min_profit = std::numeric_limits<int>::max();
+
             // profit vector
-            for(size_t j = 0; j < nb_vars; j++){file >> this->profit[j];}
+            for(size_t j = 0; j < nb_vars; j++){
+
+                file >> this->profit[j];
+
+                if(profit[j] > max_profit){max_profit = profit[j];}
+                if(profit[j] < min_profit){min_profit = profit[j];}
+            }
 
             // instance statitics 
             int nonzeros_count = 0;
@@ -69,9 +78,30 @@
                            nb_constraints,
                            static_cast<size_t>(nonzeros_count),
                            static_cast<size_t>(max_nonzeros_in_row),
-                           density};
+                           density,
+                           max_profit,
+                           min_profit};
 
+            
+            computeResourceRequirements();
         }
+    }
+
+
+
+    void Instance::computeResourceRequirements(){
+
+        this->resource_requirements.resize(nb_vars, BitVector(nb_constraints));
+
+        for(int row = 0; row < static_cast<int>(this->nb_constraints); row++){
+
+            for(int var_index : this->constraint_matrix[row]){
+
+                this->resource_requirements[var_index].activate(row);
+            }
+        }
+
+
     }
 
     
@@ -83,26 +113,32 @@
     const std::vector<int>& Instance::getProfitVector() const {return profit;}
     const std::vector<std::vector<int>>& Instance::getConstraintMatrix() const {return constraint_matrix;}
     const InstanceStatistics& Instance::getStatistics() const {return stats;}
+    const std::vector<BitVector>& Instance::getResourceRequirements() const {return resource_requirements;}
 
 
 
     void Instance::print() const{
-
-        std::cout << "\n"
+        std::cout << "\n" << std::string(100, '*') << "\n"
+                  << std::setw(50) << std::right << "Instance" << "\n"
+                  << std::string(100, '*') << "\n"
                   << " number of  variables          : " << nb_vars << "\n"
                   << " number of constraints         : " << nb_constraints << "\n"
+                  << " profit range                  : " << stats.min_profit
+                  << " - " << stats.max_profit << "\n \n"
                   << " nonzeros count                : " << stats.total_nonzeros << "\n"
                   << " max nonzeros per row          : " << stats.max_nonzeros_per_row << "\n"
                   << " constraint matrix density (%) : " << std::setprecision(3) << stats.density
                   << " \n \n \n";
 
-
-        std::cout << " Profit vector : \n \n ";
+        std::cout << std::string(100, '*') << "\n"
+                  << " Profit vector : \n\n ";
         for(int element : profit){std::cout << element << " ";}
+        std::cout << "\n" << std::string(100, '-')  << "\n";
 
 
-        std::cout << " \n \n \n \n"
-                  << " Constraint matrix : \n \n";
+        std::cout << " \n \n" << std::string(100, '*') << "\n" 
+                  << " Constraint matrix : \n"
+                  << std::string(100, '-') << "\n\n" ; 
 
 
         for(size_t i = 0; i < nb_constraints; i++){
@@ -113,7 +149,29 @@
             }
             std::cout << "\n\n";
         }
+        printResourceRequirements();
 
     }
+
+
+    void Instance::printResourceRequirements() const{
+
+        std::cout << std::string(100, '*') << "\n" ; 
+        std::cout << " Resource requirements : \n";
+
+        for(size_t var_index = 0; var_index < resource_requirements.size(); var_index++){
+
+            std::cout << std::string(100, '-') << "\n" ; 
+            std::cout << " variable " << (var_index + 1) << " = [";
+
+            resource_requirements[var_index].print();
+            std::cout << "] \n \n";
+
+            resource_requirements[var_index].printNonZeroIndexes();
+        }
+        std::cout << std::string(100, '*') << "\n" ; 
+
+    }
+
 
  }

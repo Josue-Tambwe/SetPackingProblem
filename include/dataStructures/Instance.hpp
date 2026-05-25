@@ -23,11 +23,14 @@
 
  #include "dataStructures/Parameters.hpp"
  #include "output/Logger.hpp"
+ #include "dataStructures/BitVector.hpp"
  #include <vector>
  #include <iostream>
+ #include <iomanip>
  #include <fstream>
  #include <vector>
  #include <string>
+ #include <limits>
 
  namespace spp{
 
@@ -42,6 +45,8 @@
         size_t total_nonzeros; // in the constraint matrix
         size_t max_nonzeros_per_row; // in the constraint matrix
         float density; // percentage of nonzeros in the constraint matrix
+        int max_profit;
+        int min_profit;
     };
 
 
@@ -58,8 +63,11 @@
 
             std::vector<int> profit; // profit coefficients
             std::vector<std::vector<int>> constraint_matrix; // sparse constraint matrix
-
+            std::vector<BitVector> resource_requirements; 
             InstanceStatistics stats;
+
+            void computeResourceRequirements();
+
 
         public : 
 
@@ -77,9 +85,11 @@
             const std::vector<int>& getProfitVector() const;
             const std::vector<std::vector<int>>& getConstraintMatrix() const;
             const InstanceStatistics& getStatistics() const;
+            const std::vector<BitVector>& getResourceRequirements() const;
 
 
             void print() const;
+            void printResourceRequirements() const;
         
     };
 

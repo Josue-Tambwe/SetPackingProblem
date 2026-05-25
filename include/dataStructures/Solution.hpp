@@ -23,7 +23,10 @@
 
  #include "dataStructures/BitVector.hpp"
  #include "dataStructures/Status.hpp"
+ #include "dataStructures/Instance.hpp"
  #include <iostream>
+ #include <vector>
+ #include <cstdint>
 
  namespace spp{
 
@@ -33,7 +36,12 @@
 
             BitVector solution_vector;
             BitVector consumed_resources;
+            std::int64_t objective_value;
             Status status;
+
+            void computeObjectiveValue(const Instance &instance);
+            //void consumeResource(int index_var, const Instance &instance);
+            //void freeResource(int index_var, const Instance &instance);
 
 
         public : 
@@ -48,23 +56,25 @@
             size_t getNbVars() const;
             size_t getNbNonZeroVars() const;
             size_t getNbVarWords() const;
+            std::vector<int> getNonZeroVarsIndexes() const;
+            std::vector<int> getZeroVarsIndexes() const;
 
             size_t getNbConstraints() const;
             size_t getNbConsumedResources() const;
             size_t getNbConsumedResourceWords() const;
+            std::vector<int> getNonZeroConsumedResourcesIndexes() const;
+            std::vector<int> getZeroConsumedResourcesIndexes() const;
 
+            std::int64_t getObjectiveValue(const Instance &instance);
             Status getStatus() const;
 
             // setters
-            void activateVar(int index);
-            void deactivateVar(int index);
+            void activateVar(int var_index, const Instance &instance);
+            void deactivateVar(int var_index, const Instance &instance);
 
-            void consumeResource(int index);
-            void freeResource(int index);
-
-
+        
             void printVars() const;
             void printConsumedResources() const;
-            void print() const;
+            void print(const Instance &instance);
     };
  }
