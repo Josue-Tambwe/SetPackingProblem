@@ -40,8 +40,7 @@
             Status status;
 
             void computeObjectiveValue(const Instance &instance);
-            //void consumeResource(int index_var, const Instance &instance);
-            //void freeResource(int index_var, const Instance &instance);
+            
 
 
         public : 
@@ -56,23 +55,25 @@
             size_t getNbVars() const;
             size_t getNbNonZeroVars() const;
             size_t getNbVarWords() const;
+
             std::vector<int> getNonZeroVarsIndexes() const;
             std::vector<int> getZeroVarsIndexes() const;
 
             size_t getNbConstraints() const;
             size_t getNbConsumedResources() const;
             size_t getNbConsumedResourceWords() const;
+
             std::vector<int> getNonZeroConsumedResourcesIndexes() const;
             std::vector<int> getZeroConsumedResourcesIndexes() const;
 
             std::int64_t getObjectiveValue(const Instance &instance);
             Status getStatus() const;
 
+
             // setters
             void activateVar(int var_index, const Instance &instance);
             void deactivateVar(int var_index, const Instance &instance);
 
-        
             void printVars() const;
             void printConsumedResources() const;
             void print(const Instance &instance);
