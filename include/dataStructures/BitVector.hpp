@@ -37,8 +37,11 @@
 
         public : 
 
-            // constructor 
+            // constructors 
             BitVector(size_t n);
+
+            // for copy
+            BitVector() = default;
 
             // destructor 
             ~BitVector() = default; 

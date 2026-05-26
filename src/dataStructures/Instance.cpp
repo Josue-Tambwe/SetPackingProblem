@@ -110,6 +110,23 @@
     size_t Instance::getNbVars() const {return nb_vars;}
     size_t Instance::getNbConstraints() const {return nb_constraints;}
 
+    std::unordered_set<int> Instance::getAllConflictingVarsIndexes(int index){
+
+        std::unordered_set<int> conflicting_vars_set;
+        std::vector<int> resources_indexes = this->resource_requirements[index].getNonZeroBitIndexes();
+
+        for(int resource_index : resources_indexes){
+
+            for(int var : constraint_matrix[resource_index]){
+
+                if(var != index){conflicting_vars_set.insert(var);}
+            }
+        }
+
+        return conflicting_vars_set;
+    }
+
+
     const std::vector<int>& Instance::getProfitVector() const {return profit;}
     const std::vector<std::vector<int>>& Instance::getConstraintMatrix() const {return constraint_matrix;}
     const InstanceStatistics& Instance::getStatistics() const {return stats;}

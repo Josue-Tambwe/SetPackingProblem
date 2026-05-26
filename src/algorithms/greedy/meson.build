@@ -9,29 +9,6 @@
 # See the LICENSE file for more details.
 #------------------------------------------------------------------------------
 
-# subdirectories
 
-subdir('dataStructures')
-subdir('solver')
-subdir('output')
-subdir('input')
-subdir('algorithms')
-
-
-
-
-
-# combining all source files
-
-all_sources = data_struc_sources + solver_sources + output_sources + input_sources + algorithm_sources
-
-
-
-# final binary file 
-
-executable('spp_solver',
-            all_sources,
-            include_directories : inc,
-            dependencies : [gurobi_dep, hexaly_dep, highs_dep],
-            install : true,
-            install_dir : 'bin')
+# all source files of the greedy subdirectory 
+greedy_sources = files('DeterministicConstruction.cpp')
