@@ -63,7 +63,7 @@
 
             std::vector<int> profit; // profit coefficients
             std::vector<std::vector<int>> constraint_matrix; // sparse constraint matrix
-            std::vector<BitVector> resource_requirements; 
+            std::vector<BitVector> resource_requirements; // the transpose of constraint matrix 
             InstanceStatistics stats;
 
             void computeResourceRequirements();

@@ -32,8 +32,8 @@
 
         private : 
 
-            size_t nb_logical_bits;
-            std::vector<std::uint64_t> data;
+            size_t nb_logical_bits; // number of logical bits
+            std::vector<std::uint64_t> data;  // vector of 64-bit words
 
         public : 
 
@@ -48,16 +48,54 @@
             void printZeroIndexes() const; 
 
             // getters 
+
+            /**
+             * @brief returns the number of logical bits
+             */
             size_t getNbLogicalBits() const;
+
+
+            /**
+             * @brief returns the number of 64-bit words within the vector 'data'
+             */
             size_t getNbWords() const;
+
+
+            /**
+             * @brief returns the number of nonzero (1) bits
+             */
             size_t getNbNonZeroBits() const;
+
+
+            /**
+             * returns 'true' if the bit at the index 'index' is nonzero (1) or 'false' otherwise
+             */
             bool isNonZero(int index) const;
+
             
+            /**
+             * @brief returns a vector that contains the indexes (from 0 to nb_logical_bits-1) of nonzero (1) bits
+             */
             std::vector<int> getNonZeroBitIndexes() const;
+
+
+            /**
+             * @brief returns a vector that contains the indexes (from 0 to nb_logical_bits-1) of zero (0) bits
+             */
             std::vector<int> getZeroBitIndexes() const;
 
+
             // setters 
+
+            /**
+             * @brief activates (turns to 1) the bit at the index 'index'
+            */
             void activate(int index);
+            
+
+            /**
+             * @brief deactivates (turns to 0) the bit at the index 'index' 
+             */
             void deactivate(int index);
     };
 
