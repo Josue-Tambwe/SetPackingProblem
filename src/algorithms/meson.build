@@ -10,5 +10,7 @@
 #------------------------------------------------------------------------------
 
 subdir('greedy')
+subdir('localSearch')
+
 # all source files of the algorithm subdirectory 
-algorithm_sources = greedy_sources
+algorithm_sources = greedy_sources + local_search_sources

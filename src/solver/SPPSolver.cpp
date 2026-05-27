@@ -27,6 +27,8 @@
    #include "dataStructures/Solution.hpp" // to remove 
    #include "algorithms/greedy/DeterministicConstruction.hpp" // to remove
    #include "dataStructures/Timer.hpp" // to remove
+   #include "dataStructures/MoveNode.hpp" // to remove
+   #include "algorithms/localSearch/NeighborhoodUtils.hpp" // to remove
    
    using namespace spp; 
 
@@ -43,6 +45,18 @@
       std::cout << " \n \n";
       std::cout << " construction time : " << timer.getElapsedTime(); 
       std::cout << " \n \n";
+
+      std::vector<float> scores = computeVariableScores(instance);
+      std::vector<int> active = sortNonZeroVars(solution, scores);
+      std::cout << " active index : [ ";
+      for(int index : active){std::cout << "(" << index << " - " << scores[index] << ") ";}
+      std::cout << "] \n \n";
+
+      std::vector<int> inactive = sortZeroVars(solution, scores);
+
+      std::cout << " inactive index : [ ";
+      for(int index : inactive){std::cout << "(" << index << " - " << scores[index] << ") ";}
+      std::cout << "] \n";
       //solution.printConsumedResources();
 
       
