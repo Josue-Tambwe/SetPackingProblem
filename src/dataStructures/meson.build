@@ -15,4 +15,5 @@ data_struc_sources = files('Instance.cpp',
                            'Parameters.cpp',
                            'Status.cpp',
                            'BitVector.cpp',
-                           'Solution.cpp')
+                           'Solution.cpp',
+                           'Timer.cpp')

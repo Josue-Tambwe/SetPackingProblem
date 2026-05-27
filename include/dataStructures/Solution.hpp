@@ -46,7 +46,7 @@
         public : 
 
             // constructor 
-            Solution(size_t nb_vars, size_t nb_constraints);
+            Solution(const Instance &instance);
 
             // destructor 
             ~Solution() = default; 
@@ -73,6 +73,7 @@
             // setters
             void activateVar(int var_index, const Instance &instance);
             void deactivateVar(int var_index, const Instance &instance);
+            void setStatus(Status status);
 
             void printVars() const;
             void printConsumedResources() const;

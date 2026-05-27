@@ -25,7 +25,7 @@
 
     void initialization(std::vector<float> &scores,
                         std::unordered_set<int> &free_variables,
-                        spp::Instance &instance){
+                        const spp::Instance &instance){
 
         const std::vector<int>& profit_vector = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
@@ -63,18 +63,64 @@
 
 
 
+
     void updateSolution(int best_var,
+                        std::unordered_set<int> &free_variables,
                         spp::Solution &solution,
-                        spp::Instance &instance){
+                        const spp::Instance &instance){
 
         // setting the best variable to 'one'
         solution.activateVar(best_var, instance);
 
         std::unordered_set<int> conflicting_vars = instance.getAllConflictingVarsIndexes(best_var);
 
-        // setting all conflicting variables to 'zero'
-        for(int var : conflicting_vars){solution.deactivateVar(var, instance);}
+        // removing those conflicting variables from the free variables set
+        for(int var : conflicting_vars){
+
+            free_variables.erase(var);
+        }
                         
+    }
+
+
+
+
+    spp::Solution deterministicConstruction(const spp::Instance &instance){
+
+        // initialization
+        std::vector<float> scores(instance.getNbVars());
+        std::unordered_set<int> free_variables;
+        initialization(scores, free_variables, instance);
+
+        spp::Solution solution(instance);
+        spp::Logger log;
+
+        while(!free_variables.empty()){
+
+            int best_var = findBestVariable(scores, free_variables);
+
+            if(best_var == -1){
+
+                log.warning("The deterministic greedy heuristic failed!");
+                solution.setStatus(spp::Status::INFEASIBLE);
+                return solution;
+            }
+
+            /* setting to 'one' the best variable index and setting to 'zero' and removing from
+             * the free variables set all variables in conflict with the best variable index
+            */
+            updateSolution(best_var, 
+                           free_variables, 
+                           solution, 
+                           instance);
+
+            // removing the best variable index from the free variable set
+            free_variables.erase(best_var);
+        }
+
+        solution.setStatus(spp::Status::FEASIBLE);
+        return solution;
+
     }
 
  }

@@ -24,6 +24,7 @@
  #include "dataStructures/Instance.hpp"
  #include "dataStructures/Solution.hpp"
  #include "dataStructures/Status.hpp"
+ #include "output/Logger.hpp"
  #include <unordered_set>
  #include <vector> 
 
@@ -36,7 +37,7 @@
      */
     void initialization(std::vector<float> &scores,
                         std::unordered_set<int> &free_variables,
-                        spp::Instance &instance);
+                        const spp::Instance &instance);
 
 
     /**
@@ -51,8 +52,16 @@
      *        with the best variable to 'zero'
      */
     void updateSolution(int best_var,
+                        std::unordered_set<int> &free_variables,
                         spp::Solution &solution,
-                        spp::Instance &instance);
+                        const spp::Instance &instance);
+
+
+
+    /**
+     * @brief constructs a solution with the deterministic greedy method
+     */
+    spp::Solution deterministicConstruction(const spp::Instance &instance);
 
 
  }

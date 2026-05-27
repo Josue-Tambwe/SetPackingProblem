@@ -25,6 +25,8 @@
    #include <vector> // to remove
    #include "dataStructures/BitVector.hpp" // to remove 
    #include "dataStructures/Solution.hpp" // to remove 
+   #include "algorithms/greedy/DeterministicConstruction.hpp" // to remove
+   #include "dataStructures/Timer.hpp" // to remove
    
    using namespace spp; 
 
@@ -32,15 +34,23 @@
 
       Params params = parseOptions(argc, argv);
       const Instance instance(params); // to remove
-      instance.print(); // to remove
-
+      //instance.print(); // to remove
+      Timer timer;
+      timer.start();
+      Solution solution = greedy::deterministicConstruction(instance);
+      timer.stop();
+      solution.print(instance);
       std::cout << " \n \n";
+      std::cout << " construction time : " << timer.getElapsedTime(); 
+      std::cout << " \n \n";
+      //solution.printConsumedResources();
+
       
-      if(USE_SIMD){std::cout << " Use SIMD \n";}
+      /*if(USE_SIMD){std::cout << " Use SIMD \n";}
       if(HAS_SSE2){std::cout << " Has SSE2 \n";}
       if(HAS_AVX2){std::cout << " Has AVX2 \n";}
       if(HAS_AVX512F){std::cout << " Has AVX512F \n";}
-      if(HAS_NEON){std::cout << " Has NEON \n";}
+      if(HAS_NEON){std::cout << " Has NEON \n";}*/
 
       /*Solution sol(9, 7);
       sol.activateVar(3, instance);

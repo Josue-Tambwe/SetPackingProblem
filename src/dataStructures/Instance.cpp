@@ -110,7 +110,7 @@
     size_t Instance::getNbVars() const {return nb_vars;}
     size_t Instance::getNbConstraints() const {return nb_constraints;}
 
-    std::unordered_set<int> Instance::getAllConflictingVarsIndexes(int index){
+    std::unordered_set<int> Instance::getAllConflictingVarsIndexes(int index) const{
 
         std::unordered_set<int> conflicting_vars_set;
         std::vector<int> resources_indexes = this->resource_requirements[index].getNonZeroBitIndexes();

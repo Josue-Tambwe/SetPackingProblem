@@ -82,7 +82,7 @@
             // getters 
             size_t getNbVars() const;
             size_t getNbConstraints() const;
-            std::unordered_set<int> getAllConflictingVarsIndexes(int index);
+            std::unordered_set<int> getAllConflictingVarsIndexes(int index) const;
 
             const std::vector<int>& getProfitVector() const;
             const std::vector<std::vector<int>>& getConstraintMatrix() const;

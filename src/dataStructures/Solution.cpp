@@ -22,11 +22,13 @@
  namespace spp{
 
     // constructor 
-    Solution::Solution(size_t nb_vars, size_t nb_constraints)
-     : solution_vector(nb_vars),
-       consumed_resources(nb_constraints),
-       objective_value(0),
-       status(Status::UNKNOWN){}
+    Solution::Solution(const Instance &instance):
+      solution_vector(instance.getNbVars()),
+      consumed_resources(instance.getNbConstraints()){
+
+      this->objective_value = 0;
+      this->status = Status::UNKNOWN;
+    }
 
         
     // getters 
@@ -87,6 +89,10 @@
 
     }
 
+
+
+    void Solution::setStatus(Status status){this->status = status;}
+
     
 
     void Solution::computeObjectiveValue(const Instance &instance){
@@ -131,7 +137,7 @@
                 << std::setw(50) << std::right << "Solution" << "\n"
                 << std::string(100, '*') << "\n"
                 << " number of ressources used   : " << this->getNbConsumedResources() << "\n"
-                << " number of nonzero variables : " << this->getNbNonZeroVars() << " \n"
+                << " number of nonzero variables : " << this->getNbNonZeroVars() << " \n\n"
                 << " objective value             : " << this->getObjectiveValue(instance) << "\n\n";
 
       this->solution_vector.printNonZeroIndexes();
