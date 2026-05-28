@@ -11,4 +11,6 @@
 
 
 # all source files of the localSearch subdirectory 
-local_search_sources = files('NeighborhoodUtils.cpp')
+local_search_sources = files('NeighborhoodUtils.cpp',
+                             'ConflictCheckerScalar.cpp',
+                             'VariableNeighborhoodDescent.cpp')

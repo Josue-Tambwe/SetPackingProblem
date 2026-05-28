@@ -53,6 +53,20 @@
             // getters 
 
             /**
+             * @brief returns the vector 'data' which contains all 64-bit words
+             */
+            std::vector<std::uint64_t>& getData();
+
+
+
+            /**
+             * @brief returns a pointer to the data of the 'data' member which contains all 64-bit words
+             */
+            std::uint64_t*  getPointerToData();
+
+
+
+            /**
              * @brief returns the number of logical bits
              */
             size_t getNbLogicalBits() const;

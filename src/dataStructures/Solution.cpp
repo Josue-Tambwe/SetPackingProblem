@@ -32,25 +32,28 @@
 
         
     // getters 
+
     size_t Solution::getNbVars() const {return solution_vector.getNbLogicalBits();}
     size_t Solution::getNbNonZeroVars() const {return solution_vector.getNbNonZeroBits();}
     size_t Solution::getNbVarWords() const {return solution_vector.getNbWords();}
+
     std::vector<int> Solution::getNonZeroVarsIndexes() const {return solution_vector.getNonZeroBitIndexes();}
     std::vector<int> Solution::getZeroVarsIndexes() const {return solution_vector.getZeroBitIndexes();}
 
     size_t Solution::getNbConstraints() const{return consumed_resources.getNbLogicalBits();}
     size_t Solution::getNbConsumedResources() const {return consumed_resources.getNbNonZeroBits();}
     size_t Solution::getNbConsumedResourceWords() const {return consumed_resources.getNbWords();}
+
     std::vector<int> Solution::getNonZeroConsumedResourcesIndexes() const {return consumed_resources.getNonZeroBitIndexes();}
     std::vector<int> Solution::getZeroConsumedResourcesIndexes() const {return consumed_resources.getZeroBitIndexes();}
+    std::vector<std::uint64_t>& Solution::getNbConsumedResourcesData(){return this->consumed_resources.getData();}
 
 
     Status Solution::getStatus() const {return status;}
 
     std::int64_t Solution::getObjectiveValue(const Instance &instance){
-
+      
       computeObjectiveValue(instance);
-
       return this->objective_value;
     }
 

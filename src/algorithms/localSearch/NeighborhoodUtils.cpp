@@ -40,7 +40,6 @@
 
     std::vector<int> sortNonZeroVars(Solution &solution,
                                      std::vector<float> &scores){
-        
                                                
         std::vector<int> sorted_indexes = solution.getNonZeroVarsIndexes();
         std::vector<MoveNode> tmp(sorted_indexes.size());
