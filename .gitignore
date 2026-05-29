@@ -2,6 +2,7 @@
 
 bin/
 build/
+benchmarks/rail
 *.o
 *.a
 *.so
