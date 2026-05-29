@@ -34,9 +34,9 @@
      *        by performing 4 checks of 64-bit words  every iteration (loop unrolling)
      */
     bool checkConflictTwoOneMove_X4(size_t &cursor,
-                                    std::vector<std::uint64_t> &first_to_deactivate,
-                                    std::vector<std::uint64_t> &second_to_deactivate,
-                                    std::vector<std::uint64_t> &to_activate,
+                                    const std::vector<std::uint64_t> &first_to_deactivate,
+                                    const std::vector<std::uint64_t> &second_to_deactivate,
+                                    const std::vector<std::uint64_t> &to_activate,
                                     std::vector<std::uint64_t> &consumed_resources);
 
 
@@ -44,24 +44,83 @@
      * @brief checks conflict in a 2-1 exchange move by performing 2 checks of 64-bit words
      */
     bool checkConflictTwoOneMove_X2(size_t &cursor,
-                                    std::vector<std::uint64_t> &first_to_deactivate,
-                                    std::vector<std::uint64_t> &second_to_deactivate,
-                                    std::vector<std::uint64_t> &to_activate,
+                                    const std::vector<std::uint64_t> &first_to_deactivate,
+                                    const std::vector<std::uint64_t> &second_to_deactivate,
+                                    const std::vector<std::uint64_t> &to_activate,
                                     std::vector<std::uint64_t> &consumed_resources);
 
     /**
      * @brief checks conflict in a 2-1 exchange move by performing one check of 64-bit word
      */
     bool checkConflictTwoOneMove_X1(size_t &cursor,
-                                    std::vector<std::uint64_t> &first_to_deactivate,
-                                    std::vector<std::uint64_t> &second_to_deactivate,
-                                    std::vector<std::uint64_t> &to_activate,
+                                    const std::vector<std::uint64_t> &first_to_deactivate,
+                                    const std::vector<std::uint64_t> &second_to_deactivate,
+                                    const std::vector<std::uint64_t> &to_activate,
                                     std::vector<std::uint64_t> &consumed_resources);
 
 
 
-    bool checkConflictTwoOneMove(std::vector<std::uint64_t> &first_to_deactivate,
-                                 std::vector<std::uint64_t> &second_to_deactivate,
-                                 std::vector<std::uint64_t> &to_activate,
+    /**
+     * @brief returns 'true' when there is a 'conflict' therefore the exchange is infeasible
+     */
+    bool checkConflictTwoOneMove(const std::vector<std::uint64_t> &first_to_deactivate,
+                                 const std::vector<std::uint64_t> &second_to_deactivate,
+                                 const std::vector<std::uint64_t> &to_activate,
                                  std::vector<std::uint64_t> &consumed_resources);
+
+
+
+   ////////////////////////////////////////////////
+   // ALL OTHER MOVES FOLLOWS THE SAME STRUCTURE //
+   ///////////////////////////////////////////////
+
+
+   bool checkConflictOneOneMove_X4(size_t &cursor,
+                                    const std::vector<std::uint64_t> &to_deactivate,
+                                    const std::vector<std::uint64_t> &to_activate,
+                                    std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictOneOneMove_X2(size_t &cursor,
+                                    const std::vector<std::uint64_t> &to_deactivate,
+                                    const std::vector<std::uint64_t> &to_activate,
+                                    std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictOneOneMove_X1(size_t &cursor,
+                                    const std::vector<std::uint64_t> &to_deactivate,
+                                    const std::vector<std::uint64_t> &to_activate,
+                                    std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictOneOneMove(const std::vector<std::uint64_t> &to_deactivate,
+                                 const std::vector<std::uint64_t> &to_activate,
+                                 std::vector<std::uint64_t> &consumed_resources);
+
+
+
+
+
+   bool checkConflictZeroOneMove_X4(size_t &cursor,
+                                    const std::vector<std::uint64_t> &to_activate,
+                                    std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictZeroOneMove_X2(size_t &cursor,
+                                    const std::vector<std::uint64_t> &to_activate,
+                                    std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictZeroOneMove_X1(size_t &cursor,
+                                    const std::vector<std::uint64_t> &to_activate,
+                                    std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictZeroOneMove(const std::vector<std::uint64_t> &to_activate,
+                                 std::vector<std::uint64_t> &consumed_resources);
+
+
+
+
+
  }

@@ -56,6 +56,7 @@
              * @brief returns the vector 'data' which contains all 64-bit words
              */
             std::vector<std::uint64_t>& getData();
+            const std::vector<std::uint64_t>& getData() const;
 
 
 
@@ -63,6 +64,7 @@
              * @brief returns a pointer to the data of the 'data' member which contains all 64-bit words
              */
             std::uint64_t*  getPointerToData();
+            const std::uint64_t*  getPointerToData() const ;
 
 
 

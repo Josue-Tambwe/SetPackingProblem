@@ -46,7 +46,7 @@
 
     std::vector<int> Solution::getNonZeroConsumedResourcesIndexes() const {return consumed_resources.getNonZeroBitIndexes();}
     std::vector<int> Solution::getZeroConsumedResourcesIndexes() const {return consumed_resources.getZeroBitIndexes();}
-    std::vector<std::uint64_t>& Solution::getNbConsumedResourcesData(){return this->consumed_resources.getData();}
+    std::vector<std::uint64_t>& Solution::getConsumedResourcesData(){return this->consumed_resources.getData();}
 
 
     Status Solution::getStatus() const {return status;}

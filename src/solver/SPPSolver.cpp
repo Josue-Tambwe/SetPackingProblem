@@ -29,6 +29,7 @@
    #include "dataStructures/Timer.hpp" // to remove
    #include "dataStructures/MoveNode.hpp" // to remove
    #include "algorithms/localSearch/NeighborhoodUtils.hpp" // to remove
+   #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp" // to remove
    
    using namespace spp; 
 
@@ -39,82 +40,27 @@
       //instance.print(); // to remove
       Timer timer;
       timer.start();
-      Solution solution = greedy::deterministicConstruction(instance);
+      Solution solution = deterministicConstruction(instance);
       timer.stop();
       solution.print(instance);
       std::cout << " \n \n";
       std::cout << " construction time : " << timer.getElapsedTime(); 
       std::cout << " \n \n";
 
+      timer.reset();
+      timer.start();
       std::vector<float> scores = computeVariableScores(instance);
-      std::vector<int> active = sortNonZeroVars(solution, scores);
-      std::cout << " active index : [ ";
-      for(int index : active){std::cout << "(" << index << " - " << scores[index] << ") ";}
-      std::cout << "] \n \n";
+      twoOneNeighborhood(scores, solution, instance);
+      oneOneNeighborhood(scores, solution, instance);
+      zeroOneNeighborhood(scores, solution, instance);
+      timer.stop();
 
-      std::vector<int> inactive = sortZeroVars(solution, scores);
-
-      std::cout << " inactive index : [ ";
-      for(int index : inactive){std::cout << "(" << index << " - " << scores[index] << ") ";}
-      std::cout << "] \n";
-      //solution.printConsumedResources();
+      solution.print(instance);
+      std::cout << " \n \n";
+      std::cout << " improment time : " << timer.getElapsedTime(); 
+      std::cout << " \n \n";
 
       
-      /*if(USE_SIMD){std::cout << " Use SIMD \n";}
-      if(HAS_SSE2){std::cout << " Has SSE2 \n";}
-      if(HAS_AVX2){std::cout << " Has AVX2 \n";}
-      if(HAS_AVX512F){std::cout << " Has AVX512F \n";}
-      if(HAS_NEON){std::cout << " Has NEON \n";}*/
-
-      /*Solution sol(9, 7);
-      sol.activateVar(3, instance);
-      sol.activateVar(5, instance);
-      sol.print(instance);
-      sol.printConsumedResources();
-
-      std::cout << "\n index 6 deactivation \n\n";
-      sol.deactivateVar(5, instance);
-      sol.print(instance);
-      sol.printConsumedResources();*/
-      
-
-      //sol.activateVar(9);
-      //instance.printResourceRequirements();
-
-      /*BitVector b1(70);
-      b1.activate(2);
-      std::cout << "\n \n activate 3 : ";
-      b1.print();
-
-      b1.activate(6);
-      std::cout << " activate 7 : ";
-      b1.print();
-
-      b1.activate(9);
-      std::cout << " activate 10 : ";
-      b1.print();
-
-      b1.activate(59);
-      std::cout << " activate 60 : ";
-      b1.print();
-
-      b1.activate(69);
-      std::cout << " activate 70 : ";
-      b1.print();
-
-      std::cout << " nb activated bits : " << b1.getNbNonZeroBits() << "\n\n";
-
-      b1.printNonZeroIndexes();
-      b1.printZeroIndexes();
-
-      //b1.deactivate(6);
-      //std::cout << " deactivate 7 : ";
-      //b1.print();
-
-      //std::cout << " nb activated bits : " << b1.getNbNonZeroBits() << "\n";*/
-
-      
-
 
 
       

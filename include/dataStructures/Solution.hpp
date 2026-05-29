@@ -65,7 +65,7 @@
 
             std::vector<int> getNonZeroConsumedResourcesIndexes() const;
             std::vector<int> getZeroConsumedResourcesIndexes() const;
-            std::vector<std::uint64_t>& getNbConsumedResourcesData();
+            std::vector<std::uint64_t>& getConsumedResourcesData();
 
             std::int64_t getObjectiveValue(const Instance &instance);
             Status getStatus() const;

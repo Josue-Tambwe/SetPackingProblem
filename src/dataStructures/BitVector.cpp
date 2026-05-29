@@ -83,7 +83,11 @@
     // getters
 
     std::vector<std::uint64_t>& BitVector::getData() {return this->data;}
+    const std::vector<std::uint64_t>& BitVector::getData() const {return this->data;}
+
     std::uint64_t*  BitVector::getPointerToData() {return this->data.data();}
+    const std::uint64_t*  BitVector::getPointerToData() const {return this->data.data();}
+
     size_t BitVector::getNbLogicalBits() const {return nb_logical_bits;}
     size_t BitVector::getNbWords() const {return data.size();}
 

@@ -23,9 +23,34 @@
  #include "dataStructures/MoveNode.hpp"
  #include "dataStructures/Instance.hpp"
  #include "dataStructures/Solution.hpp"
+ #include "algorithms/localSearch/NeighborhoodUtils.hpp"
+ #include "algorithms/localSearch/Neighborhoods.hpp"
  #include <vector>
+ #include <cstdint>
 
- namespace spp::VND{
+ namespace spp{
 
+
+    /**
+     * @brief performs the 2-1 exchange while an improvement of the objective is possible
+     */
+    void twoOneNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance);
+
+   /**
+     * @brief performs the 1-1 exchange while an improvement of the objective is possible
+     */
+    void oneOneNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance);
+
+
+    /**
+     * @brief performs the 0-1 exchange while an improvement of the objective is possible
+     */
+    void zeroOneNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance);
  }
 

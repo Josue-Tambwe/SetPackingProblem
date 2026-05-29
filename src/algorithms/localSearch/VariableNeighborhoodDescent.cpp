@@ -19,7 +19,113 @@
 
  #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
 
- namespace spp::VND{
+ namespace spp{
+
+
+    void twoOneNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance){
+                            
+
+        bool improvement = true;
+        int first_index_to_deactivate = -1;
+        int second_index_to_deactivate = -1;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findTwoOneExchange(first_index_to_deactivate,
+                                             second_index_to_deactivate,
+                                             index_to_activate,
+                                             sorted_activated_vars,
+                                             sorted_deactivated_vars,
+                                             solution,
+                                             instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(first_index_to_deactivate, instance);
+                solution.deactivateVar(second_index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+    }
+
+
+
+
+    void oneOneNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance){
+
+        bool improvement = true;
+        int index_to_deactivate = -1;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findOneOneExchange(index_to_deactivate,
+                                             index_to_activate,
+                                             sorted_activated_vars,
+                                             sorted_deactivated_vars,
+                                             solution,
+                                             instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+    }
+
+
+
+
+    void zeroOneNeighborhood(std::vector<float> &scores,
+                             Solution &solution,
+                             const Instance &instance){
+
+        bool improvement = true;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findZeroOneExchange(index_to_activate,
+                                             sorted_deactivated_vars,
+                                             solution,
+                                             instance);
+
+    
+            if(improvement){solution.activateVar(index_to_activate, instance);}
+        }
+        while(improvement);
+
+    }
 
 
  }

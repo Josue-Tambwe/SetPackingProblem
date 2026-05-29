@@ -20,7 +20,7 @@
  #include "algorithms/greedy/DeterministicConstruction.hpp"
 
 
- namespace spp::greedy{
+ namespace spp{
 
 
     void initialization(std::vector<float> &scores,
