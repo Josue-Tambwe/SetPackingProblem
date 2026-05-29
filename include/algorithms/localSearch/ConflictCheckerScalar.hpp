@@ -123,4 +123,35 @@
 
 
 
+      
+   bool checkConflictOneTwoMove_X4(size_t &cursor,
+                                   const std::vector<std::uint64_t> &first_to_activate,
+                                   const std::vector<std::uint64_t> &second_to_activate,
+                                   const std::vector<std::uint64_t> &to_deactivate,
+                                   std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictOneTwoMove_X2(size_t &cursor,
+                                   const std::vector<std::uint64_t> &first_to_activate,
+                                   const std::vector<std::uint64_t> &second_to_activate,
+                                   const std::vector<std::uint64_t> &to_deactivate,
+                                   std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictOneTwoMove_X1(size_t &cursor,
+                                   const std::vector<std::uint64_t> &first_to_activate,
+                                   const std::vector<std::uint64_t> &second_to_activate,
+                                   const std::vector<std::uint64_t> &to_deactivate,
+                                   std::vector<std::uint64_t> &consumed_resources);
+
+
+   bool checkConflictOneTwoMove(const std::vector<std::uint64_t> &first_to_activate,
+                                const std::vector<std::uint64_t> &second_to_activate,
+                                const std::vector<std::uint64_t> &to_deactivate,
+                                std::vector<std::uint64_t> &consumed_resources);
+
+
+
+
+
  }

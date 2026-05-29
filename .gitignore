@@ -7,3 +7,5 @@ build/
 *.so
 *.exe
 *.out
+*.data
+*.data.old
