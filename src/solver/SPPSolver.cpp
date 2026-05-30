@@ -30,7 +30,6 @@
    #include "algorithms/localSearch/NeighborhoodUtils.hpp" // to remove
    #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp" // to remove
 
-   #include "hpc/simd/ConflictCheckerSIMDX86.hpp" // to remove
    
    using namespace spp; 
 
