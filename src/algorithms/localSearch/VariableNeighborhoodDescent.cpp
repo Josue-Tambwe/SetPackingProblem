@@ -144,7 +144,7 @@
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
-            improvement = findTwoOneExchange(to_deactivate,
+            improvement = findOneTwoExchange(to_deactivate,
                                              first_index_to_activate,
                                              second_index_to_activate,
                                              sorted_activated_vars,

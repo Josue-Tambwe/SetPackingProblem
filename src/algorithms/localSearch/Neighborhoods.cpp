@@ -37,7 +37,7 @@
 
         for(size_t k = 0; k < sorted_deactivated_vars.size(); k++){
 
-            for(size_t i = 0; i < (sorted_activated_vars.size() - 1); i++){
+            for(size_t i = 0; (i+1) < sorted_activated_vars.size(); i++){
 
                 for(size_t j = (i+1); j < sorted_activated_vars.size(); j++){
 
@@ -178,7 +178,7 @@
 
             while(j < bound_j){
 
-                for(size_t k = (j + 1); k < sorted_deactivated_vars.size(); k++){
+                for(size_t k = (j+1); k < sorted_deactivated_vars.size(); k++){
 
                     // case of a promissing exchange
                     if((profit[sorted_deactivated_vars[j]] + profit[sorted_deactivated_vars[k]]) > profit[sorted_activated_vars[i]]){

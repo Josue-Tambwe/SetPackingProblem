@@ -51,11 +51,18 @@
       timer.start();
       std::vector<float> scores = computeVariableScores(instance);
       
+
       oneTwoNeighborhood(scores, solution, instance);
-      twoOneNeighborhood(scores, solution, instance);
       oneOneNeighborhood(scores, solution, instance);
+      twoOneNeighborhood(scores, solution, instance);
       zeroOneNeighborhood(scores, solution, instance);
+
+
+      
       timer.stop();
+      
+      
+      
 
       solution.print(instance);
       std::cout << " \n \n";

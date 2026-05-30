@@ -412,6 +412,12 @@
 
     //------------------------------- 1-2 EXCHANGE -------------------------------------------
 
+    /*
+        This exchange is feasible if : 
+
+            - the 2 variables to activate do not require a common ressource
+            - the any of those 2 variables to activate do not required any ressource already consumed
+    */
 
     bool checkConflictOneTwoMove_X4(size_t &cursor,
                                    const std::vector<std::uint64_t> &first_to_activate,
@@ -435,10 +441,25 @@
 
 
             // checking conflict witn potential activations
-            std::uint64_t conflict_1 = occupied_after_removal_1 & (first_to_activate[cursor] & second_to_activate[cursor]);
-            std::uint64_t conflict_2 = occupied_after_removal_2 & (first_to_activate[(cursor + 1)] & second_to_activate[(cursor + 1)]) ;
-            std::uint64_t conflict_3 = occupied_after_removal_3 & (first_to_activate[(cursor + 2)] & second_to_activate[(cursor + 2)]);
-            std::uint64_t conflict_4 = occupied_after_removal_4 & (first_to_activate[(cursor + 3)] & second_to_activate[(cursor + 3)]);
+            std::uint64_t conflict_1 = (first_to_activate[cursor] & second_to_activate[cursor]) |
+                                       (occupied_after_removal_1 & first_to_activate[cursor]) |
+                                       (occupied_after_removal_1 & second_to_activate[cursor]);
+
+
+            std::uint64_t conflict_2 = (first_to_activate[(cursor + 1)] & second_to_activate[(cursor + 1)]) |
+                                       (occupied_after_removal_2 & first_to_activate[(cursor + 1)]) |
+                                       (occupied_after_removal_2 & second_to_activate[(cursor + 1)]);
+
+
+            std::uint64_t conflict_3 = (first_to_activate[(cursor + 2)] & second_to_activate[(cursor + 2)]) |
+                                       (occupied_after_removal_3 & first_to_activate[(cursor + 2)]) |
+                                       (occupied_after_removal_3 & second_to_activate[(cursor + 2)]);
+
+
+            std::uint64_t conflict_4 = (first_to_activate[(cursor + 3)] & second_to_activate[(cursor + 3)]) |
+                                       (occupied_after_removal_4 & first_to_activate[(cursor + 3)]) |
+                                       (occupied_after_removal_4 & second_to_activate[(cursor + 3)]);
+
 
             // synchronization
             if(((conflict_1 | conflict_2) | (conflict_3 | conflict_4)) != 0ULL){return false;}
@@ -469,8 +490,14 @@
 
 
         // checking conflict witn potential activations
-        std::uint64_t conflict_1 = occupied_after_removal_1 & (first_to_activate[cursor] & second_to_activate[cursor]);
-        std::uint64_t conflict_2 = occupied_after_removal_2 & (first_to_activate[(cursor + 1)] & second_to_activate[(cursor + 1)]) ;
+        std::uint64_t conflict_1 = (first_to_activate[cursor] & second_to_activate[cursor]) |
+                                    (occupied_after_removal_1 & first_to_activate[cursor]) |
+                                    (occupied_after_removal_1 & second_to_activate[cursor]);
+
+
+        std::uint64_t conflict_2 = (first_to_activate[(cursor + 1)] & second_to_activate[(cursor + 1)]) |
+                                    (occupied_after_removal_2 & first_to_activate[(cursor + 1)]) |
+                                    (occupied_after_removal_2 & second_to_activate[(cursor + 1)]);
 
         cursor += 2;
 
@@ -494,7 +521,9 @@
         occupied_after_removal &= ~to_deactivate[cursor];
 
         // checking conflict witn potential activations
-        std::uint64_t conflict = occupied_after_removal & (first_to_activate[cursor] & second_to_activate[cursor]);
+        std::uint64_t conflict = (first_to_activate[cursor] & second_to_activate[cursor]) |
+                                 (occupied_after_removal & first_to_activate[cursor]) |
+                                 (occupied_after_removal & second_to_activate[cursor]);
         
         cursor += 1;
 
