@@ -12,7 +12,7 @@
 
 
 /** 
- * @file ConflictCheckerSIMDX86.hpp
+ * @file ConflictCheckerTwoOneSIMDX86.hpp
  * @brief defines functions that check conflicting variables during the the 
  *        local search in order to ensure feasibility of solutions with SIMD vectorization
  *        X86 Instruction Set Architecture

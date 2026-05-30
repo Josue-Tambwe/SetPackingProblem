@@ -11,4 +11,4 @@
 
 
 # all source files of the simd subdirectory 
-simd_sources = files('ConflictCheckerSIMDX86.cpp')
+simd_sources = files('ConflictCheckerTwoOneSIMDX86.cpp')

@@ -12,14 +12,14 @@
 
 
 /** 
- * @file ConflictCheckerSIMDX86.cpp
+ * @file ConflictCheckerTwoOneSIMDX86.cpp
  * @author Josué Tambwe
  * @date 31 May 2026
  */
 
  #if HAS_X86
 
- #include "hpc/simd/ConflictCheckerSIMDX86.hpp"
+ #include "hpc/simd/ConflictCheckerTwoOneSIMDX86.hpp"
 
  namespace spp{
 
