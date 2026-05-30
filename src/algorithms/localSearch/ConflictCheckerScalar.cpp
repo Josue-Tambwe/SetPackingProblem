@@ -52,7 +52,7 @@
             occupied_after_removal_3 &= ~second_to_deactivate[(cursor + 2)];
             occupied_after_removal_4 &= ~second_to_deactivate[(cursor + 3)];
 
-            // checking conflict witn potential activation
+            // checking conflict witn the potential activation
             std::uint64_t conflict_1 = occupied_after_removal_1 & to_activate[cursor];
             std::uint64_t conflict_2 = occupied_after_removal_2 & to_activate[(cursor + 1)];
             std::uint64_t conflict_3 = occupied_after_removal_3 & to_activate[(cursor + 2)];
@@ -88,7 +88,7 @@
         occupied_after_removal_1 &= ~second_to_deactivate[cursor];
         occupied_after_removal_2 &= ~second_to_deactivate[(cursor + 1)];
 
-        // checking conflict witn potential activation
+        // checking conflict witn the potential activation
         std::uint64_t conflict_1 = occupied_after_removal_1 & to_activate[cursor];
         std::uint64_t conflict_2 = occupied_after_removal_2 & to_activate[(cursor + 1)];
 
@@ -115,7 +115,7 @@
         // second deactivation
         occupied_after_removal &= ~second_to_deactivate[cursor];
 
-        // checking conflict witn potential activation
+        // checking conflict witn the potential  activation
         std::uint64_t conflict = occupied_after_removal & to_activate[cursor];
         
         cursor += 1;
@@ -197,7 +197,7 @@
             occupied_after_removal_3 &= ~to_deactivate[(cursor + 2)];
             occupied_after_removal_4 &= ~to_deactivate[(cursor + 3)];
 
-            // checking conflict witn potential activation
+            // checking conflict witn the potential activation
             std::uint64_t conflict_1 = occupied_after_removal_1 & to_activate[cursor];
             std::uint64_t conflict_2 = occupied_after_removal_2 & to_activate[(cursor + 1)];
             std::uint64_t conflict_3 = occupied_after_removal_3 & to_activate[(cursor + 2)];
@@ -230,7 +230,7 @@
         occupied_after_removal_1 &= ~to_deactivate[cursor];
         occupied_after_removal_2 &= ~to_deactivate[(cursor + 1)];
 
-        // checking conflict witn potential activation
+        // checking conflict witn the potential activation
         std::uint64_t conflict_1 = occupied_after_removal_1 & to_activate[cursor];
         std::uint64_t conflict_2 = occupied_after_removal_2 & to_activate[(cursor + 1)];
 
@@ -253,7 +253,7 @@
         // deactivation
         occupied_after_removal &= ~to_deactivate[cursor];
 
-        // checking conflict witn potential activation
+        // checking conflict witn the potential activation
         std::uint64_t conflict = occupied_after_removal & to_activate[cursor];
         
         cursor += 1;
@@ -318,7 +318,7 @@
 
         while((cursor + 3) < to_activate.size()){
 
-            // checking conflict witn potential activation
+            // checking conflict witn the potential activation
             std::uint64_t conflict_1 = consumed_resources[cursor] & to_activate[cursor];
             std::uint64_t conflict_2 = consumed_resources[(cursor + 1)] & to_activate[(cursor + 1)];
             std::uint64_t conflict_3 = consumed_resources[(cursor + 2)] & to_activate[(cursor + 2)];
@@ -342,7 +342,7 @@
                                     const std::vector<std::uint64_t> &to_activate,
                                     std::vector<std::uint64_t> &consumed_resources){
                                     
-        // checking conflict witn potential activation
+        // checking conflict witn the potential activation
         std::uint64_t conflict_1 = consumed_resources[cursor] & to_activate[cursor];
         std::uint64_t conflict_2 = consumed_resources[(cursor + 1)] & to_activate[(cursor + 1)];
 
@@ -359,7 +359,7 @@
                                     std::vector<std::uint64_t> &consumed_resources){
 
 
-        // checking conflict witn potential activation
+        // checking conflict witn the potential activation
         std::uint64_t conflict = consumed_resources[cursor] & to_activate[cursor];
         
         cursor += 1;
@@ -440,7 +440,7 @@
             occupied_after_removal_4 &= ~to_deactivate[(cursor + 3)];
 
 
-            // checking conflict witn potential activations
+            // checking conflict witn the potential activations
             std::uint64_t conflict_1 = (first_to_activate[cursor] & second_to_activate[cursor]) |
                                        (occupied_after_removal_1 & first_to_activate[cursor]) |
                                        (occupied_after_removal_1 & second_to_activate[cursor]);
@@ -489,7 +489,7 @@
         occupied_after_removal_2 &= ~to_deactivate[(cursor + 1)];
 
 
-        // checking conflict witn potential activations
+        // checking conflict witn the potential activations
         std::uint64_t conflict_1 = (first_to_activate[cursor] & second_to_activate[cursor]) |
                                     (occupied_after_removal_1 & first_to_activate[cursor]) |
                                     (occupied_after_removal_1 & second_to_activate[cursor]);
@@ -520,7 +520,7 @@
         // deactivation
         occupied_after_removal &= ~to_deactivate[cursor];
 
-        // checking conflict witn potential activations
+        // checking conflict witn the  potential activations
         std::uint64_t conflict = (first_to_activate[cursor] & second_to_activate[cursor]) |
                                  (occupied_after_removal & first_to_activate[cursor]) |
                                  (occupied_after_removal & second_to_activate[cursor]);

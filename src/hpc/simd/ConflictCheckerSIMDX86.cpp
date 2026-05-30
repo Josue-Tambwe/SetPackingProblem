@@ -78,7 +78,7 @@
                                                               occupied_after_removal_4);
 
 
-                // checking conflict with potential activation 
+                // checking conflict with the potential activation 
 
                 __m256i conflict_1 = _mm256_and_si256(occupied_after_removal_1, to_activate_1);
                 __m256i conflict_2 = _mm256_and_si256(occupied_after_removal_2, to_activate_2);
