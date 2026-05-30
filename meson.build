@@ -42,6 +42,8 @@ has_neon = get_option('HAS_NEON')
 
 if has_x86
 
+    add_project_arguments('-DHAS_X86=true', language : 'cpp')
+
     if has_sse2
         add_project_arguments('-DHAS_SSE2=true', language : 'cpp')
     endif
@@ -62,6 +64,8 @@ endif
 
 
 if has_arm
+
+    add_project_arguments('-DHAS_ARM=true', language : 'cpp')
 
     if has_neon
         add_project_arguments('-DHAS_NEON=true', language : 'cpp')
@@ -175,6 +179,11 @@ endif
 if has_gurobi or has_highs or has_hexaly
     add_project_arguments('-DUSE_MILP=true', language : 'cpp')
 endif
+
+
+# Enable SIMD 
+
+add_project_arguments('-march=native', '-mtune=native', language: 'cpp')
 
 
 

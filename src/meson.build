@@ -16,6 +16,7 @@ subdir('solver')
 subdir('output')
 subdir('input')
 subdir('algorithms')
+subdir('hpc')
 
 
 
@@ -23,7 +24,7 @@ subdir('algorithms')
 
 # combining all source files
 
-all_sources = data_struc_sources + solver_sources + output_sources + input_sources + algorithm_sources
+all_sources = data_struc_sources + solver_sources + output_sources + input_sources + algorithm_sources + hpc_sources
 
 
 

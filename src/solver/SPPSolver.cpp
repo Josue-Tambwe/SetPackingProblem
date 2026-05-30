@@ -17,7 +17,6 @@
  */
    
    
-   #include "configuration/GeneralConfig.hpp"
    #include "dataStructures/Parameters.hpp"
    #include "input/OptionParser.hpp"
    #include "dataStructures/Instance.hpp" // to remove
@@ -30,6 +29,8 @@
    #include "dataStructures/MoveNode.hpp" // to remove
    #include "algorithms/localSearch/NeighborhoodUtils.hpp" // to remove
    #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp" // to remove
+
+   #include "hpc/simd/ConflictCheckerSIMDX86.hpp" // to remove
    
    using namespace spp; 
 
@@ -69,6 +70,7 @@
       std::cout << " improment time : " << timer.getElapsedTime(); 
       std::cout << " \n \n";
 
+      //if(HAS_AVX2){std::cout << " I have AVX \n";}
       
 
 

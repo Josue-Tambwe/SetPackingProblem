@@ -34,7 +34,7 @@
 
         while((cursor + 3) < first_to_deactivate.size()){
 
-            // loading 4 64-bits words
+            // loading 4 64-bit words
             std::uint64_t occupied_after_removal_1 = consumed_resources[cursor];
             std::uint64_t occupied_after_removal_2 = consumed_resources[(cursor + 1)];
             std::uint64_t occupied_after_removal_3 = consumed_resources[(cursor + 2)];
@@ -76,7 +76,7 @@
                                     const std::vector<std::uint64_t> &to_activate,
                                     std::vector<std::uint64_t> &consumed_resources){
 
-        // loading 3 64-bits words
+        // loading 2 64-bit words
         std::uint64_t occupied_after_removal_1 = consumed_resources[cursor];
         std::uint64_t occupied_after_removal_2 = consumed_resources[(cursor + 1)];
 
@@ -185,7 +185,7 @@
 
         while((cursor + 3) < to_deactivate.size()){
 
-            // loading 4 64-bits words
+            // loading 4 64-bit words
             std::uint64_t occupied_after_removal_1 = consumed_resources[cursor];
             std::uint64_t occupied_after_removal_2 = consumed_resources[(cursor + 1)];
             std::uint64_t occupied_after_removal_3 = consumed_resources[(cursor + 2)];
@@ -222,7 +222,7 @@
                                     const std::vector<std::uint64_t> &to_activate,
                                     std::vector<std::uint64_t> &consumed_resources){
                                     
-        // loading 3 64-bits words
+        // loading 2 64-bit words
         std::uint64_t occupied_after_removal_1 = consumed_resources[cursor];
         std::uint64_t occupied_after_removal_2 = consumed_resources[(cursor + 1)];
 
@@ -427,7 +427,7 @@
 
         while((cursor + 3) < first_to_activate.size()){
 
-            // loading 4 64-bits words
+            // loading 4 64-bit words
             std::uint64_t occupied_after_removal_1 = consumed_resources[cursor];
             std::uint64_t occupied_after_removal_2 = consumed_resources[(cursor + 1)];
             std::uint64_t occupied_after_removal_3 = consumed_resources[(cursor + 2)];
@@ -480,7 +480,7 @@
                                    const std::vector<std::uint64_t> &to_deactivate,
                                    std::vector<std::uint64_t> &consumed_resources){
 
-        // loading 3 64-bits words
+        // loading 2 64-bits words
         std::uint64_t occupied_after_removal_1 = consumed_resources[cursor];
         std::uint64_t occupied_after_removal_2 = consumed_resources[(cursor + 1)];
 
