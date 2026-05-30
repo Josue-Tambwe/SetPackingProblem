@@ -142,7 +142,7 @@
             return true;
         }
 
-        if(cursor <= first_to_deactivate.size() - 2 ){
+        if((cursor + 1) < first_to_deactivate.size()){
 
             if(!checkConflictTwoOneMove_X2(cursor, 
                                           first_to_deactivate, 
@@ -276,7 +276,7 @@
             return true;
         }
 
-        if(cursor <= to_deactivate.size() - 2 ){
+        if((cursor + 1) < to_deactivate.size()){
 
             if(!checkConflictOneOneMove_X2(cursor, 
                                           to_deactivate, 
@@ -381,7 +381,7 @@
             return true;
         }
 
-        if(cursor <= to_activate.size() - 2 ){
+        if((cursor + 1) < to_activate.size()){
 
             if(!checkConflictZeroOneMove_X2(cursor, 
                                             to_activate, 
@@ -521,7 +521,7 @@
             return true;
         }
 
-        if(cursor <= first_to_activate.size() - 2 ){
+        if((cursor + 1) < first_to_activate.size()){
 
             if(!checkConflictOneTwoMove_X2(cursor, 
                                           first_to_activate, 

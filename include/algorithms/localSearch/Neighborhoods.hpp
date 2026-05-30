@@ -65,5 +65,30 @@
                             const Instance &instance);
 
 
+
+
+
+   /**
+    * @brief finds an upper bound for the loop on the first index to activate (currently deactivated variable)
+    *        This bound reduces the number of iteration because of this large 1-2 neighborhood
+    */
+   size_t findIterationBoundFirstToActivate(int to_deactivate_index,
+                                            std::vector<int> &sorted_deactivated_vars,
+                                            const Instance &instance);
+
+
+
+   /**
+    * @brief searches a feasible 1-2 exchange move : 1 variable to deactivate and 2 variables to activate
+    */
+   bool findOneTwoExchange(int &to_deactivate,
+                           int &first_index_to_activate,
+                           int &second_index_to_activate,
+                           std::vector<int> &sorted_activated_vars,
+                           std::vector<int> &sorted_deactivated_vars,
+                           Solution &solution,
+                           const Instance &instance);
+
+
  }
 

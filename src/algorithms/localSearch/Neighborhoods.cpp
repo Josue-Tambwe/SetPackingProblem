@@ -111,6 +111,7 @@
                              Solution &solution,
                              const Instance &instance){
 
+
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
 
 
@@ -128,6 +129,83 @@
 
         return false;
         
+    }
+
+
+
+
+
+
+
+    size_t findIterationBoundFirstToActivate(int to_deactivate_index,
+                                            std::vector<int> &sorted_deactivated_vars,
+                                            const Instance &instance){
+
+        const std::vector<int>& profit = instance.getProfitVector();
+
+        for(size_t index = 1; index < (sorted_deactivated_vars.size() - 1); index++){
+
+            if((profit[sorted_deactivated_vars[0]] + profit[sorted_deactivated_vars[index]]) < profit[to_deactivate_index]){
+
+                return index;
+            }
+        }
+
+        return 0;
+
+    }
+
+
+
+    bool findOneTwoExchange(int &to_deactivate,
+                           int &first_index_to_activate,
+                           int &second_index_to_activate,
+                           std::vector<int> &sorted_activated_vars,
+                           std::vector<int> &sorted_deactivated_vars,
+                           Solution &solution,
+                           const Instance &instance){
+
+        const std::vector<int>& profit = instance.getProfitVector();
+        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
+
+
+        for(size_t i = 0; i < sorted_activated_vars.size(); i++){
+
+            size_t bound_j = findIterationBoundFirstToActivate(sorted_activated_vars[i], 
+                                                               sorted_deactivated_vars, 
+                                                               instance);
+            size_t j = 0;
+
+            while(j < bound_j){
+
+                for(size_t k = (j + 1); k < sorted_deactivated_vars.size(); k++){
+
+                    // case of a promissing exchange
+                    if((profit[sorted_deactivated_vars[j]] + profit[sorted_deactivated_vars[k]]) > profit[sorted_activated_vars[i]]){
+
+                        if(!checkConflictOneTwoMove(resource_requirements[sorted_deactivated_vars[j]].getData(),
+                                                   resource_requirements[sorted_deactivated_vars[k]].getData(),
+                                                   resource_requirements[sorted_activated_vars[i]].getData(),
+                                                   solution.getConsumedResourcesData())){
+
+                            to_deactivate = sorted_activated_vars[i];
+                            first_index_to_activate = sorted_deactivated_vars[j];
+                            second_index_to_activate = sorted_deactivated_vars[k];
+                            return true;
+
+                        }
+
+                    }
+
+                }
+
+                j += 1;
+            }
+
+        }
+
+        return false;
+
     }
 
 

@@ -52,5 +52,14 @@
     void zeroOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance);
+
+
+    /**
+     * @brief performs the 1-2 exchange while an improvement of the objective is possible
+     */
+    void oneTwoNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance);
+                            
  }
 

@@ -128,5 +128,47 @@
     }
 
 
+
+    void oneTwoNeighborhood(std::vector<float> &scores,
+                            Solution &solution,
+                            const Instance &instance){
+
+        bool improvement = true;
+        int to_deactivate = -1;
+        int first_index_to_activate = -1;
+        int second_index_to_activate = -1;
+        
+
+        do{
+
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findTwoOneExchange(to_deactivate,
+                                             first_index_to_activate,
+                                             second_index_to_activate,
+                                             sorted_activated_vars,
+                                             sorted_deactivated_vars,
+                                             solution,
+                                             instance);
+
+
+            // update of the solution 
+            if(improvement){
+                // deactivation
+                solution.deactivateVar(to_deactivate, instance);
+
+                // activation
+                solution.activateVar(first_index_to_activate, instance);
+                solution.activateVar(second_index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+                                
+    }
+
+
  }
  
