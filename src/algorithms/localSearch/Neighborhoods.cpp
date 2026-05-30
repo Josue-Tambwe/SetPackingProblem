@@ -143,7 +143,7 @@
 
         const std::vector<int>& profit = instance.getProfitVector();
 
-        for(size_t index = 1; index < (sorted_deactivated_vars.size() - 1); index++){
+        for(size_t index = 1; (index + 1) < sorted_deactivated_vars.size(); index++){
 
             if((profit[sorted_deactivated_vars[0]] + profit[sorted_deactivated_vars[index]]) < profit[to_deactivate_index]){
 
