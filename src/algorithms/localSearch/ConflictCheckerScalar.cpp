@@ -322,7 +322,7 @@
             std::uint64_t conflict_1 = consumed_resources[cursor] & to_activate[cursor];
             std::uint64_t conflict_2 = consumed_resources[(cursor + 1)] & to_activate[(cursor + 1)];
             std::uint64_t conflict_3 = consumed_resources[(cursor + 2)] & to_activate[(cursor + 2)];
-            std::uint64_t conflict_4 = consumed_resources[(cursor + 3)]  & to_activate[(cursor + 3)];
+            std::uint64_t conflict_4 = consumed_resources[(cursor + 3)] & to_activate[(cursor + 3)];
 
             // synchronization
             if(((conflict_1 | conflict_2) | (conflict_3 | conflict_4)) != 0ULL){return false;}
