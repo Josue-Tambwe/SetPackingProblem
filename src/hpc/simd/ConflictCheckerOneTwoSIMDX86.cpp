@@ -145,7 +145,6 @@
         occupied_after_removal_2 = _mm256_andnot_si256(to_deactivate_2, occupied_after_removal_2);
         
         // checking conflict with the potential activations 
-
         __m256i conflict_1 = _mm256_or_si256(_mm256_and_si256(first_to_activate_1, second_to_activate_1), 
                                              _mm256_or_si256(_mm256_and_si256(occupied_after_removal_1, first_to_activate_1), 
                                                              _mm256_and_si256(occupied_after_removal_1, second_to_activate_1))
@@ -304,7 +303,6 @@
         }
 
         return false;
-
 
     }
 

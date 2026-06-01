@@ -59,11 +59,8 @@
                 // deactivation :  occupied_after_removal <- not (to_deactivate) and consumed_resources
 
                 occupied_after_removal_1 = _mm256_andnot_si256(to_deactivate_1, occupied_after_removal_1);
-
                 occupied_after_removal_2 = _mm256_andnot_si256(to_deactivate_2, occupied_after_removal_2);
-
                 occupied_after_removal_3 = _mm256_andnot_si256(to_deactivate_3, occupied_after_removal_3);
-
                 occupied_after_removal_4 = _mm256_andnot_si256(to_deactivate_4, occupied_after_removal_4);
 
 
@@ -156,7 +153,6 @@
 
        
         // deactivation :  occupied_after_removal <- not (to_deactivate) and consumed_resources
-
         occupied_after_removal = _mm256_andnot_si256(to_deactivate_register, occupied_after_removal);
 
 

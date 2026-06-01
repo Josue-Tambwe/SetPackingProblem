@@ -86,12 +86,10 @@
                 __m256i conflict_4 = _mm256_and_si256(occupied_after_removal_4, to_activate_4);
 
                 // synchronization 
-
                 __m256i all_conflict = _mm256_or_si256(_mm256_or_si256(conflict_1, conflict_2), 
                                                        _mm256_or_si256(conflict_3, conflict_4));
 
                 // _mm256_testz_si256 returns (all_conflict & all_conflict) == 0
-
                 if(!_mm256_testz_si256(all_conflict, all_conflict)){return false;}
 
 
@@ -144,13 +142,11 @@
         __m256i conflict_2 = _mm256_and_si256(occupied_after_removal_2, to_activate_2);
 
         // synchronization 
-
         __m256i all_conflict = _mm256_or_si256(conflict_1, conflict_2);
 
         cursor += 8;
 
         // _mm256_testz_si256 returns (all_conflict & all_conflict) == 0
-
         return (_mm256_testz_si256(all_conflict, all_conflict));             
 
     }
@@ -191,7 +187,6 @@
         cursor += 4;
 
         // _mm256_testz_si256 returns (conflict & conflict) == 0
-
         return (_mm256_testz_si256(conflict, conflict));             
     }
 
@@ -291,7 +286,6 @@
         }
 
         return false;
-
 
     }
 
