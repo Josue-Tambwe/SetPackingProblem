@@ -47,29 +47,49 @@
       std::cout << " construction time : " << timer.getElapsedTime(); 
       std::cout << " \n \n";
 
-      timer.reset();
-      timer.start();
+      
       std::vector<float> scores = computeVariableScores(instance);
       
+      timer.reset();
+      timer.start();
 
       oneTwoNeighborhood(scores, solution, instance);
       oneOneNeighborhood(scores, solution, instance);
       twoOneNeighborhood(scores, solution, instance);
       zeroOneNeighborhood(scores, solution, instance);
-
-
-      
       timer.stop();
-      
-      
-      
-
+   
       solution.print(instance);
       std::cout << " \n \n";
       std::cout << " improment time : " << timer.getElapsedTime(); 
+      std::cout << " \n \n \n \n";
+
+
+
+
+      timer.reset();
+      timer.start();
+      Solution solution_simd = deterministicConstruction(instance);
+      timer.stop();
+      solution_simd.print(instance);
+      std::cout << " \n \n";
+      std::cout << " SIMD construction time : " << timer.getElapsedTime(); 
       std::cout << " \n \n";
 
-      //if(HAS_AVX2){std::cout << " I have AVX \n";}
+      timer.reset();
+      timer.start();
+
+      oneTwoNeighborhoodSIMDX86(scores, solution_simd, instance);
+      oneOneNeighborhoodSIMDX86(scores, solution_simd, instance);
+      twoOneNeighborhoodSIMDX86(scores, solution_simd, instance);
+      zeroOneNeighborhoodSIMDX86(scores, solution_simd, instance);
+      timer.stop();
+   
+      solution_simd.print(instance);
+      std::cout << " \n \n";
+      std::cout << "SIMD improment time : " << timer.getElapsedTime(); 
+      std::cout << " \n \n  ";
+      
       
 
 

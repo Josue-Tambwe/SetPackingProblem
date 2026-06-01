@@ -27,6 +27,7 @@
         algorithm = Algorithm::Unknown;
         instance_path = "";
         verbose = false;
+        use_simd = false;
         nb_threads = NUMBER_PHYSICAL_CORES;
 
 

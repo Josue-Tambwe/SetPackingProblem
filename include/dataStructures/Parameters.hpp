@@ -40,6 +40,7 @@
         Algorithm algorithm; 
         std::string instance_path;
         bool verbose;
+        bool use_simd;
         int nb_threads;
 
         
