@@ -136,7 +136,7 @@
         }
         return nonzeros_indexes;
 
-        /* This method extract in each word every nonzero bit from the LSB to the MSB
+        /* This method extract in each word every nonzero bit from the MSB to the LSB
          * Example with word = 00101000
          * bit 7 : 0
          * bit 6 : 0
