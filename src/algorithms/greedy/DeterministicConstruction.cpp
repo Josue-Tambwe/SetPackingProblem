@@ -118,7 +118,10 @@
             free_variables.erase(best_var);
         }
 
-        solution.setStatus(spp::Status::FEASIBLE);
+        // feasibility certification
+        if(solution.isFeasible(instance)){solution.setStatus(Status::FEASIBLE);}
+        else{solution.setStatus(Status::INFEASIBLE);}
+        
         return solution;
 
     }
