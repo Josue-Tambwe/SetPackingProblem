@@ -52,6 +52,36 @@
 
     Status Solution::getStatus() const {return status;}
 
+
+    bool Solution::isFeasible(const Instance &instance){
+
+      std::vector<int> nonzeros_vars = this->getNonZeroVarsIndexes();
+      size_t nb_words = this->getNbConsumedResourceWords();
+      std::vector<std::uint64_t> resources_used(nb_words, 0ULL);
+      const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
+
+      for(int var : nonzeros_vars){
+
+        const std::vector<std::uint64_t>& resources_required = resource_requirements[var].getData();
+        
+        // checks conflicts
+        for(size_t word = 0; word < nb_words; word++){
+
+          if((resources_used[word] & resources_required[word]) != 0ULL) return false;
+        }
+
+        // accumulates resources used
+        for(size_t word = 0; word < nb_words; word++){
+
+          resources_used[word] |= resources_required[word];
+        }
+
+      }
+
+      return true;
+    }
+
+
     std::int64_t Solution::getObjectiveValue(const Instance &instance){
       
       computeObjectiveValue(instance);

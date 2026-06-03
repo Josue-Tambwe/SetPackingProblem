@@ -71,6 +71,8 @@
             std::int64_t getObjectiveValue(const Instance &instance);
             Status getStatus() const;
 
+            bool isFeasible(const Instance &instance);
+
 
             // setters
             void activateVar(int var_index, const Instance &instance);
