@@ -68,53 +68,6 @@
 
 
 
-    bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
-                                   int &second_index_to_deactivate,
-                                   int &index_to_activate,
-                                   std::vector<int> &sorted_activated_vars,
-                                   std::vector<int> &sorted_deactivated_vars,
-                                   Solution &solution,
-                                   const Instance &instance){
-
-
-        const std::vector<int>& profit = instance.getProfitVector();
-        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
-        const size_t nb_words = solution.getNbConsumedResourceWords();
-
-        for(size_t k = 0; k < sorted_deactivated_vars.size(); k++){
-
-            for(size_t i = 0; (i+1) < sorted_activated_vars.size(); i++){
-
-                for(size_t j = (i+1); j < sorted_activated_vars.size(); j++){
-
-                    // case of a promissing exchange
-                    if(profit[sorted_deactivated_vars[k]] > (profit[sorted_activated_vars[i]] + profit[sorted_activated_vars[j]])){
-
-                        // case of a feasible move
-                        if(!checkConflictTwoOneMoveAVX2(nb_words,
-                                                        resource_requirements[sorted_activated_vars[i]].getPointerToData(),
-                                                        resource_requirements[sorted_activated_vars[j]].getPointerToData(),
-                                                        resource_requirements[sorted_deactivated_vars[k]].getPointerToData(),
-                                                        solution.getConsumedResourcesPointerToData())){
-                                                    
-                            first_index_to_deactivate = sorted_activated_vars[i];
-                            second_index_to_deactivate = sorted_activated_vars[j];
-                            index_to_activate = sorted_deactivated_vars[k];
-                            return true;
-
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-
-
-
-
     // ---------------------- 1-1 Exchange ------------------------------------
 
     bool findOneOneExchange(int &index_to_deactivate,
@@ -155,47 +108,6 @@
 
 
 
-    bool findOneOneExchangeSIMDX86(int &index_to_deactivate,
-                                   int &index_to_activate,
-                                   std::vector<int> &sorted_activated_vars,
-                                   std::vector<int> &sorted_deactivated_vars,
-                                   Solution &solution,
-                                   const Instance &instance){
-
-        const std::vector<int>& profit = instance.getProfitVector();
-        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
-        const size_t nb_words = solution.getNbConsumedResourceWords();
-
-
-        for(size_t i = 0; i < sorted_deactivated_vars.size(); i++){
-
-            for(size_t j = 0; j < sorted_activated_vars.size(); j++){
-
-                // case of a promissing exchange
-                if(profit[sorted_deactivated_vars[i]] > profit[sorted_activated_vars[j]]){
-
-                    // case of a feasible move
-                    if(!checkConflictOneOneMoveAVX2(nb_words, 
-                                                    resource_requirements[sorted_activated_vars[j]].getPointerToData(),
-                                                    resource_requirements[sorted_deactivated_vars[i]].getPointerToData(),
-                                                    solution.getConsumedResourcesPointerToData())){
-                                                    
-                        index_to_deactivate = sorted_activated_vars[j];
-                        index_to_activate = sorted_deactivated_vars[i];
-                        return true;
-
-                    }
-                }
-            }
-        }
-
-        return false;
-        
-    }
-
-
-
-
     // ---------------------- 0-1 Exchange ------------------------------------
 
     bool findZeroOneExchange(int &index_to_activate,
@@ -211,34 +123,6 @@
             // case of a feasible move
             if(!checkConflictZeroOneMove(resource_requirements[sorted_deactivated_vars[i]].getData(),
                                         solution.getConsumedResourcesData())){
-                                                    
-                index_to_activate = sorted_deactivated_vars[i];
-                return true;
-
-            }
-        }
-
-        return false;
-        
-    }
-
-
-
-    bool findZeroOneExchangeSIMDX86(int &index_to_activate,
-                                    std::vector<int> &sorted_deactivated_vars,
-                                    Solution &solution,
-                                    const Instance &instance){
-
-
-        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
-        const size_t nb_words = solution.getNbConsumedResourceWords();
-
-        for(size_t i = 0; i < sorted_deactivated_vars.size(); i++){
-
-            // case of a feasible move
-            if(!checkConflictZeroOneMoveAVX2(nb_words,
-                                             resource_requirements[sorted_deactivated_vars[i]].getPointerToData(),
-                                             solution.getConsumedResourcesPointerToData())){
                                                     
                 index_to_activate = sorted_deactivated_vars[i];
                 return true;
@@ -329,6 +213,126 @@
 
 
 
+
+
+    #if HAS_X86
+
+    bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
+                                   int &second_index_to_deactivate,
+                                   int &index_to_activate,
+                                   std::vector<int> &sorted_activated_vars,
+                                   std::vector<int> &sorted_deactivated_vars,
+                                   Solution &solution,
+                                   const Instance &instance){
+
+
+        const std::vector<int>& profit = instance.getProfitVector();
+        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
+        const size_t nb_words = solution.getNbConsumedResourceWords();
+
+        for(size_t k = 0; k < sorted_deactivated_vars.size(); k++){
+
+            for(size_t i = 0; (i+1) < sorted_activated_vars.size(); i++){
+
+                for(size_t j = (i+1); j < sorted_activated_vars.size(); j++){
+
+                    // case of a promissing exchange
+                    if(profit[sorted_deactivated_vars[k]] > (profit[sorted_activated_vars[i]] + profit[sorted_activated_vars[j]])){
+
+                        // case of a feasible move
+                        if(!checkConflictTwoOneMoveAVX2(nb_words,
+                                                        resource_requirements[sorted_activated_vars[i]].getPointerToData(),
+                                                        resource_requirements[sorted_activated_vars[j]].getPointerToData(),
+                                                        resource_requirements[sorted_deactivated_vars[k]].getPointerToData(),
+                                                        solution.getConsumedResourcesPointerToData())){
+                                                    
+                            first_index_to_deactivate = sorted_activated_vars[i];
+                            second_index_to_deactivate = sorted_activated_vars[j];
+                            index_to_activate = sorted_deactivated_vars[k];
+                            return true;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+    bool findOneOneExchangeSIMDX86(int &index_to_deactivate,
+                                   int &index_to_activate,
+                                   std::vector<int> &sorted_activated_vars,
+                                   std::vector<int> &sorted_deactivated_vars,
+                                   Solution &solution,
+                                   const Instance &instance){
+
+        const std::vector<int>& profit = instance.getProfitVector();
+        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
+        const size_t nb_words = solution.getNbConsumedResourceWords();
+
+
+        for(size_t i = 0; i < sorted_deactivated_vars.size(); i++){
+
+            for(size_t j = 0; j < sorted_activated_vars.size(); j++){
+
+                // case of a promissing exchange
+                if(profit[sorted_deactivated_vars[i]] > profit[sorted_activated_vars[j]]){
+
+                    // case of a feasible move
+                    if(!checkConflictOneOneMoveAVX2(nb_words, 
+                                                    resource_requirements[sorted_activated_vars[j]].getPointerToData(),
+                                                    resource_requirements[sorted_deactivated_vars[i]].getPointerToData(),
+                                                    solution.getConsumedResourcesPointerToData())){
+                                                    
+                        index_to_deactivate = sorted_activated_vars[j];
+                        index_to_activate = sorted_deactivated_vars[i];
+                        return true;
+
+                    }
+                }
+            }
+        }
+
+        return false;
+        
+    }
+
+
+
+
+
+    bool findZeroOneExchangeSIMDX86(int &index_to_activate,
+                                    std::vector<int> &sorted_deactivated_vars,
+                                    Solution &solution,
+                                    const Instance &instance){
+
+
+        const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
+        const size_t nb_words = solution.getNbConsumedResourceWords();
+
+        for(size_t i = 0; i < sorted_deactivated_vars.size(); i++){
+
+            // case of a feasible move
+            if(!checkConflictZeroOneMoveAVX2(nb_words,
+                                             resource_requirements[sorted_deactivated_vars[i]].getPointerToData(),
+                                             solution.getConsumedResourcesPointerToData())){
+                                                    
+                index_to_activate = sorted_deactivated_vars[i];
+                return true;
+
+            }
+        }
+
+        return false;
+        
+    }
+
+
+
     bool findOneTwoExchangeSIMDX86(int &to_deactivate,
                                 int &first_index_to_activate,
                                 int &second_index_to_activate,
@@ -380,6 +384,8 @@
         return false;
 
     }
+
+    #endif
 
 
 

@@ -24,6 +24,7 @@
  #include "dataStructures/Instance.hpp"
  #include "dataStructures/Solution.hpp"
  #include "dataStructures/Parameters.hpp"
+ #include "dataStructures/Status.hpp"
  #include "algorithms/localSearch/NeighborhoodUtils.hpp"
  #include "algorithms/localSearch/Neighborhoods.hpp"
  #include <vector>
@@ -39,14 +40,7 @@
                             Solution &solution,
                             const Instance &instance);
 
-    void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
-                                   Solution &solution,
-                                   const Instance &instance);
-
-
-
-
-
+    
    /**
      * @brief performs the 1-1 exchange while an improvement of the objective is possible
      */
@@ -54,14 +48,7 @@
                             Solution &solution,
                             const Instance &instance);
 
-    void oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
-                                   Solution &solution,
-                                   const Instance &instance);
-
-
-
-
-
+    
     /**
      * @brief performs the 0-1 exchange while an improvement of the objective is possible
      */
@@ -69,13 +56,7 @@
                             Solution &solution,
                             const Instance &instance);
 
-    void zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
-                                    Solution &solution,
-                                    const Instance &instance);
-
-
-
-
+    
 
     /**
      * @brief performs the 1-2 exchange while an improvement of the objective is possible
@@ -84,9 +65,37 @@
                             Solution &solution,
                             const Instance &instance);
 
+
+    #if HAS_X86                        
+
+    void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance);
+
+
+
+    void oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance);
+
+
+
+    void zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                    Solution &solution,
+                                    const Instance &instance);
+
+
+
     void oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
-                            
+
+    #endif
+
+
+    void variableNeighborhoodDescent(Params &params, 
+                                     Solution &solution, 
+                                     const Instance &instance);
+    
  }
 

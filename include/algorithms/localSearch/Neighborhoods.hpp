@@ -24,10 +24,14 @@
  #include "dataStructures/Instance.hpp"
  #include "dataStructures/Solution.hpp"
  #include "algorithms/localSearch/ConflictCheckerScalar.hpp"
- #include "hpc/simd/ConflictCheckerTwoOneSIMDX86.hpp" // to remove
- #include "hpc/simd/ConflictCheckerOneOneSIMDX86.hpp" // to remove
- #include "hpc/simd/ConflictCheckerZeroOneSIMDX86.hpp" // to remove
- #include "hpc/simd/ConflictCheckerOneTwoSIMDX86.hpp" // to remove
+
+ #if HAS_X86
+ #include "hpc/simd/ConflictCheckerTwoOneSIMDX86.hpp" // 
+ #include "hpc/simd/ConflictCheckerOneOneSIMDX86.hpp" //
+ #include "hpc/simd/ConflictCheckerZeroOneSIMDX86.hpp" //
+ #include "hpc/simd/ConflictCheckerOneTwoSIMDX86.hpp" //
+ #endif
+ 
  #include <vector>
 
  namespace spp{
@@ -48,19 +52,6 @@
                             const Instance &instance);
 
 
-
-   bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
-                                 int &second_index_to_deactivate,
-                                 int &index_to_activate,
-                                 std::vector<int> &sorted_activated_vars,
-                                 std::vector<int> &sorted_deactivated_vars,
-                                 Solution &solution,
-                                 const Instance &instance);
-
-
-
-
-
    /**
     * @brief searches a feasible 1-1 exchange move : 1 variable to deactivate and 1 variable to activate
     */
@@ -72,19 +63,6 @@
                            const Instance &instance);
 
 
-
-   bool findOneOneExchangeSIMDX86(int &index_to_deactivate,
-                                 int &index_to_activate,
-                                 std::vector<int> &sorted_activated_vars,
-                                 std::vector<int> &sorted_deactivated_vars,
-                                 Solution &solution,
-                                 const Instance &instance);
-
-
-
-
-
-
    /**
     * @brief searches a feasible 0-1 exchange move : 0 variable to deactivate and 1 variable to activate
     */
@@ -92,18 +70,6 @@
                             std::vector<int> &sorted_deactivated_vars,
                             Solution &solution,
                             const Instance &instance);
-
-
-   bool findZeroOneExchangeSIMDX86(int &index_to_activate,
-                                 std::vector<int> &sorted_deactivated_vars,
-                                 Solution &solution,
-                                 const Instance &instance);
-
-
-
-
-
-
 
 
    /**
@@ -128,6 +94,36 @@
                            const Instance &instance);
 
 
+
+
+   #if HAS_X86
+
+   bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
+                                 int &second_index_to_deactivate,
+                                 int &index_to_activate,
+                                 std::vector<int> &sorted_activated_vars,
+                                 std::vector<int> &sorted_deactivated_vars,
+                                 Solution &solution,
+                                 const Instance &instance);
+
+
+
+
+   bool findOneOneExchangeSIMDX86(int &index_to_deactivate,
+                                 int &index_to_activate,
+                                 std::vector<int> &sorted_activated_vars,
+                                 std::vector<int> &sorted_deactivated_vars,
+                                 Solution &solution,
+                                 const Instance &instance);
+
+
+   bool findZeroOneExchangeSIMDX86(int &index_to_activate,
+                                 std::vector<int> &sorted_deactivated_vars,
+                                 Solution &solution,
+                                 const Instance &instance);
+
+
+
    bool findOneTwoExchangeSIMDX86(int &to_deactivate,
                                  int &first_index_to_activate,
                                  int &second_index_to_activate,
@@ -135,6 +131,8 @@
                                  std::vector<int> &sorted_deactivated_vars,
                                  Solution &solution,
                                  const Instance &instance);
+
+   #endif
 
 
  }

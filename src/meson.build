@@ -31,8 +31,8 @@ all_sources = data_struc_sources + solver_sources + output_sources + input_sourc
 # final binary file 
 
 executable('spp_solver',
-            all_sources,
-            include_directories : inc,
-            dependencies : [gurobi_dep, hexaly_dep, highs_dep],
-            install : true,
-            install_dir : 'bin')
+           all_sources,
+           include_directories : inc,
+           dependencies : [gurobi_dep, hexaly_dep, highs_dep],
+           install : true,
+           install_dir : 'bin')

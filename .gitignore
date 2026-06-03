@@ -10,3 +10,4 @@ benchmarks/rail
 *.out
 *.data
 *.data.old
+Dockerfile

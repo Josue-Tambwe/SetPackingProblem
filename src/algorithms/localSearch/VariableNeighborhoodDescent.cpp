@@ -65,50 +65,6 @@
 
 
 
-    void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
-                                   Solution &solution,
-                                   const Instance &instance){
-                            
-
-        bool improvement = true;
-        int first_index_to_deactivate = -1;
-        int second_index_to_deactivate = -1;
-        int index_to_activate = -1;
-
-        do{
-            
-            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
-            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
-
-            improvement = findTwoOneExchangeSIMDX86(first_index_to_deactivate,
-                                                    second_index_to_deactivate,
-                                                    index_to_activate,
-                                                    sorted_activated_vars,
-                                                    sorted_deactivated_vars,
-                                                    solution,
-                                                    instance);
-
-            // update of the solution 
-            if(improvement){
-
-                // deactivation
-                solution.deactivateVar(first_index_to_deactivate, instance);
-                solution.deactivateVar(second_index_to_deactivate, instance);
-
-                // activation
-                solution.activateVar(index_to_activate, instance);
-            }
-
-
-        }
-        while(improvement);
-
-    }
-
-
-
-
-
 
     // ------------------------ 1-1 Exchange -----------------------------
 
@@ -151,46 +107,6 @@
 
 
 
-    void oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
-                                   Solution &solution,
-                                   const Instance &instance){
-
-        bool improvement = true;
-        int index_to_deactivate = -1;
-        int index_to_activate = -1;
-
-        do{
-            
-            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
-            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
-
-            improvement = findOneOneExchangeSIMDX86(index_to_deactivate,
-                                                    index_to_activate,
-                                                    sorted_activated_vars,
-                                                    sorted_deactivated_vars,
-                                                    solution,
-                                                    instance);
-
-            // update of the solution 
-            if(improvement){
-
-                // deactivation
-                solution.deactivateVar(index_to_deactivate, instance);
-
-                // activation
-                solution.activateVar(index_to_activate, instance);
-            }
-
-
-        }
-        while(improvement);
-
-    }
-
-
-
-
-
 
     // ------------------------ 0-1 Exchange -----------------------------
 
@@ -216,31 +132,6 @@
         while(improvement);
 
     }
-
-
-
-    void zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
-                             Solution &solution,
-                             const Instance &instance){
-
-        bool improvement = true;
-        int index_to_activate = -1;
-
-        do{
-            
-            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
-            improvement = findZeroOneExchangeSIMDX86(index_to_activate,
-                                                    sorted_deactivated_vars,
-                                                    solution,
-                                                    instance);
-
-    
-            if(improvement){solution.activateVar(index_to_activate, instance);}
-        }
-        while(improvement);
-
-    }
-
 
 
     // ------------------------ 1-2 Exchange -----------------------------
@@ -287,6 +178,116 @@
 
 
 
+
+    #if HAS_X86
+
+    void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance){
+                            
+
+        bool improvement = true;
+        int first_index_to_deactivate = -1;
+        int second_index_to_deactivate = -1;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findTwoOneExchangeSIMDX86(first_index_to_deactivate,
+                                                    second_index_to_deactivate,
+                                                    index_to_activate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(first_index_to_deactivate, instance);
+                solution.deactivateVar(second_index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+    }
+
+
+
+
+
+    void oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance){
+
+        bool improvement = true;
+        int index_to_deactivate = -1;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findOneOneExchangeSIMDX86(index_to_deactivate,
+                                                    index_to_activate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+    }
+
+
+
+
+    void zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                             Solution &solution,
+                             const Instance &instance){
+
+        bool improvement = true;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+            improvement = findZeroOneExchangeSIMDX86(index_to_activate,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+    
+            if(improvement){solution.activateVar(index_to_activate, instance);}
+        }
+        while(improvement);
+
+    }
+
+
+
     void oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
@@ -325,6 +326,43 @@
         }
         while(improvement);
                                 
+    }
+    #endif
+
+
+
+    void variableNeighborhoodDescent(Params &params, 
+                                     Solution &solution, 
+                                     const Instance &instance){
+
+        std::vector<float> scores = computeVariableScores(instance);
+
+        if(params.use_simd){
+
+            #if HAS_X86
+
+                oneTwoNeighborhoodSIMDX86(scores, solution, instance);
+                oneOneNeighborhoodSIMDX86(scores, solution, instance);
+                twoOneNeighborhoodSIMDX86(scores, solution, instance);
+                zeroOneNeighborhoodSIMDX86(scores, solution, instance);
+
+            #endif
+        }
+
+        else{
+
+            oneTwoNeighborhood(scores, solution, instance);
+            oneOneNeighborhood(scores, solution, instance);
+            twoOneNeighborhood(scores, solution, instance);
+            zeroOneNeighborhood(scores, solution, instance);
+
+        }
+
+        // feasibility certification
+        if(solution.isFeasible(instance)){solution.setStatus(Status::FEASIBLE);}
+        else{solution.setStatus(Status::INFEASIBLE);}
+       
+
     }
 
 

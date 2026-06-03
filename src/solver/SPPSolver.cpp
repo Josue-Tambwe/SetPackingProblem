@@ -38,57 +38,29 @@
       Params params = parseOptions(argc, argv);
       const Instance instance(params); // to remove
       //instance.print(); // to remove
+
       Timer timer;
       timer.start();
       Solution solution = deterministicConstruction(instance);
       timer.stop();
+
       solution.print(instance);
       std::cout << " \n \n";
-      std::cout << " construction time : " << timer.getElapsedTime(); 
+      std::cout << " construction time : " << timer.getElapsedTime() << "\n";
+      std::cout << " status            : " << solution.getStatus() << " \n \n"; 
       std::cout << " \n \n";
-
-      
-      std::vector<float> scores = computeVariableScores(instance);
       
       timer.reset();
       timer.start();
-
-      oneTwoNeighborhood(scores, solution, instance);
-      oneOneNeighborhood(scores, solution, instance);
-      twoOneNeighborhood(scores, solution, instance);
-      zeroOneNeighborhood(scores, solution, instance);
+      variableNeighborhoodDescent(params, solution, instance);
       timer.stop();
    
       solution.print(instance);
       std::cout << " \n \n";
-      std::cout << " improment time : " << timer.getElapsedTime(); 
-      std::cout << " \n \n \n \n";
+      std::cout << " improment time : " << timer.getElapsedTime() << "\n"; 
+      std::cout << " status         : " << solution.getStatus() << " \n \n"; 
 
 
-
-
-      timer.reset();
-      timer.start();
-      Solution solution_simd = deterministicConstruction(instance);
-      timer.stop();
-      solution_simd.print(instance);
-      std::cout << " \n \n";
-      std::cout << " SIMD construction time : " << timer.getElapsedTime(); 
-      std::cout << " \n \n";
-
-      timer.reset();
-      timer.start();
-
-      oneTwoNeighborhoodSIMDX86(scores, solution_simd, instance);
-      oneOneNeighborhoodSIMDX86(scores, solution_simd, instance);
-      twoOneNeighborhoodSIMDX86(scores, solution_simd, instance);
-      zeroOneNeighborhoodSIMDX86(scores, solution_simd, instance);
-      timer.stop();
-   
-      solution_simd.print(instance);
-      std::cout << " \n \n";
-      std::cout << "SIMD improment time : " << timer.getElapsedTime(); 
-      std::cout << " \n \n  ";
       
       
 
