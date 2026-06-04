@@ -484,7 +484,7 @@
 
 
 
-    void variableNeighborhoodDescent(Params &params, 
+    void variableNeighborhoodDescent(const Params &params, 
                                      Solution &solution, 
                                      const Instance &instance){
 
@@ -493,16 +493,31 @@
         if(params.use_simd){
 
             #if HAS_AVX2
+                if(params.use_intensification){
 
-                oneTwoNeighborhoodSIMDX86(scores, solution, instance);
-                oneOneNeighborhoodSIMDX86(scores, solution, instance);
+                    oneOneNeighborhoodSIMDX86(scores, solution, instance);
+                    oneTwoNeighborhoodSIMDX86(scores, solution, instance);
+                }
+                else{
+                    oneTwoNeighborhoodSIMDX86(scores, solution, instance);
+                    oneOneNeighborhoodSIMDX86(scores, solution, instance);
+                }
+                
                 twoOneNeighborhoodSIMDX86(scores, solution, instance);
                 zeroOneNeighborhoodSIMDX86(scores, solution, instance);
 
             #elif HAS_NEON
 
-                oneTwoNeighborhoodSIMDARM(scores, solution, instance);
-                oneOneNeighborhoodSIMDARM(scores, solution, instance);
+                if(params.use_intensification){
+
+                    oneOneNeighborhoodSIMDARM(scores, solution, instance);
+                    oneTwoNeighborhoodSIMDARM(scores, solution, instance);
+                }
+                else{
+                    oneTwoNeighborhoodSIMDARM(scores, solution, instance);
+                    oneOneNeighborhoodSIMDARM(scores, solution, instance);
+                }
+
                 twoOneNeighborhoodSIMDARM(scores, solution, instance);
                 zeroOneNeighborhoodSIMDARM(scores, solution, instance);
                 
@@ -512,8 +527,16 @@
 
         else{
 
-            oneTwoNeighborhood(scores, solution, instance);
-            oneOneNeighborhood(scores, solution, instance);
+            if(params.use_intensification){
+
+                oneOneNeighborhood(scores, solution, instance);
+                oneTwoNeighborhood(scores, solution, instance);
+            }
+            else{
+                oneTwoNeighborhood(scores, solution, instance);
+                oneOneNeighborhood(scores, solution, instance);
+            }
+
             twoOneNeighborhood(scores, solution, instance);
             zeroOneNeighborhood(scores, solution, instance);
 

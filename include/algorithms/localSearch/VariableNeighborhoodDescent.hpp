@@ -124,7 +124,11 @@
     #endif
 
 
-    void variableNeighborhoodDescent(Params &params, 
+    /**
+     * @brief local search : VND (classic) = 1-2 exchange -> 1-1 exchange -> 2-1 exchange -> 0-1 exchange
+     *                       VND intensification = 1-1 exchange -> 1-2 exchange -> 2-1 exchange -> 0-1 exchange
+     */
+    void variableNeighborhoodDescent(const Params &params, 
                                      Solution &solution, 
                                      const Instance &instance);
     

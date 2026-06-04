@@ -22,7 +22,7 @@
  namespace spp{
 
     // constructor 
-    Instance::Instance(Params &params){
+    Instance::Instance(const Params &params){
 
         // opening the file 
         std::ifstream file(params.instance_path);

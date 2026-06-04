@@ -28,6 +28,7 @@
         instance_path = "";
         verbose = false;
         use_simd = false;
+        use_intensification = false;
         nb_threads = NUMBER_PHYSICAL_CORES;
 
 

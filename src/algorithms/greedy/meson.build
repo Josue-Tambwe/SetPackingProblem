@@ -11,4 +11,5 @@
 
 
 # all source files of the greedy subdirectory 
-greedy_sources = files('DeterministicConstruction.cpp')
+greedy_sources = files('DeterministicConstruction.cpp',
+                       'RunGreedy.cpp')

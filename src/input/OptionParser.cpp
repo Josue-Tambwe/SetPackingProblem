@@ -96,6 +96,7 @@
 
                 if(arg == "--verbose"){params.verbose = true; continue;}
                 if(arg == "--simd"){params.use_simd = true; continue;}
+                if(arg == "--intensification"){params.use_intensification = true; continue;}
 
                 //if(arg == "--warm-start"){params.warm_start = true; continue;}
 

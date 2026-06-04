@@ -73,7 +73,7 @@
         public : 
 
             // constructor
-            Instance(Params &params);
+            Instance(const Params &params);
 
             // destructor
             ~Instance() = default; 
