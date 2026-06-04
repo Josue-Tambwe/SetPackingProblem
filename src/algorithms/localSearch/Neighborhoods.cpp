@@ -215,7 +215,7 @@
 
 
 
-    #if HAS_AVX2
+    #if HAS_X86 && HAS_AVX2
 
     bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
                                    int &second_index_to_deactivate,
@@ -390,7 +390,7 @@
 
 
 
-    #if HAS_NEON
+    #if HAS_ARM && HAS_NEON
 
     bool findTwoOneExchangeSIMDARM(int &first_index_to_deactivate,
                                    int &second_index_to_deactivate,

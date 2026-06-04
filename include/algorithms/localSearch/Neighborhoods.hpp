@@ -25,14 +25,14 @@
  #include "dataStructures/Solution.hpp"
  #include "algorithms/localSearch/ConflictCheckerScalar.hpp"
 
- #if HAS_X86
+ #if HAS_X86 && HAS_AVX2
  #include "hpc/simd/ConflictCheckerTwoOneSIMDX86.hpp" // 
  #include "hpc/simd/ConflictCheckerOneOneSIMDX86.hpp" //
  #include "hpc/simd/ConflictCheckerZeroOneSIMDX86.hpp" //
  #include "hpc/simd/ConflictCheckerOneTwoSIMDX86.hpp" //
  #endif
 
- #if HAS_ARM
+ #if HAS_ARM && HAS_NEON
  #include "hpc/simd/ConflictCheckerTwoOneSIMDARM.hpp"
  #include "hpc/simd/ConflictCheckerOneOneSIMDARM.hpp"
  #include "hpc/simd/ConflictCheckerZeroOneSIMDARM.hpp"
@@ -103,7 +103,7 @@
 
 
 
-   #if HAS_AVX2
+   #if HAS_X86 && HAS_AVX2
    
 
    bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
@@ -144,7 +144,7 @@
 
 
 
-   #if HAS_NEON
+   #if HAS_ARM && HAS_NEON
 
    bool findTwoOneExchangeSIMDARM(int &first_index_to_deactivate,
                                  int &second_index_to_deactivate,

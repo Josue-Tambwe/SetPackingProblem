@@ -66,7 +66,7 @@
                             const Instance &instance);
 
 
-    #if HAS_AVX2                        
+    #if HAS_X86 && HAS_AVX2                        
 
     void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
@@ -95,7 +95,7 @@
 
 
 
-    #if HAS_NEON
+    #if HAS_ARM && HAS_NEON
 
     void twoOneNeighborhoodSIMDNEON(std::vector<float> &scores,
                                    Solution &solution,

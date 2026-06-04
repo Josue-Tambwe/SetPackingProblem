@@ -26,10 +26,10 @@
                            double &one_one_exchange_time, 
                            double &two_one_exchange_time, 
                            double &zero_one_exchange_time,
-                           double &one_two_exchange_objective,
-                           double &one_one_exchange_objective,
-                           double &two_one_exchange_objective,
-                           double &zero_one_exchange_objective,
+                           std::int64_t &one_two_exchange_objective,
+                           std::int64_t &one_one_exchange_objective,
+                           std::int64_t &two_one_exchange_objective,
+                           std::int64_t &zero_one_exchange_objective,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance){
@@ -46,7 +46,9 @@
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_one_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
             // 1-2 exchange
             timer.start();
@@ -54,7 +56,9 @@
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_two_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_two_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
         }
 
@@ -66,7 +70,9 @@
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_two_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_two_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
         
 
             // 1-1 exchange
@@ -75,7 +81,9 @@
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_one_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
         }
 
@@ -87,7 +95,9 @@
         timer.stop();
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
-        two_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+        two_one_exchange_objective = solution.getObjectiveValue(instance);
+        solution.print(instance);
+
 
 
         // 0-1 exchange
@@ -96,22 +106,24 @@
         timer.stop();
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
-        zero_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+        zero_one_exchange_objective = solution.getObjectiveValue(instance);
+        solution.print(instance);
+
         
     }
 
 
 
-    #if HAS_AVX2
+    #if HAS_x86 && HAS_AVX2
 
     void localSearchSIMDX86(double &one_two_exchange_time, 
                            double &one_one_exchange_time, 
                            double &two_one_exchange_time, 
                            double &zero_one_exchange_time,
-                           double &one_two_exchange_objective,
-                           double &one_one_exchange_objective,
-                           double &two_one_exchange_objective,
-                           double &zero_one_exchange_objective,
+                           std::int64_t &one_two_exchange_objective,
+                           std::int64_t &one_one_exchange_objective,
+                           std::int64_t &two_one_exchange_objective,
+                           std::int64_t &zero_one_exchange_objective,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance){
@@ -128,7 +140,8 @@
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_one_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
 
             // 1-2 exchange
             timer.start();
@@ -136,7 +149,9 @@
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_two_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_two_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
         }
 
@@ -148,7 +163,9 @@
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_two_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_two_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
         
 
             // 1-1 exchange
@@ -157,7 +174,9 @@
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_one_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
         }
 
@@ -167,7 +186,9 @@
         timer.stop();
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
-        two_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+        two_one_exchange_objective = solution.getObjectiveValue(instance);
+        solution.print(instance);
+
 
         // 0-1 exchange
         timer.start();
@@ -175,7 +196,9 @@
         timer.stop();
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
-        zero_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+        zero_one_exchange_objective = solution.getObjectiveValue(instance);
+        solution.print(instance);
+
 
     }
 
@@ -183,16 +206,16 @@
 
 
 
-    #if HAS_NEON
+    #if HAS_ARM && HAS_NEON
 
     void localSearchSIMDARM(double &one_two_exchange_time, 
                            double &one_one_exchange_time, 
                            double &two_one_exchange_time, 
                            double &zero_one_exchange_time,
-                           double &one_two_exchange_objective,
-                           double &one_one_exchange_objective,
-                           double &two_one_exchange_objective,
-                           double &zero_one_exchange_objective,
+                           std::int64_t &one_two_exchange_objective,
+                           std::int64_t &one_one_exchange_objective,
+                           std::int64_t &two_one_exchange_objective,
+                           std::int64_t &zero_one_exchange_objective,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance){
@@ -209,7 +232,9 @@
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_one_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
             // 1-2 exchange
             timer.start();
@@ -217,7 +242,9 @@
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_two_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_two_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
         }
 
@@ -229,7 +256,9 @@
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_two_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_two_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
         
 
             // 1-1 exchange
@@ -238,7 +267,9 @@
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
-            one_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+            one_one_exchange_objective = solution.getObjectiveValue(instance);
+            solution.print(instance);
+
 
         }
 
@@ -248,7 +279,9 @@
         timer.stop();
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
-        two_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+        two_one_exchange_objective = solution.getObjectiveValue(instance);
+        solution.print(instance);
+
 
 
         // 0-1 exchange
@@ -257,7 +290,9 @@
         timer.stop();
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
-        zero_one_exchange_objective = static_cast<double>(solution.getObjectiveValue(instance));
+        zero_one_exchange_objective = solution.getObjectiveValue(instance);
+        solution.print(instance);
+
 
 
     }
@@ -297,10 +332,10 @@
         double two_one_exchange_time;
         double zero_one_exchange_time;
 
-        double one_two_exchange_objective;
-        double one_one_exchange_objective;
-        double two_one_exchange_objective;
-        double zero_one_exchange_objective;
+        std::int64_t one_two_exchange_objective;
+        std::int64_t one_one_exchange_objective;
+        std::int64_t two_one_exchange_objective;
+        std::int64_t zero_one_exchange_objective;
 
         if(params.use_simd){
 
