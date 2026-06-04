@@ -31,6 +31,13 @@
  #include "hpc/simd/ConflictCheckerZeroOneSIMDX86.hpp" //
  #include "hpc/simd/ConflictCheckerOneTwoSIMDX86.hpp" //
  #endif
+
+ #if HAS_ARM
+ #include "hpc/simd/ConflictCheckerTwoOneSIMDARM.hpp"
+ #include "hpc/simd/ConflictCheckerOneOneSIMDARM.hpp"
+ #include "hpc/simd/ConflictCheckerZeroOneSIMDARM.hpp"
+ #include "hpc/simd/ConflictCheckerOneTwoSIMDARM.hpp"
+ #endif
  
  #include <vector>
 
@@ -96,7 +103,8 @@
 
 
 
-   #if HAS_X86
+   #if HAS_AVX2
+   
 
    bool findTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
                                  int &second_index_to_deactivate,
@@ -125,6 +133,46 @@
 
 
    bool findOneTwoExchangeSIMDX86(int &to_deactivate,
+                                 int &first_index_to_activate,
+                                 int &second_index_to_activate,
+                                 std::vector<int> &sorted_activated_vars,
+                                 std::vector<int> &sorted_deactivated_vars,
+                                 Solution &solution,
+                                 const Instance &instance);
+
+   #endif
+
+
+
+   #if HAS_NEON
+
+   bool findTwoOneExchangeSIMDARM(int &first_index_to_deactivate,
+                                 int &second_index_to_deactivate,
+                                 int &index_to_activate,
+                                 std::vector<int> &sorted_activated_vars,
+                                 std::vector<int> &sorted_deactivated_vars,
+                                 Solution &solution,
+                                 const Instance &instance);
+
+
+
+   bool findOneOneExchangeSIMDARM(int &index_to_deactivate,
+                                 int &index_to_activate,
+                                 std::vector<int> &sorted_activated_vars,
+                                 std::vector<int> &sorted_deactivated_vars,
+                                 Solution &solution,
+                                 const Instance &instance);
+
+
+
+   bool findZeroOneExchangeSIMDARM(int &index_to_activate,
+                                  std::vector<int> &sorted_deactivated_vars,
+                                  Solution &solution,
+                                  const Instance &instance);
+
+
+                                
+   bool findOneTwoExchangeSIMDARM(int &to_deactivate,
                                  int &first_index_to_activate,
                                  int &second_index_to_activate,
                                  std::vector<int> &sorted_activated_vars,

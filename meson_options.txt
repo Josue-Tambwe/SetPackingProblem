@@ -29,20 +29,11 @@ option('HAS_ARM',
         value : false,
         description : 'CPU ISA ARM')
 
-option('HAS_SSE2',
-        type : 'boolean',
-        value : false,
-        description : 'Enable SSE2 SIMD instructions')
 
 option('HAS_AVX2',
         type : 'boolean',
         value : false,
         description : 'Enable AVX2 SIMD instructions')
-
-option('HAS_AVX512F',
-        type : 'boolean',
-        value : false,
-        description : 'Enable AVX512F SIMD instructions')
 
 option('HAS_NEON',
         type : 'boolean',

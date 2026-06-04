@@ -14,4 +14,8 @@
 simd_sources = files('ConflictCheckerTwoOneSIMDX86.cpp', 
                      'ConflictCheckerOneOneSIMDX86.cpp',
                      'ConflictCheckerZeroOneSIMDX86.cpp',
-                     'ConflictCheckerOneTwoSIMDX86.cpp')
+                     'ConflictCheckerOneTwoSIMDX86.cpp',
+                     'ConflictCheckerTwoOneSIMDARM.cpp',
+                     'ConflictCheckerOneOneSIMDARM.cpp',
+                     'ConflictCheckerZeroOneSIMDARM.cpp',
+                     'ConflictCheckerOneTwoSIMDARM.cpp')

@@ -49,15 +49,11 @@ esac
 
 # SIMD extensions
 
-HAS_SSE2=false
 HAS_AVX2=false
-HAS_AVX512F=false
 HAS_NEON=false
 
 if [ "$HAS_X86" = true ]; then
-    lscpu | grep -qi sse2      && HAS_SSE2=true
     lscpu | grep -qi avx2      && HAS_AVX2=true
-    lscpu | grep -qi avx512f   && HAS_AVX512F=true
 
 elif [ "$HAS_ARM" = true ]; then
     lscpu | grep -qiE 'asimd|neon' && HAS_NEON=true
@@ -178,10 +174,7 @@ then
                       -DHAS_HIGHS="$HAS_HIGHS" \
                       -DHAS_X86="$HAS_X86" \
                       -DHAS_ARM="$HAS_ARM" \
-                      -DHAS_X86="$HAS_X86" \
-                      -DHAS_SSE2="$HAS_SSE2" \
                       -DHAS_AVX2="$HAS_AVX2" \
-                      -DHAS_AVX512F="$HAS_AVX512F" \
                       -DHAS_NEON="$HAS_NEON" \
                       || exit 1
 else
@@ -199,10 +192,7 @@ else
                 -DHAS_HIGHS="$HAS_HIGHS" \
                 -DHAS_X86="$HAS_X86" \
                 -DHAS_ARM="$HAS_ARM" \
-                -DHAS_X86="$HAS_X86" \
-                -DHAS_SSE2="$HAS_SSE2" \
                 -DHAS_AVX2="$HAS_AVX2" \
-                -DHAS_AVX512F="$HAS_AVX512F" \
                 -DHAS_NEON="$HAS_NEON" \
                 || exit 1
 fi

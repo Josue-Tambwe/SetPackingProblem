@@ -32,16 +32,8 @@
     #define HAS_ARM false
  #endif
 
- #ifndef HAS_SSE2
-    #define HAS_SSE2 false
- #endif
-
  #ifndef HAS_AVX2
     #define HAS_AVX2 false
- #endif
-
- #ifndef HAS_AVX512F
-    #define HAS_AVX512F false
  #endif
 
  #ifndef HAS_NEON

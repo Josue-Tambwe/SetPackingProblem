@@ -179,7 +179,7 @@
 
 
 
-    #if HAS_X86
+    #if HAS_AVX2
 
     void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
@@ -330,6 +330,159 @@
     #endif
 
 
+    
+
+    #if HAS_NEON
+
+    void twoOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance){
+                            
+
+        bool improvement = true;
+        int first_index_to_deactivate = -1;
+        int second_index_to_deactivate = -1;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findTwoOneExchangeSIMDARM(first_index_to_deactivate,
+                                                    second_index_to_deactivate,
+                                                    index_to_activate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(first_index_to_deactivate, instance);
+                solution.deactivateVar(second_index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+    }
+
+
+
+    void oneOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance){
+
+        bool improvement = true;
+        int index_to_deactivate = -1;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findOneOneExchangeSIMDARM(index_to_deactivate,
+                                                    index_to_activate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+    }
+
+
+
+
+    void zeroOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                             Solution &solution,
+                             const Instance &instance){
+
+        bool improvement = true;
+        int index_to_activate = -1;
+
+        do{
+            
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+            improvement = findZeroOneExchangeSIMDARM(index_to_activate,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+    
+            if(improvement){solution.activateVar(index_to_activate, instance);}
+        }
+        while(improvement);
+
+    }
+
+
+
+    void oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance){
+
+        bool improvement = true;
+        int to_deactivate = -1;
+        int first_index_to_activate = -1;
+        int second_index_to_activate = -1;
+        
+
+        do{
+
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findOneTwoExchangeSIMDARM(to_deactivate,
+                                                    first_index_to_activate,
+                                                    second_index_to_activate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    instance);
+
+
+            // update of the solution 
+            if(improvement){
+                // deactivation
+                solution.deactivateVar(to_deactivate, instance);
+
+                // activation
+                solution.activateVar(first_index_to_activate, instance);
+                solution.activateVar(second_index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+                                
+    }
+
+    #endif
+
+
+
 
     void variableNeighborhoodDescent(Params &params, 
                                      Solution &solution, 
@@ -339,12 +492,20 @@
 
         if(params.use_simd){
 
-            #if HAS_X86
+            #if HAS_AVX2
 
                 oneTwoNeighborhoodSIMDX86(scores, solution, instance);
                 oneOneNeighborhoodSIMDX86(scores, solution, instance);
                 twoOneNeighborhoodSIMDX86(scores, solution, instance);
                 zeroOneNeighborhoodSIMDX86(scores, solution, instance);
+
+            #elif HAS_NEON
+
+                oneTwoNeighborhoodSIMDARM(scores, solution, instance);
+                oneOneNeighborhoodSIMDARM(scores, solution, instance);
+                twoOneNeighborhoodSIMDARM(scores, solution, instance);
+                zeroOneNeighborhoodSIMDARM(scores, solution, instance);
+                
 
             #endif
         }

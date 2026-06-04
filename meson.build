@@ -34,9 +34,7 @@ has_x86 = get_option('HAS_X86')
 has_arm = get_option('HAS_ARM')
 
 # SIMD extensions 
-has_sse2 = get_option('HAS_SSE2')
 has_avx2 = get_option('HAS_AVX2')
-has_avx512f = get_option('HAS_AVX512F')
 has_neon = get_option('HAS_NEON')
 
 
@@ -44,21 +42,10 @@ if has_x86
 
     add_project_arguments('-DHAS_X86=true', language : 'cpp')
 
-    if has_sse2
-        add_project_arguments('-DHAS_SSE2=true', language : 'cpp')
-    endif
-
     if has_avx2
         add_project_arguments('-DHAS_AVX2=true', language : 'cpp')
     endif
 
-    if has_avx512f
-        add_project_arguments('-DHAS_AVX512F=true', language : 'cpp')
-    endif
-
-    if has_sse2 or has_avx2 or has_avx512f
-        add_project_arguments('-DUSE_SIMD=true', language : 'cpp')
-    endif 
 
 endif
 

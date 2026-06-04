@@ -21,13 +21,9 @@
    #include "input/OptionParser.hpp"
    #include "dataStructures/Instance.hpp" // to remove
    #include <iostream> // to remove
-   #include <vector> // to remove
-   #include "dataStructures/BitVector.hpp" // to remove 
    #include "dataStructures/Solution.hpp" // to remove 
    #include "algorithms/greedy/DeterministicConstruction.hpp" // to remove
    #include "dataStructures/Timer.hpp" // to remove
-   #include "dataStructures/MoveNode.hpp" // to remove
-   #include "algorithms/localSearch/NeighborhoodUtils.hpp" // to remove
    #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp" // to remove
 
    
@@ -60,10 +56,10 @@
       std::cout << " improment time : " << timer.getElapsedTime() << "\n"; 
       std::cout << " status         : " << solution.getStatus() << " \n \n"; 
 
-      if(HAS_X86){std::cout << " Has X86 ISA \n";}
+      /*if(HAS_X86){std::cout << " Has X86 ISA \n";}
       if(HAS_AVX2){std::cout << " Has AVX2 SIMD extension \n";}
       if(HAS_ARM){std::cout << " Has ARM ISA \n";}
-      if(HAS_NEON){std::cout << " Has NEON SIMD extension \n";}
+      if(HAS_NEON){std::cout << " Has NEON SIMD extension \n";}*/
       
       
 

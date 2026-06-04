@@ -66,7 +66,7 @@
                             const Instance &instance);
 
 
-    #if HAS_X86                        
+    #if HAS_AVX2                        
 
     void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
@@ -89,6 +89,37 @@
     void oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
+
+    #endif
+
+
+
+
+    #if HAS_NEON
+
+    void twoOneNeighborhoodSIMDNEON(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance);
+
+
+
+    void oneOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance);
+
+
+
+    void zeroOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                                    Solution &solution,
+                                    const Instance &instance);
+
+
+
+    void oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
+                                   Solution &solution,
+                                   const Instance &instance);
+
+
 
     #endif
 
