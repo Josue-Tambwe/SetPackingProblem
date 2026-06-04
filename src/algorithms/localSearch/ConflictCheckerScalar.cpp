@@ -416,7 +416,7 @@
         This exchange is feasible if : 
 
             - the 2 variables to activate do not require a common ressource
-            - the any of those 2 variables to activate do not required any ressource already consumed
+            - none of those 2 variables to activate (first and second)  require a ressource already consumed
     */
 
     bool checkConflictOneTwoMove_X4(size_t &cursor,
