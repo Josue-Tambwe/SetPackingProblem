@@ -161,9 +161,9 @@
 
 
 
-    bool findOneTwoExchange(int &to_deactivate,
-                           int &first_index_to_activate,
+    bool findOneTwoExchange(int &first_index_to_activate,
                            int &second_index_to_activate,
+                           int &to_deactivate,
                            std::vector<int> &sorted_activated_vars,
                            std::vector<int> &sorted_deactivated_vars,
                            Solution &solution,
@@ -191,9 +191,9 @@
                                                    resource_requirements[sorted_activated_vars[i]].getData(),
                                                    solution.getConsumedResourcesData())){
 
-                            to_deactivate = sorted_activated_vars[i];
                             first_index_to_activate = sorted_deactivated_vars[j];
                             second_index_to_activate = sorted_deactivated_vars[k];
+                            to_deactivate = sorted_activated_vars[i];
                             return true;
 
                         }
@@ -333,9 +333,9 @@
 
 
 
-    bool findOneTwoExchangeSIMDX86(int &to_deactivate,
-                                int &first_index_to_activate,
+    bool findOneTwoExchangeSIMDX86(int &first_index_to_activate,
                                 int &second_index_to_activate,
+                                int &to_deactivate,
                                 std::vector<int> &sorted_activated_vars,
                                 std::vector<int> &sorted_deactivated_vars,
                                 Solution &solution,
@@ -365,9 +365,9 @@
                                                         resource_requirements[sorted_activated_vars[i]].getPointerToData(),
                                                         solution.getConsumedResourcesPointerToData())){
 
-                            to_deactivate = sorted_activated_vars[i];
                             first_index_to_activate = sorted_deactivated_vars[j];
                             second_index_to_activate = sorted_deactivated_vars[k];
+                            to_deactivate = sorted_activated_vars[i];
                             return true;
 
                         }
@@ -508,9 +508,9 @@
 
 
 
-    bool findOneTwoExchangeSIMDARM(int &to_deactivate,
-                                    int &first_index_to_activate,
+    bool findOneTwoExchangeSIMDARM( int &first_index_to_activate,
                                     int &second_index_to_activate,
+                                    int &to_deactivate,
                                     std::vector<int> &sorted_activated_vars,
                                     std::vector<int> &sorted_deactivated_vars,
                                     Solution &solution,
@@ -540,9 +540,9 @@
                                                         resource_requirements[sorted_activated_vars[i]].getPointerToData(),
                                                         solution.getConsumedResourcesPointerToData())){
 
-                            to_deactivate = sorted_activated_vars[i];
                             first_index_to_activate = sorted_deactivated_vars[j];
                             second_index_to_activate = sorted_deactivated_vars[k];
+                            to_deactivate = sorted_activated_vars[i];
                             return true;
 
                         }

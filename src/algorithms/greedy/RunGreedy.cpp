@@ -48,6 +48,8 @@
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
 
+            std::cout << " after 1-1 : " << solution.isFeasible(instance) << "\n";
+
             // 1-2 exchange
             timer.start();
             oneTwoNeighborhood(scores, solution, instance);
@@ -55,6 +57,8 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
+
+            std::cout << " after 1-2 : " << solution.isFeasible(instance) << "\n";
 
         }
 
@@ -68,6 +72,8 @@
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
 
+            std::cout << " after 1-2 : " << solution.isFeasible(instance) << "\n";
+
             // 1-1 exchange
             timer.start();
             oneOneNeighborhood(scores, solution, instance);
@@ -75,6 +81,9 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
+
+            
+            std::cout << " after 1-1 : " << solution.isFeasible(instance) << "\n";
             
         }
 
@@ -88,6 +97,9 @@
         timer.reset();
         two_one_exchange_objective = solution.getObjectiveValue(instance);
 
+        
+        std::cout << " after 2-1 : " << solution.isFeasible(instance) << "\n";
+
         // 0-1 exchange
         timer.start();
         zeroOneNeighborhood(scores, solution, instance);
@@ -95,6 +107,9 @@
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         zero_one_exchange_objective = solution.getObjectiveValue(instance);
+
+        
+        std::cout << " after 0-1 : " << solution.isFeasible(instance) << "\n";
         
     }
 

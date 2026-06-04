@@ -92,9 +92,9 @@
    /**
     * @brief searches a feasible 1-2 exchange move : 1 variable to deactivate and 2 variables to activate
     */
-   bool findOneTwoExchange(int &to_deactivate,
-                           int &first_index_to_activate,
+   bool findOneTwoExchange(int &first_index_to_activate,
                            int &second_index_to_activate,
+                           int &to_deactivate,
                            std::vector<int> &sorted_activated_vars,
                            std::vector<int> &sorted_deactivated_vars,
                            Solution &solution,
@@ -132,9 +132,9 @@
 
 
 
-   bool findOneTwoExchangeSIMDX86(int &to_deactivate,
-                                 int &first_index_to_activate,
+   bool findOneTwoExchangeSIMDX86(int &first_index_to_activate,
                                  int &second_index_to_activate,
+                                 int &to_deactivate,
                                  std::vector<int> &sorted_activated_vars,
                                  std::vector<int> &sorted_deactivated_vars,
                                  Solution &solution,
@@ -172,9 +172,9 @@
 
 
                                 
-   bool findOneTwoExchangeSIMDARM(int &to_deactivate,
-                                 int &first_index_to_activate,
+   bool findOneTwoExchangeSIMDARM(int &first_index_to_activate,
                                  int &second_index_to_activate,
+                                 int &to_deactivate,
                                  std::vector<int> &sorted_activated_vars,
                                  std::vector<int> &sorted_deactivated_vars,
                                  Solution &solution,

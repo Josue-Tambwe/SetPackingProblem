@@ -23,7 +23,7 @@
 
 #pragma once
 
-#if HAS_ARM
+#if HAS_ARM && HAS_NEON
 
 #include <vector>
 #include <cstdint>
@@ -32,9 +32,7 @@
 
 namespace spp{
 
-    #if HAS_NEON
-
-
+   
     /**
      * @brief checks conflict in a 2-1 exchange move (two variables are set to '0' and one variable is set to '1') 
      *        by performing 4 checks of 128 bits every iteration (loop unrolling) : 512 bits per iteration
@@ -89,8 +87,6 @@ namespace spp{
                                      const std::uint64_t* second_to_deactivate,
                                      const std::uint64_t* to_activate,
                                      std::uint64_t* consumed_resources);
-
-    #endif
 }
 
 #endif

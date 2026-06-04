@@ -23,7 +23,7 @@
 
  #pragma once
 
- #if HAS_X86
+ #if HAS_X86 && HAS_AVX2
 
  #include <vector>
  #include <cstdint>
@@ -31,9 +31,6 @@
 
  namespace spp{
 
-
-    
-  #if HAS_AVX2
     
     /**
      * @brief checks conflict in a 1-2 exchange move (one variable is set to '0' and two variables are set to '1') 
@@ -91,10 +88,6 @@
                                   const std::uint64_t* second_to_activate,
                                   const std::uint64_t* to_deactivate,
                                   std::uint64_t* consumed_resources);
-
-  #endif
-   
-
  }
 
  #endif

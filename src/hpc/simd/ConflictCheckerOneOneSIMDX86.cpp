@@ -17,14 +17,11 @@
  * @date 1 June 2026
  */
 
- #if HAS_X86
+ #if HAS_X86 && HAS_AVX2
 
  #include "hpc/simd/ConflictCheckerOneOneSIMDX86.hpp"
 
  namespace spp{
-
-
-    #if HAS_AVX2
 
     bool checkConflictOneOneMoveAVX2_X4(size_t &cursor,
                                         const size_t &nb_words,
@@ -256,9 +253,6 @@
         return false;
 
     }
-
-    #endif
-
 
  }
 

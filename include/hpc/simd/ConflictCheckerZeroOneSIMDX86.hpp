@@ -23,17 +23,13 @@
 
  #pragma once
 
- #if HAS_X86
+ #if HAS_X86 && HAS_AVX2
 
  #include <vector>
  #include <cstdint>
  #include <immintrin.h>
 
  namespace spp{
-
-
-    
-  #if HAS_AVX2
     
     /**
      * @brief checks conflict in a 0-1 exchange move (one variable is set to '1') 
@@ -83,9 +79,6 @@
     bool checkConflictZeroOneMoveAVX2(const size_t &nb_words,
                                     const std::uint64_t* to_activate,
                                     std::uint64_t* consumed_resources);
-
-  #endif
-   
 
  }
 

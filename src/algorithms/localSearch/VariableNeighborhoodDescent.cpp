@@ -151,9 +151,9 @@
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
-            improvement = findOneTwoExchange(to_deactivate,
-                                             first_index_to_activate,
+            improvement = findOneTwoExchange(first_index_to_activate,
                                              second_index_to_activate,
+                                             to_deactivate,
                                              sorted_activated_vars,
                                              sorted_deactivated_vars,
                                              solution,
@@ -303,9 +303,9 @@
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
-            improvement = findOneTwoExchangeSIMDX86(to_deactivate,
-                                                    first_index_to_activate,
+            improvement = findOneTwoExchangeSIMDX86(first_index_to_activate,
                                                     second_index_to_activate,
+                                                    to_deactivate,
                                                     sorted_activated_vars,
                                                     sorted_deactivated_vars,
                                                     solution,
@@ -454,9 +454,9 @@
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
-            improvement = findOneTwoExchangeSIMDARM(to_deactivate,
-                                                    first_index_to_activate,
+            improvement = findOneTwoExchangeSIMDARM(first_index_to_activate,
                                                     second_index_to_activate,
+                                                    to_deactivate,
                                                     sorted_activated_vars,
                                                     sorted_deactivated_vars,
                                                     solution,
@@ -484,7 +484,8 @@
 
 
 
-    void variableNeighborhoodDescent(const Params &params, 
+    void variableNeighborhoodDescent(bool intensification,
+                                     const Params &params, 
                                      Solution &solution, 
                                      const Instance &instance){
 
@@ -493,7 +494,7 @@
         if(params.use_simd){
 
             #if HAS_AVX2
-                if(params.use_intensification){
+                if(intensification){
 
                     oneOneNeighborhoodSIMDX86(scores, solution, instance);
                     oneTwoNeighborhoodSIMDX86(scores, solution, instance);
@@ -508,7 +509,7 @@
 
             #elif HAS_NEON
 
-                if(params.use_intensification){
+                if(intensification){
 
                     oneOneNeighborhoodSIMDARM(scores, solution, instance);
                     oneTwoNeighborhoodSIMDARM(scores, solution, instance);
@@ -527,7 +528,7 @@
 
         else{
 
-            if(params.use_intensification){
+            if(intensification){
 
                 oneOneNeighborhood(scores, solution, instance);
                 oneTwoNeighborhood(scores, solution, instance);

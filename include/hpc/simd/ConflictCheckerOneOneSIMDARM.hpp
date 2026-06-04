@@ -23,7 +23,7 @@
 
 #pragma once
 
-#if HAS_ARM
+#if HAS_ARM && HAS_NEON
 
 #include <vector>
 #include <cstdint>
@@ -32,7 +32,6 @@
 
 namespace spp{
 
-    #if HAS_NEON
 
     /**
      * @brief checks conflict in a 1-1 exchange move (one variable is set to '0' and one variable is set to '1') 
@@ -84,7 +83,6 @@ namespace spp{
                                      const std::uint64_t* to_activate,
                                      std::uint64_t* consumed_resources);
 
-    #endif
 }
 
 #endif

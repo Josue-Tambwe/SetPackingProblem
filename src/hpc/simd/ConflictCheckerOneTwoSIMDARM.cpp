@@ -17,13 +17,11 @@
  * @date 4 June 2026
  */
 
-#if HAS_ARM
+#if HAS_ARM && HAS_NEON
 
 #include "hpc/simd/ConflictCheckerOneTwoSIMDARM.hpp"
 
 namespace spp{
-
-    #if HAS_NEON
 
 
     bool checkConflictOneTwoMoveNEON_X4(size_t &cursor,
@@ -293,8 +291,6 @@ namespace spp{
 
     }
 
-
-    #endif
 }
 
 #endif
