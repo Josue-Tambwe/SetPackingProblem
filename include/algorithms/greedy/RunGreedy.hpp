@@ -57,7 +57,7 @@
      * @brief performs the Variable neighborhood Descent (VND) with SIMD instrinsic (AVX2 on x86 ISA)
      */
 
-    #if HAS_x86 && HAS_AVX2
+   #if HAS_X86 && HAS_AVX2
 
     void localSearchSIMDX86(double &one_two_exchange_time, 
                            double &one_one_exchange_time, 
@@ -70,13 +70,13 @@
                            Solution &solution,
                            const Params &params,
                            const Instance &instance);
-    #endif
+   #endif
 
     /**
      * @brief performs the Variable neighborhood Descent (VND) with SIMD instrinsic (NEON on ARM ISA)
      */
 
-    #if HAS_ARM && HAS_NEON
+   #if HAS_ARM && HAS_NEON
 
     void localSearchSIMDARM(double &one_two_exchange_time, 
                            double &one_one_exchange_time, 
@@ -89,7 +89,7 @@
                            Solution &solution,
                            const Params &params,
                            const Instance &instance);
-    #endif
+   #endif
 
 
     /**

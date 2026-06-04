@@ -47,8 +47,6 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
 
             // 1-2 exchange
             timer.start();
@@ -57,8 +55,6 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
 
         }
 
@@ -71,9 +67,6 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-        
 
             // 1-1 exchange
             timer.start();
@@ -82,9 +75,7 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-
+            
         }
 
         
@@ -96,9 +87,6 @@
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         two_one_exchange_objective = solution.getObjectiveValue(instance);
-        solution.print(instance);
-
-
 
         // 0-1 exchange
         timer.start();
@@ -107,14 +95,12 @@
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         zero_one_exchange_objective = solution.getObjectiveValue(instance);
-        solution.print(instance);
-
         
     }
 
 
 
-    #if HAS_x86 && HAS_AVX2
+    #if HAS_X86 && HAS_AVX2
 
     void localSearchSIMDX86(double &one_two_exchange_time, 
                            double &one_one_exchange_time, 
@@ -141,7 +127,6 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
 
             // 1-2 exchange
             timer.start();
@@ -150,9 +135,7 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-
+            
         }
 
         else{
@@ -164,9 +147,6 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-        
 
             // 1-1 exchange
             timer.start();
@@ -175,9 +155,6 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-
         }
 
         // 2-1 exchange
@@ -187,9 +164,7 @@
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         two_one_exchange_objective = solution.getObjectiveValue(instance);
-        solution.print(instance);
-
-
+        
         // 0-1 exchange
         timer.start();
         zeroOneNeighborhoodSIMDX86(scores, solution, instance);
@@ -197,9 +172,6 @@
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         zero_one_exchange_objective = solution.getObjectiveValue(instance);
-        solution.print(instance);
-
-
     }
 
     #endif
@@ -233,9 +205,7 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-
+            
             // 1-2 exchange
             timer.start();
             oneTwoNeighborhoodSIMDARM(scores, solution, instance);
@@ -243,9 +213,6 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-
         }
 
         else{
@@ -257,10 +224,7 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-        
-
+            
             // 1-1 exchange
             timer.start();
             oneOneNeighborhoodSIMDARM(scores, solution, instance);
@@ -268,9 +232,6 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-            solution.print(instance);
-
-
         }
 
         // 2-1 exchange
@@ -280,10 +241,7 @@
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         two_one_exchange_objective = solution.getObjectiveValue(instance);
-        solution.print(instance);
-
-
-
+        
         // 0-1 exchange
         timer.start();
         zeroOneNeighborhoodSIMDARM(scores, solution, instance);
@@ -291,10 +249,6 @@
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         zero_one_exchange_objective = solution.getObjectiveValue(instance);
-        solution.print(instance);
-
-
-
     }
 
     #endif 
