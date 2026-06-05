@@ -23,7 +23,7 @@
 
     // ------------------------ 2-1 Exchange -----------------------------
 
-    void twoOneNeighborhood(std::vector<float> &scores,
+    size_t twoOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance){
                             
@@ -32,8 +32,11 @@
         int first_index_to_deactivate = -1;
         int second_index_to_deactivate = -1;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+
+            nb_iterations += 1;
             
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -61,6 +64,8 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
@@ -69,16 +74,19 @@
     // ------------------------ 1-1 Exchange -----------------------------
 
 
-    void oneOneNeighborhood(std::vector<float> &scores,
+    size_t oneOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance){
 
         bool improvement = true;
         int index_to_deactivate = -1;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
             
+            nb_iterations += 1;
+
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
@@ -103,6 +111,8 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
@@ -110,14 +120,16 @@
 
     // ------------------------ 0-1 Exchange -----------------------------
 
-    void zeroOneNeighborhood(std::vector<float> &scores,
+    size_t zeroOneNeighborhood(std::vector<float> &scores,
                              Solution &solution,
                              const Instance &instance){
 
         bool improvement = true;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
@@ -131,12 +143,14 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
     // ------------------------ 1-2 Exchange -----------------------------
 
-    void oneTwoNeighborhood(std::vector<float> &scores,
+    size_t oneTwoNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance){
 
@@ -144,9 +158,11 @@
         int to_deactivate = -1;
         int first_index_to_activate = -1;
         int second_index_to_activate = -1;
+        size_t nb_iterations = 0;
         
 
         do{
+            nb_iterations += 1;
 
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -173,6 +189,8 @@
 
         }
         while(improvement);
+
+        return nb_iterations;
                                 
     }
 
@@ -181,7 +199,7 @@
 
     #if HAS_X86 && HAS_AVX2
 
-    void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
                             
@@ -190,8 +208,10 @@
         int first_index_to_deactivate = -1;
         int second_index_to_deactivate = -1;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -219,21 +239,25 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
 
 
 
-    void oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
 
         bool improvement = true;
         int index_to_deactivate = -1;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -259,19 +283,23 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
 
 
-    void zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
                              Solution &solution,
                              const Instance &instance){
 
         bool improvement = true;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
             improvement = findZeroOneExchangeSIMDX86(index_to_activate,
@@ -284,11 +312,13 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
 
-    void oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
 
@@ -296,9 +326,11 @@
         int to_deactivate = -1;
         int first_index_to_activate = -1;
         int second_index_to_activate = -1;
+        size_t nb_iterations = 0;
         
 
         do{
+            nb_iterations += 1;
 
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -325,6 +357,8 @@
 
         }
         while(improvement);
+
+        return nb_iterations;
                                 
     }
     #endif
@@ -334,7 +368,7 @@
 
     #if HAS_ARM && HAS_NEON
 
-    void twoOneNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t twoOneNeighborhoodSIMDARM(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
                             
@@ -343,8 +377,10 @@
         int first_index_to_deactivate = -1;
         int second_index_to_deactivate = -1;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -372,19 +408,23 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
 
-    void oneOneNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t oneOneNeighborhoodSIMDARM(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
 
         bool improvement = true;
         int index_to_deactivate = -1;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -410,19 +450,23 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
 
 
-    void zeroOneNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t zeroOneNeighborhoodSIMDARM(std::vector<float> &scores,
                              Solution &solution,
                              const Instance &instance){
 
         bool improvement = true;
         int index_to_activate = -1;
+        size_t nb_iterations = 0;
 
         do{
+            nb_iterations += 1;
             
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
             improvement = findZeroOneExchangeSIMDARM(index_to_activate,
@@ -435,11 +479,13 @@
         }
         while(improvement);
 
+        return nb_iterations;
+
     }
 
 
 
-    void oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
 
@@ -447,9 +493,11 @@
         int to_deactivate = -1;
         int first_index_to_activate = -1;
         int second_index_to_activate = -1;
+        size_t nb_iterations = 0;
         
 
         do{
+            nb_iterations += 1;
 
             std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
             std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
@@ -476,6 +524,8 @@
 
         }
         while(improvement);
+
+        return nb_iterations;
                                 
     }
 

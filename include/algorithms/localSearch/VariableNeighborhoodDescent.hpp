@@ -36,7 +36,7 @@
     /**
      * @brief performs the 2-1 exchange while an improvement of the objective is possible
      */
-    void twoOneNeighborhood(std::vector<float> &scores,
+    size_t twoOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance);
 
@@ -44,7 +44,7 @@
    /**
      * @brief performs the 1-1 exchange while an improvement of the objective is possible
      */
-    void oneOneNeighborhood(std::vector<float> &scores,
+    size_t oneOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance);
 
@@ -52,7 +52,7 @@
     /**
      * @brief performs the 0-1 exchange while an improvement of the objective is possible
      */
-    void zeroOneNeighborhood(std::vector<float> &scores,
+    size_t zeroOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance);
 
@@ -61,32 +61,32 @@
     /**
      * @brief performs the 1-2 exchange while an improvement of the objective is possible
      */
-    void oneTwoNeighborhood(std::vector<float> &scores,
+    size_t oneTwoNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance);
 
 
     #if HAS_X86 && HAS_AVX2                        
 
-    void twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
 
 
-    void oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t oneOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
 
 
-    void zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t zeroOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                     Solution &solution,
                                     const Instance &instance);
 
 
 
-    void oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
+    size_t oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
@@ -97,25 +97,25 @@
 
     #if HAS_ARM && HAS_NEON
 
-    void twoOneNeighborhoodSIMDNEON(std::vector<float> &scores,
+    size_t twoOneNeighborhoodSIMDNEON(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
 
 
-    void oneOneNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t oneOneNeighborhoodSIMDARM(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
 
 
-    void zeroOneNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t zeroOneNeighborhoodSIMDARM(std::vector<float> &scores,
                                     Solution &solution,
                                     const Instance &instance);
 
 
 
-    void oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
+    size_t oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
