@@ -86,8 +86,8 @@
 
         std::cout << " Examples:\n" << " " << std::string(9, '-') << "\n\n"
 
-            << "    spp_solver --algorithm=greedy "
-            << "--instance=../benchmarks/gap_a/a05100  --intensification  --simd\n\n";
+            << "    ./bin/spp_solver --algorithm=greedy "
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --simd\n\n";
 
 
 
