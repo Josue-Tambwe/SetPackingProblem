@@ -48,8 +48,6 @@
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
 
-            std::cout << " after 1-1 : " << solution.isFeasible(instance) << "\n";
-
             // 1-2 exchange
             timer.start();
             oneTwoNeighborhood(scores, solution, instance);
@@ -57,8 +55,6 @@
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
-
-            std::cout << " after 1-2 : " << solution.isFeasible(instance) << "\n";
 
         }
 
@@ -72,8 +68,6 @@
             timer.reset();
             one_two_exchange_objective = solution.getObjectiveValue(instance);
 
-            std::cout << " after 1-2 : " << solution.isFeasible(instance) << "\n";
-
             // 1-1 exchange
             timer.start();
             oneOneNeighborhood(scores, solution, instance);
@@ -81,13 +75,8 @@
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
             one_one_exchange_objective = solution.getObjectiveValue(instance);
-
-            
-            std::cout << " after 1-1 : " << solution.isFeasible(instance) << "\n";
             
         }
-
-        
 
         // 2-1 exchange
         timer.start();
@@ -97,8 +86,6 @@
         timer.reset();
         two_one_exchange_objective = solution.getObjectiveValue(instance);
 
-        
-        std::cout << " after 2-1 : " << solution.isFeasible(instance) << "\n";
 
         // 0-1 exchange
         timer.start();
@@ -107,9 +94,6 @@
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
         zero_one_exchange_objective = solution.getObjectiveValue(instance);
-
-        
-        std::cout << " after 0-1 : " << solution.isFeasible(instance) << "\n";
         
     }
 
@@ -288,13 +272,13 @@
         if(solution.getStatus() != Status::FEASIBLE && 
            solution.getStatus() != Status::OPTIMAL) {
 
-            log.warning("the greedy construction heuristic failed.");
+            log.warning("Greedy construction heuristic failed.");
             std::cout << " Processing time : " << construction_time << " (s) \n" << std::endl;
             return;
         }
 
         std::int64_t construction_objective = solution.getObjectiveValue(instance);
-        log.info("the greedy construction heuristic succeed !");
+        log.info("Greedy construction heuristic completed successfully.");
 
         // local search
 
@@ -359,7 +343,16 @@
 
         // feasibility certification
         if(solution.isFeasible(instance)){solution.setStatus(Status::FEASIBLE);}
-        else{solution.setStatus(Status::INFEASIBLE);}
+
+        else{
+            log.warning("the VND local search produced an infeasible solution (feasibility degraded)");
+            std::cout << " Processing time : " << timer.getElapsedTime() << " (s) \n" << std::endl;
+            return;
+        }
+
+
+
+        log.info("Greedy algorithm completed. Final best known solution : ");
 
 
         std::cout << " construction time : " << construction_time 
