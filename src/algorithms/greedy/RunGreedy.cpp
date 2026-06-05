@@ -277,8 +277,10 @@
         Timer timer;
         Logger log;
 
-        // construction
+        printHeader();
+        printHeaderGreedy(params, instance);
 
+        // construction
         timer.start();
         Solution solution = deterministicConstruction(instance);
         double construction_time = timer.getElapsedTime();

@@ -84,7 +84,7 @@
             std::string arg = argv[i];
 
             // case of Help
-            //if(arg == "--help"){printHelp(); break;}
+            if(arg == "--help"){printHelp(); break;}
 
             // Checking if the option contains '=' 
             std::size_t position = arg.find('=');

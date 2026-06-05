@@ -26,6 +26,8 @@
  #include "dataStructures/Status.hpp"
  #include "dataStructures/Timer.hpp"
  #include "output/Logger.hpp"
+ #include "output/GeneralOutput.hpp"
+ #include "output/GreedyOutput.hpp"
  #include "algorithms/greedy/DeterministicConstruction.hpp"
  #include "algorithms/localSearch/NeighborhoodUtils.hpp"
  #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
