@@ -124,7 +124,7 @@
 
             std::uint64_t word = data[word_index];
 
-            while(word != 0){
+            while(word != 0ULL){
 
                 int bit_index = std::countr_zero(word);
                 nonzeros_indexes[cursor] = (word_index * 64) + bit_index;
@@ -220,7 +220,7 @@
 
 
             // This part follows the same logic as the previous method 'getNonZeroBitIndexes()'
-            while(word != 0){
+            while(word != 0ULL){
 
                 int bit_index = std::countr_zero(word);
                 zeros_indexes[cursor] = (word_index * 64) + bit_index;
