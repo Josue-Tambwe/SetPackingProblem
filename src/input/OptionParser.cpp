@@ -210,8 +210,6 @@
                     continue;
                 }*/
 
-
-
                 // case of invalid option
                 log.error("Unknown option: " + name);
                 break;
@@ -246,6 +244,11 @@
             log.error(" Hexaly must not be used for linear relaxation in the Branch And Bound algorithm! "); 
 
         }*/
+
+        if(params.use_simd){
+            if(HAS_X86 &&  !HAS_AVX2){log.error(" --simd flag is used but AVX2 extension not detected");}
+            else if(HAS_ARM && !HAS_NEON){log.error(" --simd flag is used but NEON extension not detected");}
+        }
 
         
         checkRequiredOptions(argc, argv);

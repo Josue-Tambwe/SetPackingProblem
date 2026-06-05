@@ -111,7 +111,7 @@ namespace spp{
 
         std::cout << "  " << std::setw(22) << std::left << "matrix density (%)"
                 << std::setw(2) << std::right << " : " 
-                <<  std::setw(16) <<  std::left << stats.density
+                <<  std::setw(16) <<  std::left << std::fixed << std::setprecision(3) <<  stats.density
                 <<  "\n\n";
                  
     }
