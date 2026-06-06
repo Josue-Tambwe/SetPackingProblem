@@ -30,6 +30,10 @@
                            std::int64_t &one_one_exchange_objective,
                            std::int64_t &two_one_exchange_objective,
                            std::int64_t &zero_one_exchange_objective,
+                           size_t &one_two_exchange_iterations,
+                           size_t &one_one_exchange_iterations,
+                           size_t &two_one_exchange_iterations,
+                           size_t &zero_one_exchange_iterations,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance){
@@ -42,7 +46,9 @@
 
             // 1-1 exchange
             timer.start();
-            oneOneNeighborhood(scores, solution, instance);
+            one_one_exchange_iterations = oneOneNeighborhood(scores, 
+                                                             solution, 
+                                                             instance);
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -50,7 +56,9 @@
 
             // 1-2 exchange
             timer.start();
-            oneTwoNeighborhood(scores, solution, instance);
+            one_two_exchange_iterations = oneTwoNeighborhood(scores, 
+                                                             solution, 
+                                                             instance);
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -62,7 +70,9 @@
 
             // 1-2 exchange
             timer.start();
-            oneTwoNeighborhood(scores, solution, instance);
+            one_two_exchange_iterations = oneTwoNeighborhood(scores, 
+                                                             solution, 
+                                                             instance);
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -70,7 +80,9 @@
 
             // 1-1 exchange
             timer.start();
-            oneOneNeighborhood(scores, solution, instance);
+            one_one_exchange_iterations = oneOneNeighborhood(scores, 
+                                                             solution, 
+                                                             instance);
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -80,7 +92,9 @@
 
         // 2-1 exchange
         timer.start();
-        twoOneNeighborhood(scores, solution, instance);
+        two_one_exchange_iterations = twoOneNeighborhood(scores, 
+                                                         solution, 
+                                                         instance);
         timer.stop();
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
@@ -89,7 +103,9 @@
 
         // 0-1 exchange
         timer.start();
-        zeroOneNeighborhood(scores, solution, instance);
+        zero_one_exchange_iterations = zeroOneNeighborhood(scores, 
+                                                           solution, 
+                                                           instance);
         timer.stop();
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
@@ -109,6 +125,10 @@
                            std::int64_t &one_one_exchange_objective,
                            std::int64_t &two_one_exchange_objective,
                            std::int64_t &zero_one_exchange_objective,
+                           size_t &one_two_exchange_iterations,
+                           size_t &one_one_exchange_iterations,
+                           size_t &two_one_exchange_iterations,
+                           size_t &zero_one_exchange_iterations,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance){
@@ -121,7 +141,9 @@
 
             // 1-1 exchange
             timer.start();
-            oneOneNeighborhoodSIMDX86(scores, solution, instance);
+            one_one_exchange_iterations = oneOneNeighborhoodSIMDX86(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -129,7 +151,9 @@
 
             // 1-2 exchange
             timer.start();
-            oneTwoNeighborhoodSIMDX86(scores, solution, instance);
+            one_two_exchange_iterations = oneTwoNeighborhoodSIMDX86(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -141,7 +165,9 @@
 
             // 1-2 exchange
             timer.start();
-            oneTwoNeighborhoodSIMDX86(scores, solution, instance);
+            one_two_exchange_iterations = oneTwoNeighborhoodSIMDX86(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -149,7 +175,9 @@
 
             // 1-1 exchange
             timer.start();
-            oneOneNeighborhoodSIMDX86(scores, solution, instance);
+            one_one_exchange_iterations = oneOneNeighborhoodSIMDX86(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -158,7 +186,9 @@
 
         // 2-1 exchange
         timer.start();
-        twoOneNeighborhoodSIMDX86(scores, solution, instance);
+        two_one_exchange_iterations = twoOneNeighborhoodSIMDX86(scores, 
+                                                                solution, 
+                                                                instance);
         timer.stop();
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
@@ -166,7 +196,9 @@
         
         // 0-1 exchange
         timer.start();
-        zeroOneNeighborhoodSIMDX86(scores, solution, instance);
+        zero_one_exchange_iterations = zeroOneNeighborhoodSIMDX86(scores, 
+                                                                  solution, 
+                                                                  instance);
         timer.stop();
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
@@ -187,6 +219,10 @@
                            std::int64_t &one_one_exchange_objective,
                            std::int64_t &two_one_exchange_objective,
                            std::int64_t &zero_one_exchange_objective,
+                           size_t &one_two_exchange_iterations,
+                           size_t &one_one_exchange_iterations,
+                           size_t &two_one_exchange_iterations,
+                           size_t &zero_one_exchange_iterations,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance){
@@ -199,7 +235,9 @@
 
             // 1-1 exchange
             timer.start();
-            oneOneNeighborhoodSIMDARM(scores, solution, instance);
+            one_one_exchange_iterations = oneOneNeighborhoodSIMDARM(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -207,7 +245,9 @@
             
             // 1-2 exchange
             timer.start();
-            oneTwoNeighborhoodSIMDARM(scores, solution, instance);
+            one_two_exchange_iterations = oneTwoNeighborhoodSIMDARM(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -218,7 +258,9 @@
 
             // 1-2 exchange
             timer.start();
-            oneTwoNeighborhoodSIMDARM(scores, solution, instance);
+            one_two_exchange_iterations = oneTwoNeighborhoodSIMDARM(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_two_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -226,7 +268,9 @@
             
             // 1-1 exchange
             timer.start();
-            oneOneNeighborhoodSIMDARM(scores, solution, instance);
+            one_one_exchange_iterations = oneOneNeighborhoodSIMDARM(scores, 
+                                                                    solution, 
+                                                                    instance);
             timer.stop();
             one_one_exchange_time = timer.getElapsedTime();
             timer.reset();
@@ -235,7 +279,9 @@
 
         // 2-1 exchange
         timer.start();
-        twoOneNeighborhoodSIMDARM(scores, solution, instance);
+        two_one_exchange_iterations = twoOneNeighborhoodSIMDARM(scores, 
+                                                                solution, 
+                                                                instance);
         timer.stop();
         two_one_exchange_time = timer.getElapsedTime();
         timer.reset();
@@ -243,7 +289,9 @@
         
         // 0-1 exchange
         timer.start();
-        zeroOneNeighborhoodSIMDARM(scores, solution, instance);
+        zero_one_exchange_iterations = zeroOneNeighborhoodSIMDARM(scores, 
+                                                                  solution, 
+                                                                  instance);
         timer.stop();
         zero_one_exchange_time = timer.getElapsedTime();
         timer.reset();
@@ -292,6 +340,11 @@
         std::int64_t two_one_exchange_objective;
         std::int64_t zero_one_exchange_objective;
 
+        size_t one_two_exchange_iterations;
+        size_t one_one_exchange_iterations;
+        size_t two_one_exchange_iterations;
+        size_t zero_one_exchange_iterations;
+
         if(params.use_simd){
 
             #if HAS_AVX2
@@ -304,6 +357,10 @@
                                    one_one_exchange_objective,
                                    two_one_exchange_objective,
                                    zero_one_exchange_objective,
+                                   one_two_exchange_iterations,
+                                   one_one_exchange_iterations,
+                                   two_one_exchange_iterations,
+                                   zero_one_exchange_iterations,
                                    solution,
                                    params,
                                    instance);
@@ -318,6 +375,10 @@
                                    one_one_exchange_objective,
                                    two_one_exchange_objective,
                                    zero_one_exchange_objective,
+                                   one_two_exchange_iterations,
+                                   one_one_exchange_iterations,
+                                   two_one_exchange_iterations,
+                                   zero_one_exchange_iterations,
                                    solution,
                                    params,
                                    instance);
@@ -336,6 +397,10 @@
                               one_one_exchange_objective,
                               two_one_exchange_objective,
                               zero_one_exchange_objective,
+                              one_two_exchange_iterations,
+                              one_one_exchange_iterations,
+                              two_one_exchange_iterations,
+                              zero_one_exchange_iterations,
                               solution,
                               params,
                               instance);
@@ -354,21 +419,31 @@
 
         log.info("Greedy algorithm completed. Final best known solution : ");
 
+        printSummaryGreedy(construction_time, 
+                          timer.getElapsedTime(),
+                          construction_objective,
+                          solution.getObjectiveValue(instance),
+                          solution.getStatus());
 
-        std::cout << " construction time : " << construction_time 
-                  << "  objective : "  << construction_objective << " \n"
-                  << " 1-2 time : " << one_two_exchange_time 
-                  << "  objective : "  << one_two_exchange_objective << " \n"
-                  << " 1-1 time : " << one_one_exchange_time 
-                  << "  objective : "  << one_one_exchange_objective << " \n"
-                  << " 2-1 time : " << two_one_exchange_time 
-                  << "  objective : "  << two_one_exchange_objective << " \n"
-                  << " 0-1 time : " << zero_one_exchange_time << "\n"
-                  << "  objective : "  << zero_one_exchange_objective << " \n"
-                  << "  status :" << solution.getStatus() << "\n\n";
-                  
+        solution.print(instance);
 
+        if(params.verbose){
 
+            printStepsGreedy(one_two_exchange_time, 
+                            one_one_exchange_time, 
+                            two_one_exchange_time, 
+                            zero_one_exchange_time,
+                            construction_objective,
+                            one_two_exchange_objective,
+                            one_one_exchange_objective,
+                            two_one_exchange_objective,
+                            zero_one_exchange_objective,
+                            one_two_exchange_iterations,
+                            one_one_exchange_iterations,
+                            two_one_exchange_iterations,
+                            zero_one_exchange_iterations,
+                            params);
+        }
 
     }
  }

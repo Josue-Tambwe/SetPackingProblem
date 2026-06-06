@@ -49,6 +49,10 @@
                            std::int64_t &one_one_exchange_objective,
                            std::int64_t &two_one_exchange_objective,
                            std::int64_t &zero_one_exchange_objective,
+                           size_t &one_two_exchange_iterations,
+                           size_t &one_one_exchange_iterations,
+                           size_t &two_one_exchange_iterations,
+                           size_t &zero_one_exchange_iterations,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance);
@@ -69,6 +73,10 @@
                            std::int64_t &one_one_exchange_objective,
                            std::int64_t &two_one_exchange_objective,
                            std::int64_t &zero_one_exchange_objective,
+                           size_t &one_two_exchange_iterations,
+                           size_t &one_one_exchange_iterations,
+                           size_t &two_one_exchange_iterations,
+                           size_t &zero_one_exchange_iterations,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance);
@@ -88,6 +96,10 @@
                            std::int64_t &one_one_exchange_objective,
                            std::int64_t &two_one_exchange_objective,
                            std::int64_t &zero_one_exchange_objective,
+                           size_t &one_two_exchange_iterations,
+                           size_t &one_one_exchange_iterations,
+                           size_t &two_one_exchange_iterations,
+                           size_t &zero_one_exchange_iterations,
                            Solution &solution,
                            const Params &params,
                            const Instance &instance);

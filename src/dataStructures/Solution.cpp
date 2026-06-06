@@ -175,7 +175,7 @@
                 << " objective value             : " << this->getObjectiveValue(instance) << "\n\n";
 
       this->solution_vector.printNonZeroIndexes();
-      std::cout << std::string(100, '*') << "\n" ; 
+      std::cout << std::string(100, '*') << "\n\n" ; 
                 
 
     }
