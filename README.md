@@ -127,8 +127,8 @@ ___
 
 If you have MILP solvers installed, define the environment variables pointing to their installation folders : 
 
-- GUROBI_HOME -> for Gurobi
-- HX_HOME -> for Hexaly
+- GUROBI_HOME $\rightarrow$ for Gurobi
+- HX_HOME $\rightarrow$ for Hexaly
 - Highs does not require an environment variable
 
 ### Example on Linux
