@@ -100,13 +100,13 @@ To enable the Branch and Bound algorithm or Milp backends, you must have at leas
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/Josue-Tambwe/GeneralizedAssignmentProblem.git
+git clone https://github.com/Josue-Tambwe/SetPackingProblem.git
 ```
 
 ## 2. Move into the project directory
 
 ```bash
-cd GeneralizedAssignmentProblem
+cd SetPackingProblem
 
 ```
 
