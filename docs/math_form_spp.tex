@@ -1,0 +1,62 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+
+\geometry{margin=2.0cm}
+
+\title{Mathematical Formulation of the Set Packing Problem (SPP)}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+Let $n \ge 1$ be the number of activities and $m \ge 1$ the number of resources.
+The objective is to maximize the total profit:
+
+
+
+\[
+\max \sum_{j=1}^{n}  p_{j} \, x_{j}
+\]
+
+
+
+Subject to:
+
+
+
+\[
+\sum_{j=1}^{n} a_{ij} \, x_{j} \leq 1 
+\quad \forall i \in \{1,\dots,m\}
+\tag{1}
+\]
+
+
+\[
+x_{j} \in \{0, 1\}
+\quad 
+\forall j \in \{1,\dots,n\}
+\tag{2}
+\]
+
+
+
+With:
+
+\begin{itemize}
+	\item $x_{j}$ : decision variable which is equal to $1$ when the activity $j$ is selected and is equal to $0$ otherwise, $ \forall j \in \{1,\dots,n\}$.
+	
+	\item $p_{j}$ : the individual profit of the activity $j$.
+	
+    \item $a_{ij}$ : is equal to $1$ if the activity  $j$ requires the resource $i$ and is equal to $0$ otherwise.
+    
+    
+\end{itemize}
+
+The constraint (1) ensures that each resource is used at most once by an activity and (2) are the integrality constraints.
+
+\end{document}
