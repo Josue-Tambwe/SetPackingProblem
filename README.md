@@ -188,7 +188,7 @@ The executable is located in the **bin/** directory after installation.
 
 
 
-### Run Greedy algorithm (deterministic construction + VND local search)
+## Run Greedy algorithm (deterministic construction + VND local search)
 
 ```bash
 ./bin/spp_solver --algorithm=greedy --instance=benchmarks/pb_1000rnd0700.dat --simd --verbose 
