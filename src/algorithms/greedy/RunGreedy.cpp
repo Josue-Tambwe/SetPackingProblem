@@ -419,13 +419,14 @@
 
         log.info("Greedy algorithm completed. Final best known solution : ");
 
+        solution.print(instance);
+
         printSummaryGreedy(construction_time, 
                           timer.getElapsedTime(),
                           construction_objective,
                           solution.getObjectiveValue(instance),
                           solution.getStatus());
 
-        solution.print(instance);
 
         if(params.verbose){
 
