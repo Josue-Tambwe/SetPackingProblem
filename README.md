@@ -75,8 +75,9 @@ In particular, instances with **low density** and **high Max‑One values**—su
 
 # Dependencies :
 
+> **Note** : The solver is designed for Linux and macOS systems and supports both **x86‑64** and **ARMv8** architectures.  
+> SIMD acceleration relies on **AVX2** on x86 processors and **NEON** on ARM processors. A minimum of **ARMv8** is required to ensure 64‑bit NEON support.
 
->**Note** : The solver is only designed for Linux and macOS operating systems.
 
 ### Mandatory : 
 
