@@ -70,13 +70,120 @@ These instances range from **small and easy** (100 variables) to **very large an
 In particular, instances with **low density** and **high Max‑One values**—such as *pb_1000rnd0700* and *pb_2000rnd0700*—are known to be among the most difficult and are commonly used to stress‑test construction heuristics, local search procedures, and exact solvers.
 
 
-
-
-
-
 >**Note** : **All instances follow the same standardized SPP input format, and the SPP‑Solver is designed to read this format directly without any preprocessing**.
 
 
+# Dependencies :
+
+
+>**Note** : The solver is only designed for Linux and macOS operating systems.
+
+### Mandatory : 
+
+- meson (at least 1.5.1)
+- ninja (at least 1.11.1)
+- g++ (C++20)
+
+
+### MILP SOLVERS :
+
+To enable the Branch and Bound algorithm or Milp backends, you must have at least one of : 
+
+- Highs (open source)
+- Hexaly (commercial, licence required)
+- Gurobi (commercial, licence required)
+
+
+# Installation : 
+
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/Josue-Tambwe/GeneralizedAssignmentProblem.git
+```
+
+## 2. Move into the project directory
+
+```bash
+cd GeneralizedAssignmentProblem
+
+```
+
+## 3. Make the installation script executable
+
+
+ ```bash
+ chmod +x install.sh 
+```
+## 4. Run the installation script
+
+Without MILP solvers : 
+
+```bash
+./install.sh
+```
+___
+
+If you have MILP solvers installed, define the environment variables pointing to their installation folders : 
+
+- GUROBI_HOME -> for Gurobi
+- HX_HOME -> for Hexaly
+- Highs does not require an environment variable
+
+### Example on Linux
+```bash
+# Gurobi
+export GUROBI_HOME=/home/<user>/gurobi1300/linux64
+export PATH="$PATH:$GUROBI_HOME/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GUROBI_HOME/lib"
+
+# Hexaly
+export HX_HOME=/home/<user>/hexaly_14_5
+export PATH="$PATH:$HX_HOME/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HX_HOME/bin"
+```
+
+
+### Example on MacOS
+
+```bash
+# Gurobi
+export GUROBI_HOME=/Library/gurobi1300/macos_universal2
+export PATH="$PATH:$GUROBI_HOME/bin"
+export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:$GUROBI_HOME/lib"
+
+# Hexaly
+export HX_HOME=/Users/<user>/hexaly_14_5
+export PATH="$PATH:$HX_HOME/bin"
+export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:$HX_HOME/bin"
+```
+
+You can add these lines to your `~/.bashrc` or `~/.zshrc` (depending on your shell) to make them persistent.
+
+> **Note:** Adapt those lines to your versions installed of **Gurobi** and **Hexaly**. In addition, once the project is compiled, you can choose the MILP solver at runtime.  GAP‑Solver does not hard‑code a specific backend: the solver is selected dynamically based on the command‑line options you provide when running the executable.
+
+
+
+Then run the installer with the backends you want to enable : 
+
+```bash
+./install.sh HAS_GUROBI HAS_HEXALY HAS_HIGHS
+```
+___
+
+
+
+
+# Usage / CLI examples
+
+The executable is located in the **bin/** directory after installation.
+
+
+## Display the help message
+
+```bash
+./bin/spp_solver --help
+```
 
 
 
