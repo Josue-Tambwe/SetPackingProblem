@@ -170,7 +170,7 @@
       std::cout << "\n" << std::string(100, '*') << "\n"
                 << std::setw(50) << std::right << "Solution" << "\n"
                 << std::string(100, '*') << "\n"
-                << " number of resources used   : " << this->getNbConsumedResources() << "\n"
+                << " number of resources used    : " << this->getNbConsumedResources() << "\n"
                 << " number of nonzero variables : " << this->getNbNonZeroVars() << " \n\n"
                 << " objective value             : " << this->getObjectiveValue(instance) << "\n\n";
 
