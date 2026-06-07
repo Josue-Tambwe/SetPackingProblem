@@ -224,3 +224,7 @@ The theoretical foundations and algorithmic components implemented in this solve
 
 - **Johann Dréo, Alain Petrowski, Patrick Siarry, Éric Taillard** — *Métaheuristiques pour l’optimisation difficile*.  
   Eyrolles, 2006.
+
+- **Mauricio G.C. Resende, Celso C. Ribeiro** — *Greedy Randomized Adaptive Search Procedures: Advances, Hybridizations, and Applications*.  
+  In *Handbook of Metaheuristics*, International Series in Operations Research & Management Science, vol. 146, Springer, 2010.
+
