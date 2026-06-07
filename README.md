@@ -51,7 +51,7 @@ Although the intensified strategy often yields better results on challenging cas
 Since both the decision variables and the constraint matrix are purely binary, the solver uses a **compact BitVector representation** to encode solutions and conflicts efficiently.
 This enables fast bitwise operations for feasibility checks and neighborhood evaluation.
 
-To further accelerate computation, the solver integrates **SIMD (Single Instruction, Multiple Data)** vectorization, **loop unrolling**, and **CPU multi‑threading**.
+To further accelerate computation, the solver integrates **SIMD (Single Instruction, Multiple Data)** vectorization, **loop unrolling** and **CPU multi‑threading**.
 
 These HPC techniques significantly reduce the cost of conflict detection and neighborhood exploration, especially on large and sparse SPP instances.
 
@@ -197,6 +197,8 @@ The executable is located in the **bin/** directory after installation.
 
 
 - **--verbose** (optional) : Prints neighborhood exploration details.
+
+- **--intensification** (optional) : Enables intensified VND local search.
 
 ![](docs/images/run_greedy.png)
 
