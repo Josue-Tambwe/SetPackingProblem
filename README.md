@@ -70,7 +70,7 @@ These instances range from **small and easy** (100 variables) to **very large an
 In particular, instances with **low density** and **high Max‑One values**—such as *pb_1000rnd0700* and *pb_2000rnd0700*—are known to be among the most difficult and are commonly used to stress‑test construction heuristics, local search procedures and exact solvers.
 
 
->**Note** : **All instances follow the same standardized SPP input format, and the SPP‑Solver is designed to read this format directly without any preprocessing**.
+>**Note** : **All instances follow the same standardized SPP input format and the SPP‑Solver is designed to read this format directly without any preprocessing**.
 
 
 # Dependencies :
