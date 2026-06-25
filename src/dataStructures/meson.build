@@ -17,4 +17,5 @@ data_struc_sources = files('Instance.cpp',
                            'BitVector.cpp',
                            'Solution.cpp',
                            'Timer.cpp',
-                           'MoveNode.cpp')
+                           'MoveNode.cpp',
+                           'BaBNode.cpp')
