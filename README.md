@@ -49,8 +49,7 @@ Although the intensified strategy often yields better results on challenging cas
 
 
 An **exact** Branch & Bound method with **optimality guarantee**.  
-The search is warm‑started using the **deterministic greedy construction with VND local search**, providing a strong initial primal bound and improving pruning efficiency.  
-Linear relaxations are solved through the selected Linear Programming solver backend, with configurable branching rules and exploration strategies.
+The search is warm‑started using the **deterministic greedy construction with VND local search**, providing a strong initial primal bound and improving pruning efficiency.  Linear relaxations are solved through the selected Linear Programming solver backend, with configurable branching rules and exploration strategies.
 
 
 ## 9. MILP Solvers interfaces
