@@ -30,6 +30,8 @@
 #include "dataStructures/Parameters.hpp"
 #include "algorithms/branchAndBound/BestFirst.hpp"
 #include "algorithms/branchAndBound/DepthFirst.hpp"
+#include "output/GeneralOutput.hpp"
+#include "output/BranchAndBoundOutput.hpp"
 #include "algorithms/greedy/DeterministicConstruction.hpp"
 #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
 #include "algorithms/milpSolver/LPSolver.hpp"

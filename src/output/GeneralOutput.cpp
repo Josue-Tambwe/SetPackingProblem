@@ -59,24 +59,36 @@
 
     void printOptionalOptions(){
 
-        std::cout << " Optional options:\n" << std::string(17, '-') << "\n\n"
+        std::cout << " Optional options:\n" << " " << std::string(17, '-') << "\n\n"
 
-                << "  "  << "--nb-threads=value" << std::string(5, ' ')
+                << "  "  << "--nb-threads=value" << std::string(9, ' ')
                 << "Number of threads (default: number of physical CPU cores)\n \n"
 
-                << "  " << "--simd" << std::string(17, ' ')
+                << "  " << "--simd" << std::string(21, ' ')
                 << "Enable SIMD-accelerated kernels (AVX2/NEON)\n \n"
 
-                << "  " << "--verbose" << std::string(14, ' ')
+                << "  " << "--warm-start" << std::string(15, ' ')
+                << "Provide a feasible starting point for the MILP resolution\n \n"
+
+                << "  " << "--verbose" << std::string(18, ' ')
                 << "Enable verbose mode\n \n"
 
-                << "  " << "--intensification" << std::string(6, ' ')
+                << "  " << "--intensification" << std::string(10, ' ')
                 << "Enable an intensified Variable Neighborhood Descent local search\n \n"
 
-                << "  "  << "--time-limit=value" << std::string(5, ' ')
+                << "  "  << "--time-limit=value" << std::string(9, ' ')
                 << "Set the time limit in seconds (default: 10)\n \n"
 
-                << "  "  << "--iterations=value" << std::string(5, ' ')
+                << "  "  << "--branching-rule=value" << std::string(5, ' ')
+                << "Branching rule strategy for the Branch and Bound algorithm (values: one, zero, fractional)\n \n"
+
+                << "  "  << "--exploration=value" << std::string(8, ' ')
+                << "Node exploration strategy for the Branch and Bound algorithm (values: bfs, dfs)\n \n"
+
+                << "  "  << "--gap=value" << std::string(16, ' ')
+                << "Target optimality gap in [0,1] for the Branch and Bound algorithm (default: 0.0)\n \n"
+
+                << "  "  << "--iterations=value" << std::string(9, ' ')
                 << "Set the number of iterations for GRASP, Genetic Algorithm, Simulated Annealing and Tabu Search\n \n";    
     }
 
@@ -87,7 +99,13 @@
         std::cout << " Examples:\n" << " " << std::string(9, '-') << "\n\n"
 
             << "    ./bin/spp_solver --algorithm=greedy "
-            << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --simd\n\n";
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --simd\n\n"
+
+            << "    ./bin/spp_solver --algorithm=bab "
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --solver=gurobi --exploration=dfs\n\n"
+
+            << "    ./bin/spp_solver --algorithm=milp "
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --solver=highs  --simd  --time-limit=30 --warm-start\n\n";
 
 
 

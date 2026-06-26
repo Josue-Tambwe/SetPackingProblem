@@ -113,7 +113,7 @@ namespace spp{
 
         // initialization
         const Instance instance(params);
-        //printHeaderBaB(params, instance);
+        printHeaderBaB(params, instance);
 
         Timer timer = Timer();
         Logger log;
@@ -147,7 +147,7 @@ namespace spp{
         // initialization of the root node
         open_nodes.add(BaBNode(dual_bound));
 
-        //printHeaderLineBaB();
+        printHeaderLineBaB();
 
         size_t processed_nodes = 0;
         size_t nodes_fathomed_by_infeasibility = 0;
@@ -225,14 +225,14 @@ namespace spp{
             }
             else{dual_bound = primal_bound;}
 
-            /*if(processed_nodes % 1000 == 0 || processed_nodes < 10){
+            if(processed_nodes % 1000 == 0 || processed_nodes < 10){
 
                 printBaBIteration(timer.getElapsedTime(),
                                   processed_nodes,
                                   open_nodes.getSize(),
                                   dual_bound,
                                   primal_bound);
-            }*/
+            }
 
             // undoing variables fixation
             solver->resetLinearModel(current_node);  
@@ -251,9 +251,7 @@ namespace spp{
         // display of the final solution
         primal_solution.print(instance);
 
-        std::cout << " Status : " << primal_solution.getStatus() << " ";
-
-        /*finalStatisticsBaB(preprocessing_time,
+        finalStatisticsBaB(preprocessing_time,
                            preprocessing_obj_value,
                            dual_bound,
                            primal_bound,
@@ -264,7 +262,7 @@ namespace spp{
                            nodes_fathomed_by_optimality,
                            nodes_fathomed_by_dominance,
                            nodes_fathomed_by_infeasibility,
-                           params);*/
+                           params);
 
 
 
@@ -278,7 +276,7 @@ namespace spp{
 
         // initialization
         const Instance instance(params);
-        //printHeaderBaB(params, instance);
+        printHeaderBaB(params, instance);
 
         Timer timer = Timer();
         Logger log;
@@ -312,7 +310,7 @@ namespace spp{
         // initialization of the root node
         open_nodes.add(BaBNode(dual_bound));
 
-        //printHeaderLineBaB();
+        printHeaderLineBaB();
 
         size_t processed_nodes = 0;
         size_t nodes_fathomed_by_infeasibility = 0;
@@ -390,14 +388,14 @@ namespace spp{
             }
             else{dual_bound = primal_bound;}
 
-            /*if(processed_nodes % 1000 == 0 || processed_nodes < 10){
+            if(processed_nodes % 1000 == 0 || processed_nodes < 10){
 
                 printBaBIteration(timer.getElapsedTime(),
                                   processed_nodes,
                                   open_nodes.getSize(),
                                   dual_bound,
                                   primal_bound);
-            }*/
+            }
 
             // undoing variables fixation
             solver->resetLinearModel(current_node);  
@@ -423,9 +421,7 @@ namespace spp{
         // display of the final solution
         primal_solution.print(instance);
 
-        std::cout << " Status : " << primal_solution.getStatus() << " ";
-
-        /*finalStatisticsBaB(preprocessing_time,
+        finalStatisticsBaB(preprocessing_time,
                            preprocessing_obj_value,
                            dual_bound,
                            primal_bound,
@@ -436,7 +432,7 @@ namespace spp{
                            nodes_fathomed_by_optimality,
                            nodes_fathomed_by_dominance,
                            nodes_fathomed_by_infeasibility,
-                           params);*/
+                           params);
 
 
 
@@ -447,7 +443,7 @@ namespace spp{
 
     void runBaB(const Params &params){
         
-        //printHeader();
+        printHeader();
 
         if(params.exploration_strategy == 'b'){
 

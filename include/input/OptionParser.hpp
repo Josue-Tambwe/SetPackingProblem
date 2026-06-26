@@ -46,10 +46,16 @@
 
 
     /**
-    * @brief checks that no unsupported options are given for the greedy algorithm
+    * @brief checks that no unsupported options are given for the B&B algorithm
     */
     void unsupportedOptionsBaB(int argc, char** argv);
 
+
+
+    /**
+    * @brief checks that no unsupported options are given for the MILP algorithm
+    */
+    void unsupportedOptionsMilp(int argc, char** argv);
 
 
 

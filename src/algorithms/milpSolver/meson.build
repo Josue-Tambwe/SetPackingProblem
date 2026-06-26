@@ -13,4 +13,5 @@
 # all source files of the branchAndBound subdirectory 
 milp_solver_sources = files('GurobiBackend.cpp',
                             'HighsBackend.cpp',
-                            'HexalyBackend.cpp')
+                            'HexalyBackend.cpp',
+                            'RunMilpSolver.cpp')

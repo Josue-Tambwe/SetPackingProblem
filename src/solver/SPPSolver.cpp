@@ -33,7 +33,14 @@
    #include "algorithms/milpSolver/GurobiBackend.hpp" // to remove
    #include "algorithms/milpSolver/HighsBackend.hpp" // to remove
    #include "algorithms/milpSolver/HexalyBackend.hpp" // to remove
-   #include "algorithms/branchAndBound/RunBranchAndBound.hpp" // to remove
+
+   #if USE_BRANCH_AND_BOUND
+   #include "algorithms/branchAndBound/RunBranchAndBound.hpp"
+   #endif
+
+   #if USE_MILP
+   #include "algorithms/milpSolver/RunMilpSolver.hpp"
+   #endif
 
    
    using namespace spp; 
@@ -42,23 +49,23 @@
 
       const Params params = parseOptions(argc, argv);
 
-      //if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
+      if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
 
-      const Instance instance(params);
-      Timer timer;
+      else if(params.algorithm == Algorithm::BranchAndBound){
 
-      timer.start();
-      runBaB(params);
-      timer.stop();
+         #if USE_BRANCH_AND_BOUND
+         runBaB(params);
+         #endif
+      }
 
-      std::cout << " time : " << timer.getElapsedTime() << " (s) \n\n";
-                  
-      
-      
-      
+      else if(params.algorithm == Algorithm::Milp){
+         
+         #if USE_MILP
+         runMilpSolver(params);
+         #endif
+      }
 
-
-      
-
+   
+         
       return 0;
    }

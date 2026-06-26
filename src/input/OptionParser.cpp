@@ -75,6 +75,7 @@
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the greedy algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
+            if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -101,6 +102,29 @@
 
 
 
+
+    void unsupportedOptionsMilp(int argc, char** argv){
+        
+        Logger log; 
+
+        for(int i = 1; i < argc; i++){
+
+            std::string arg = argv[i];
+
+            if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+            if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the milp algorithm! ");}
+            if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the milp algorithm! ");}
+            if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the milp algorithm! ");}
+            if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+        }
+
+    }
+
+
+
+
     Params parseOptions(int argc, char** argv){
 
         Params params;
@@ -124,8 +148,7 @@
                 if(arg == "--verbose"){params.verbose = true; continue;}
                 if(arg == "--simd"){params.use_simd = true; continue;}
                 if(arg == "--intensification"){params.use_intensification = true; continue;}
-
-                //if(arg == "--warm-start"){params.warm_start = true; continue;}
+                if(arg == "--warm-start"){params.warm_start = true; continue;}
 
                 else{log.error(" Unknown flag: " + arg);}
             }
@@ -242,7 +265,14 @@
         }
 
         if(params.algorithm == Algorithm::Greedy){unsupportedOptionsGreedy(argc, argv);}
-        if(params.algorithm == Algorithm::BranchAndBound){unsupportedOptionsBaB(argc, argv);}
+        else if(params.algorithm == Algorithm::BranchAndBound){unsupportedOptionsBaB(argc, argv);}
+        else if(params.algorithm == Algorithm::Milp){unsupportedOptionsMilp(argc, argv);}
+
+        if(params.algorithm == Algorithm::BranchAndBound &&
+           params.milp_solver == 'x'){
+
+            log.error(" Hexaly must not be used for linear relaxation in the Branch And Bound algorithm! "); 
+        }
 
         /*if(params.algorithm == gap::Algorithm::AntColonyOptimizer){unsupportedOptionsACO(argc, argv);}
 

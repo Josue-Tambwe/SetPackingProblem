@@ -13,4 +13,6 @@
 # all source files of the output subdirectory 
 output_sources = files('Logger.cpp', 
                        'GeneralOutput.cpp',
-                       'GreedyOutput.cpp')
+                       'GreedyOutput.cpp',
+                       'BranchAndBoundOutput.cpp',
+                       'MilpSolverOutput.cpp')
