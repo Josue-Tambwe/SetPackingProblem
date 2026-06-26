@@ -24,11 +24,12 @@
 
 
 
-    void checkRequiredOptions(int argc, char** argv){
+    void checkRequiredOptions(int argc, char** argv, const Params &params){
 
         Logger log; 
         bool has_algorithm = false;
         bool has_instance = false;
+        bool use_milp_solver = false;
         
 
         for(int i = 1; i < argc; i++){
@@ -36,11 +37,21 @@
             std::string arg = argv[i];
             if (arg.find("--instance=") == 0) {has_instance = true;}
             if (arg.find("--algorithm=") == 0) {has_algorithm = true;}
+            if (arg.find("--solver=") == 0) {use_milp_solver = true;}
         }
 
         if(!has_algorithm){log.error(" Missing required option : --algorithm=value");}
 
         if(!has_instance){log.error(" Missing required option : --instance=value");}
+
+        if((params.algorithm == Algorithm::BranchAndBound ||
+            params.algorithm == Algorithm::Milp) &&
+            !use_milp_solver){
+
+            log.error(" Missing required option : --solver=value");
+
+        }
+
 
         
     }
@@ -63,7 +74,7 @@
             if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the greedy algorithm! ");}
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the greedy algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
-            
+            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -71,6 +82,22 @@
     }
 
 
+
+
+    void unsupportedOptionsBaB(int argc, char** argv){
+        
+        Logger log; 
+
+        for(int i = 1; i < argc; i++){
+
+            std::string arg = argv[i];
+
+            if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the bab algorithm! ");}
+            if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
+        }
+
+    }
 
 
 
@@ -147,30 +174,29 @@
 
 
 
-                /*
+                
                 if(name == "--solver"){
 
                     if(value == "gurobi"){
-                        if(!HAS_GUROBI){gap::Logger log; log.error(" The solver has not been built with Gurobi");}
+                        if(!HAS_GUROBI){log.error(" The solver has not been built with Gurobi");}
                         params.milp_solver = 'g'; 
                         continue;
                     }
 
 
                     if(value == "hexaly"){
-                        if(!HAS_HEXALY){gap::Logger log; log.error(" The solver has not been built with Hexaly");}
+                        if(!HAS_HEXALY){log.error(" The solver has not been built with Hexaly");}
                         params.milp_solver = 'x'; 
                         continue;
                     }
 
 
                     if(value == "highs"){
-                        if(!HAS_HIGHS){gap::Logger log; log.error(" The solver has not been built with Highs");}
+                        if(!HAS_HIGHS){log.error(" The solver has not been built with Highs");}
                         params.milp_solver = 'h'; 
                         continue;
                     }
 
-                    gap::Logger log; 
                     log.error(" Unsupported milp solver : " + value); 
                     break;
                     
@@ -181,8 +207,6 @@
 
                     if(value == "bfs"){params.exploration_strategy = 'b'; continue;}
                     if(value == "dfs"){params.exploration_strategy = 'd'; continue;}
-
-                    gap::Logger log; 
                     log.error(" Unknown nodes exploration strategy : " + value); 
                     break;
                     
@@ -195,7 +219,6 @@
                     if(value == "zero"){params.branching_value = 0.0; continue;}
                     if(value == "fractional"){params.branching_value = 0.5; continue;}
 
-                    gap::Logger log; 
                     log.error(" Unknown branching rule : " + value); 
                     break;
                     
@@ -204,11 +227,11 @@
                 if(name == "--gap"){
                     params.optimality_gap = std::stod(value);
                     if(params.optimality_gap < 0.0 || params.optimality_gap > 1.0){
-                        gap::Logger log; 
+
                         log.error(" gap must be in the interval [0,1]");
                     }
                     continue;
-                }*/
+                }
 
                 // case of invalid option
                 log.error("Unknown option: " + name);
@@ -219,6 +242,7 @@
         }
 
         if(params.algorithm == Algorithm::Greedy){unsupportedOptionsGreedy(argc, argv);}
+        if(params.algorithm == Algorithm::BranchAndBound){unsupportedOptionsBaB(argc, argv);}
 
         /*if(params.algorithm == gap::Algorithm::AntColonyOptimizer){unsupportedOptionsACO(argc, argv);}
 
@@ -251,7 +275,7 @@
         }
 
         
-        checkRequiredOptions(argc, argv);
+        checkRequiredOptions(argc, argv, params);
         return params;
 
     }

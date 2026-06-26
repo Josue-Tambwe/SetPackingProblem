@@ -23,7 +23,7 @@
 
 #include "dataStructures/BaBNode.hpp"
 #include <stack>
-#include <limits>
+#include <algorithm>
 #include <iostream>
 
 namespace spp{
@@ -41,7 +41,7 @@ namespace spp{
 
             // getters
 
-            double getLowestDualBound() const;
+            double getHighestDualBound() const;
 
             spp::BaBNode pop();
 
@@ -53,7 +53,7 @@ namespace spp{
             
             // Setter
 
-            void add(spp::BaBNode &node);
+            void add(spp::BaBNode node);
 
 
 

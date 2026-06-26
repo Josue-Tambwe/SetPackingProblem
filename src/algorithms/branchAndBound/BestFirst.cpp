@@ -24,14 +24,14 @@ namespace spp{
 
     // getters 
 
-    double BestFirst::getLowestDualBound() const {
+    double BestFirst::getHighestDualBound() const {
 
         if(!node_list.empty()){
             
             return node_list.top().getDualBound();
         }
 
-        return std::numeric_limits<double>::max();
+        return 0.0;
     }
 
 
@@ -52,7 +52,7 @@ namespace spp{
 
     // Setter
 
-    void BestFirst::add(spp::BaBNode &node){node_list.push(node);}
+    void BestFirst::add(spp::BaBNode node){node_list.push(node);}
 
 
 

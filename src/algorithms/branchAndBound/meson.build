@@ -12,4 +12,5 @@
 
 # all source files of the branchAndBound subdirectory 
 BaB_sources = files('BestFirst.cpp',
-                    'DepthFirst.cpp')
+                    'DepthFirst.cpp',
+                    'RunBranchAndBound.cpp')

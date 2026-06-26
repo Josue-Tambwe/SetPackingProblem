@@ -36,5 +36,12 @@
         use_max_iterations = false;
         nb_max_iterations = 5;
         time_limit = 10.0;
+
+        // Branch and Bound & Milp solver
+        milp_solver='h';
+        exploration_strategy='b';
+        warm_start = false;
+        branching_value = 0.0;
+        optimality_gap = 0.0;
     }
  }

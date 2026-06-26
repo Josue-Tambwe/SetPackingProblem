@@ -55,7 +55,7 @@ namespace spp{
 
     // operator overloading
 
-    bool BaBNode::operator<(const BaBNode &other) const{return this->dual_bound > other.dual_bound;}
+    bool BaBNode::operator<(const BaBNode &other) const{return this->dual_bound < other.dual_bound;}
 
 
     void BaBNode::print() const{

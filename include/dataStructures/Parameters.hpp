@@ -44,11 +44,29 @@
         bool use_intensification;
         int nb_threads;
 
-        
         bool use_time_limit;
         bool use_max_iterations;
         size_t nb_max_iterations;
         double time_limit;
+
+        // Branch and Bound & Milp solver
+        char milp_solver;
+        /* Possible value for the attribute "milp_solver"
+         - 'g' : gurobi
+         - 'h' : highs
+         - 'x ': hexaly 
+        */
+
+        char exploration_strategy;
+        /* Possible value
+         - 'b' : best first search
+         - 'd' : depth first search
+        */
+
+        bool warm_start;
+        double branching_value;
+        double optimality_gap;
+
 
 
     };

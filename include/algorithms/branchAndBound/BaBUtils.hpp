@@ -42,7 +42,6 @@ namespace spp{
             }
         }
         return true;
-
     }
 
 
@@ -52,7 +51,7 @@ namespace spp{
      * @brief finds the index of the branching variable
      */
     inline int branchingVariableIndex(std::vector<double> &solution, 
-                                      gap::Params params){
+                                      const Params &params){
 
         int index = -1;
         double best_score = std::numeric_limits<double>::max();
@@ -69,7 +68,6 @@ namespace spp{
                 }
 
             }
-
         }
 
         return index;
@@ -81,11 +79,11 @@ namespace spp{
      * @brief check of the stopping criteria for the Best First node exploration strategy
      */
     inline bool stoppingCriteriaBestFirst(double primal_bound,
-                                        double dual_bound,
-                                        double current_time,
-                                        gap::Params &params){
+                                          double dual_bound,
+                                          double current_time,
+                                          const Params &params){
 
-        if((primal_bound - dual_bound) <= (params.optimality_gap * primal_bound)){return true;}
+        if((dual_bound - primal_bound) <= (params.optimality_gap * dual_bound)){return true;}
 
         if(current_time >= params.time_limit){return true;}
 
@@ -101,7 +99,7 @@ namespace spp{
      * @brief check of the stopping criteria for the Depth First node exploration strategy
      */
     inline bool stoppingCriteriaDepthFirst(double current_time,
-                                           gap::Params &params){
+                                           const Params &params){
 
         return (current_time >= params.time_limit);
 

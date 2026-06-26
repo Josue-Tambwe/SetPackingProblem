@@ -24,9 +24,9 @@ namespace spp{
 
     // getters
 
-    double DepthFirst::getLowestDualBound() const {
+    double DepthFirst::getHighestDualBound() const {
 
-        if(node_list.empty()){return std::numeric_limits<double>::max();}
+        if(node_list.empty()){return 0.0;}
 
         double dual_bound = node_list.top().getDualBound();
         std::stack<spp::BaBNode> copy = node_list;
@@ -34,11 +34,9 @@ namespace spp{
         while(!copy.empty()){
 
             spp::BaBNode current_node = copy.top();
-            
-            if(current_node.getDualBound() < dual_bound){
 
-                dual_bound = current_node.getDualBound();
-            }
+            dual_bound = std::max(dual_bound, current_node.getDualBound());
+            
             copy.pop();
 
         }
@@ -65,7 +63,7 @@ namespace spp{
 
     // Setter 
 
-    void DepthFirst::add(spp::BaBNode &node){node_list.push(node);}
+    void DepthFirst::add(spp::BaBNode node){node_list.push(node);}
 
 
 

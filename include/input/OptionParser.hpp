@@ -35,13 +35,21 @@
     /**
     * @brief checks that all required options have been given by the user
     */
-    void checkRequiredOptions(int argc, char** argv);
+    void checkRequiredOptions(int argc, char** argv, const Params &params);
 
 
     /**
     * @brief checks that no unsupported options are given for the greedy algorithm
     */
     void unsupportedOptionsGreedy(int argc, char** argv);
+
+
+
+    /**
+    * @brief checks that no unsupported options are given for the greedy algorithm
+    */
+    void unsupportedOptionsBaB(int argc, char** argv);
+
 
 
 
