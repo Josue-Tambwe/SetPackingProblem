@@ -45,7 +45,7 @@ It produces slightly better solutions on most difficult benchmark instances (not
 Although the intensified strategy often yields better results on challenging cases, it does not systematically outperform the classical VND — which is the default mode and remains highly competitive thanks to its exceptional speed.
 
 
-## 7. Branch & Bound
+## 8. Branch & Bound
 
 
 An **exact** Branch & Bound method with **optimality guarantee**.  
@@ -53,14 +53,14 @@ The search is warm‑started using the **deterministic greedy construction with 
 Linear relaxations are solved through the selected Linear Programming solver backend, with configurable branching rules and exploration strategies.
 
 
-## 8. MILP Solvers interfaces
+## 9. MILP Solvers interfaces
 
 This project includes lightweight interfaces to **HiGHS**, **Gurobi** and **Hexaly** for solving the Set Packing Problem as a MILP.  
 These interfaces build the SPP model, call the solver and then extract the resulting solution.
 
 
 
-## 9. High‑Performance Computing (HPC) Enhancements
+## 10. High‑Performance Computing (HPC) Enhancements
 
 Since both the decision variables and the constraint matrix are purely binary, the solver uses a **compact BitVector representation** to encode solutions and conflicts efficiently.
 This enables fast bitwise operations for feasibility checks and neighborhood evaluation.
