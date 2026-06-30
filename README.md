@@ -10,7 +10,7 @@ The Set Packing Problem (SPP) is an **NP-hard** combinatorial optimization probl
 
 # Resolution methods
 
-This solver integrates a set of complementary methods for the Set Packing Problem (SPP), including monotonic and non‑monotonic local search, evolutionary procedures, selection‑based hyper‑heuristics, and exact techniques. Its HPC design relies on compact BitVector representations, loop unrolling, SIMD vectorization and multithreading to ensure efficient large‑scale optimization.
+This solver integrates a set of complementary methods for the Set Packing Problem (SPP), including monotonic and non‑monotonic local search, evolutionary procedures, selection‑based hyper‑heuristics and exact techniques. Its HPC design relies on compact BitVector representations, loop unrolling, SIMD vectorization and multithreading to ensure efficient large‑scale optimization.
 
 
 ## 1. Deterministic Greedy Construction
