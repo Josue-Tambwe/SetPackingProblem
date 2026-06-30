@@ -10,7 +10,9 @@
 #------------------------------------------------------------------------------
 
 subdir('simd')
+subdir('thread')
 
 
 # all source files of the hpc subdirectory 
-hpc_sources = simd_sources
+
+hpc_sources = simd_sources + thread_sources

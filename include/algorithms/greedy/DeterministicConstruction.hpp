@@ -49,7 +49,7 @@
 
     /**
      * @brief updates the solution by setting the best variable to 'one' and all variables in conflict 
-     *        with the best variable to 'zero'
+     *        with the best variable to 'zero' => removing them from the set of free variables
      */
     void updateSolution(int best_var,
                         std::unordered_set<int> &free_variables,
@@ -57,7 +57,7 @@
                         const spp::Instance &instance);
 
 
-
+ 
     /**
      * @brief constructs a solution with the deterministic greedy method
      */

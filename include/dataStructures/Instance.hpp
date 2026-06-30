@@ -31,7 +31,6 @@
  #include <vector>
  #include <string>
  #include <limits>
- #include <unordered_set>
 
  namespace spp{
 
@@ -82,7 +81,7 @@
             // getters 
             size_t getNbVars() const;
             size_t getNbConstraints() const;
-            std::unordered_set<int> getAllConflictingVarsIndexes(int index) const;
+            std::vector<int> getAllConflictingVarsIndexes(int index) const;
 
             const std::vector<int>& getProfitVector() const;
             const std::vector<std::vector<int>>& getConstraintMatrix() const;

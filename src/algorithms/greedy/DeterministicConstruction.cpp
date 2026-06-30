@@ -72,13 +72,10 @@
         // setting the best variable to 'one'
         solution.activateVar(best_var, instance);
 
-        std::unordered_set<int> conflicting_vars = instance.getAllConflictingVarsIndexes(best_var);
+        std::vector<int> conflicting_vars = instance.getAllConflictingVarsIndexes(best_var);
 
         // removing those conflicting variables from the free variables set
-        for(int var : conflicting_vars){
-
-            free_variables.erase(var);
-        }
+        for(int var : conflicting_vars){free_variables.erase(var);}
                         
     }
 
@@ -101,7 +98,7 @@
 
             if(best_var == -1){
 
-                log.warning("The deterministic greedy heuristic failed!");
+                log.warning("The deterministic greedy construction heuristic failed!");
                 solution.setStatus(spp::Status::INFEASIBLE);
                 return solution;
             }
@@ -120,6 +117,7 @@
 
         // feasibility certification
         if(solution.isFeasible(instance)){solution.setStatus(Status::FEASIBLE);}
+        
         else{solution.setStatus(Status::INFEASIBLE);}
         
         return solution;

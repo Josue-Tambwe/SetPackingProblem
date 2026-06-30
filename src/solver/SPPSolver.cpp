@@ -33,6 +33,7 @@
    #include "algorithms/milpSolver/GurobiBackend.hpp" // to remove
    #include "algorithms/milpSolver/HighsBackend.hpp" // to remove
    #include "algorithms/milpSolver/HexalyBackend.hpp" // to remove
+   #include "algorithms/greedy/RandomizedConstruction.hpp" // to remove
 
    #if USE_BRANCH_AND_BOUND
    #include "algorithms/branchAndBound/RunBranchAndBound.hpp"
@@ -48,8 +49,20 @@
    int main(int argc, char** argv){
 
       const Params params = parseOptions(argc, argv);
+      const Instance instance(params);
 
-      if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
+      Timer timer;
+
+      float alpha = 0.0f;
+
+      // construction
+        timer.start();
+        Solution solution = randomizedConstruction(alpha, instance);
+        solution.print(instance);
+        std::cout << " time : " << timer.getElapsedTime() << " (s) " << "   status : " << solution.getStatus() << " \n\n";
+
+
+      /*if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
 
       else if(params.algorithm == Algorithm::BranchAndBound){
 
@@ -63,7 +76,7 @@
          #if USE_MILP
          runMilpSolver(params);
          #endif
-      }
+      }*/
 
    
          
