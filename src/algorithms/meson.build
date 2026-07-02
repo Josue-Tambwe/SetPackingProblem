@@ -13,6 +13,7 @@ subdir('greedy')
 subdir('localSearch')
 subdir('branchAndBound')
 subdir('milpSolver')
+subdir('grasp')
 
 # all source files of the algorithm subdirectory 
-algorithm_sources = greedy_sources + local_search_sources + BaB_sources + milp_solver_sources
+algorithm_sources = greedy_sources + local_search_sources + BaB_sources + milp_solver_sources + grasp_sources

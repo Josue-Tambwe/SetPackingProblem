@@ -34,6 +34,7 @@
    #include "algorithms/milpSolver/HighsBackend.hpp" // to remove
    #include "algorithms/milpSolver/HexalyBackend.hpp" // to remove
    #include "algorithms/greedy/RandomizedConstruction.hpp" // to remove
+   #include "algorithms/grasp/ReactiveGRASP.hpp" // to remove
 
    #if USE_BRANCH_AND_BOUND
    #include "algorithms/branchAndBound/RunBranchAndBound.hpp"
@@ -53,11 +54,13 @@
 
       Timer timer;
 
-      float alpha = 0.0f;
+      float alpha = 1.0f;
 
       // construction
         timer.start();
-        Solution solution = randomizedConstruction(alpha, instance);
+        Solution solution = constructAndImproveSolution(alpha, 
+                                                        params, 
+                                                        instance);
         solution.print(instance);
         std::cout << " time : " << timer.getElapsedTime() << " (s) " << "   status : " << solution.getStatus() << " \n\n";
 

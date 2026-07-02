@@ -110,8 +110,8 @@ namespace spp{
 
     void updateSolutionRandomizedConstruction(int selected_var,
                                               std::unordered_set<int> &free_variables,
-                                              spp::Solution &solution,
-                                              const spp::Instance &instance){
+                                              Solution &solution,
+                                              const Instance &instance){
 
         // setting the selected variable to 'one'
         solution.activateVar(selected_var, instance);
@@ -125,7 +125,7 @@ namespace spp{
 
 
 
-    spp::Solution randomizedConstruction(float alpha, const spp::Instance &instance){
+    Solution randomizedConstruction(float alpha, const Instance &instance){
 
         // initialization
         std::vector<float> scores = computeScore(instance);
