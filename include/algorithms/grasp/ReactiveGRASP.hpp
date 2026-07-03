@@ -30,6 +30,8 @@
 #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
 #include <array>
 #include <vector> 
+#include <algorithm>
+#include <cstdint>
 
 
 namespace spp{
@@ -48,6 +50,49 @@ namespace spp{
     Solution constructAndImproveSolution(float alpha, 
                                          const Params &params, 
                                          const Instance &instance);
+
+
+    
+
+    /**
+     * @brief computes the array of the alpha values cumulative probabilities
+     */
+    std::array<float, 10> computeAlphaCumulativeProbabilities(const std::array<float, 10> &alpha_probabilities);
+
+
+
+
+    /**
+     * @brief selects randomdly the index of an alpha value using the alpha values cumulative  distribution
+     */
+    size_t selectAlphaIndexRandomly(const std::array<float, 10> &cumulative_probabilities);
+
+
+
+    /**
+     * @brief performs iterations (construction + local search) for a single CPU thread and return the best solution found
+     */
+    Solution runThreadIterations(const std::array<float, 10> &alpha_probabilities,
+                                 std::array<float, 10> &alpha_maximum_scores,
+                                 const int nb_iterations,
+                                 const Params &params,
+                                 const Instance &instance);
+
+
+
+    /**
+     * @brief synchornizes the alpha values maximum scores across all CPU threads
+     */
+    std::array<float, 10> synchronizeAlphaMaximumScores(const std::vector<std::array<float, 10>> &all_alpha_maximum_scores);
+
+
+
+
+    /**
+     * @brief synchronizes best solutions across all CPU threads
+     */
+    Solution synchronizeBestSolutions(const std::vector<Solution> &best_solutions, 
+                                      const Instance &instance);
 
 
 }
