@@ -76,6 +76,7 @@
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the greedy algorithm! ");}
+            if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -96,6 +97,7 @@
             if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the bab algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
+            if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the bab algorithm! ");}
         }
 
     }
@@ -118,6 +120,7 @@
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the milp algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+            if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the milp algorithm! ");}
         }
 
     }
@@ -252,6 +255,15 @@
                     if(params.optimality_gap < 0.0 || params.optimality_gap > 1.0){
 
                         log.error(" gap must be in the interval [0,1]");
+                    }
+                    continue;
+                }
+
+                if(name == "--biais"){
+                    params.biais = std::stod(value);
+                    if(params.biais < 0.0 || params.biais > 1.0){
+
+                        log.error(" biais must be in the interval [0,1]");
                     }
                     continue;
                 }

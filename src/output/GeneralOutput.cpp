@@ -62,13 +62,13 @@
         std::cout << " Optional options:\n" << " " << std::string(17, '-') << "\n\n"
 
                 << "  "  << "--nb-threads=value" << std::string(9, ' ')
-                << "Number of threads (default: number of physical CPU cores)\n \n"
+                << "Number of threads to use (default: number of physical CPU cores)\n \n"
 
                 << "  " << "--simd" << std::string(21, ' ')
                 << "Enable SIMD-accelerated kernels (AVX2/NEON)\n \n"
 
                 << "  " << "--warm-start" << std::string(15, ' ')
-                << "Provide a feasible starting point for the MILP resolution\n \n"
+                << "Provide a feasible starting point for the MILP resolution approach\n \n"
 
                 << "  " << "--verbose" << std::string(18, ' ')
                 << "Enable verbose mode\n \n"
@@ -89,7 +89,11 @@
                 << "Target optimality gap in [0,1] for the Branch and Bound algorithm (default: 0.0)\n \n"
 
                 << "  "  << "--iterations=value" << std::string(9, ' ')
-                << "Set the number of iterations for GRASP, Genetic Algorithm, Simulated Annealing and Tabu Search\n \n";    
+                << "Number of iterations for GRASP, Genetic Algorithm, Simulated Annealing and Tabu Search\n \n"
+                
+                << "  "  << "--biais=value" << std::string(14, ' ')
+                << "Biais factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
+
     }
 
 

@@ -43,5 +43,6 @@
         warm_start = false;
         branching_value = 0.0;
         optimality_gap = 0.0;
+        biais = 0.0;
     }
  }

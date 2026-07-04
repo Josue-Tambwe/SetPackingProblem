@@ -67,6 +67,9 @@
         double branching_value;
         double optimality_gap;
 
+        // GRASP 
+        double biais;
+
 
 
     };
