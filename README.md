@@ -76,7 +76,7 @@ All benchmark instances used in this project come from the well‑known **Set Pa
 
 [Benchmark SPP – Delorme & Gandibleux](https://www.emse.fr/%7Edelorme/SetPacking.html#BOSPP)
 
-This dataset is widely used in the literature for evaluating heuristics, metaheuristics, and exact methods for the **Set Packing Problem**.  
+This dataset is widely used in the literature for evaluating heuristics, metaheuristics and exact methods for the **Set Packing Problem**.  
 It contains **64 mono‑objective instances**, generated with controlled parameters (number of variables, number of constraints, density, and maximum number of non‑zero coefficients per constraint).  
 These instances range from **small and easy** (100 variables) to **very large and challenging** (2000 variables and up to 10 000 constraints).
 
