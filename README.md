@@ -61,7 +61,7 @@ These interfaces build the SPP model, call the solver and then extract the resul
 
 ## 10. High‑Performance Computing (HPC) Enhancements
 
-Since both the decision variables and the constraint matrix are purely binary, the solver uses a **compact BitVector representation** to encode solutions and conflicts efficiently.
+Since both the decision variables and the constraint matrix are purely binary, the solver uses a **compact BitVector representation** to efficiently encode solutions and conflicts.
 This enables fast bitwise operations for feasibility checks and neighborhood evaluation.
 
 To further accelerate computation, the solver integrates **SIMD (Single Instruction, Multiple Data)** vectorization, **loop unrolling** and **CPU multi‑threading**.
