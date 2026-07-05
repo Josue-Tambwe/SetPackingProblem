@@ -286,6 +286,14 @@
             log.error(" Hexaly must not be used for linear relaxation in the Branch And Bound algorithm! "); 
         }
 
+        if(params.algorithm == Algorithm::Milp && !params.warm_start){
+
+            if(params.use_simd){log.error(" --simd must not be used when --warm-start is not enabled in the milp algorithm! ");}
+
+            if(params.use_intensification){log.error(" --intensification must not be used when --warm-start is not enabled in the milp algorithm! ");}
+
+        }
+
         /*if(params.algorithm == gap::Algorithm::AntColonyOptimizer){unsupportedOptionsACO(argc, argv);}
 
         if(params.algorithm == gap::Algorithm::BranchAndBound){unsupportedOptionsBaB(argc, argv);}

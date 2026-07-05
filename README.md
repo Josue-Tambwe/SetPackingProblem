@@ -244,7 +244,7 @@ The executable is located in the **bin/** directory after installation.
 ## Run MILP Backend Solvers
 
 ```bash
-./bin/spp_solver --algorithm=milp --instance=benchmarks/pb_1000rnd0700.dat  --solver=hexaly --intensification  --simd  --time-limit=30 
+./bin/spp_solver --algorithm=milp --instance=benchmarks/pb_1000rnd0700.dat  --solver=hexaly --time-limit=30 
 ```
 
 - **--solver** (mandatory) : Selects the solver for the Linear Relaxation (Gurobi, Hexaly or Highs) .
@@ -257,7 +257,7 @@ The executable is located in the **bin/** directory after installation.
 >This feature was implemented to evaluate whether providing a warm start could help the solver prune suboptimal branches earlier and accelerate the search.
 
 
-- additional options : **--simd** and **--intensification**
+- additional options : **--simd** and **--intensification** only when **--warm-start** option is enabled
 
 ![](docs/images/run_milp.png)
 
