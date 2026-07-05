@@ -54,7 +54,7 @@ The search is warm‑started using the **deterministic greedy construction with 
 
 ## 9. MILP Solvers interfaces
 
-This project includes lightweight interfaces to **HiGHS**, **Gurobi** and **Hexaly** for solving the Set Packing Problem as a MILP.  
+This project includes lightweight interfaces to **HiGHS**, **Gurobi** and **Hexaly** for solving the Set Packing Problem as a Mixed-Integer Linear Program (MILP).  
 These interfaces build the SPP model, call the solver and then extract the resulting solution.
 
 
