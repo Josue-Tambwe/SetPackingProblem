@@ -81,22 +81,20 @@ namespace spp{
 
 
 
-    Solution runThreadIterations(const std::array<float, 10> &alpha_probabilities,
-                                 std::array<float, 10> &alpha_maximum_scores,
-                                 const int nb_iterations,
-                                 const Params &params,
-                                 const Instance &instance){
+    void runSingleThreadIterations(const std::array<float, 10> &alpha_probabilities,
+                                    std::array<float, 10> &alpha_maximum_scores,
+                                    const int nb_iterations,
+                                    std::vector<Solution> &all_best_solutions,
+                                    int thread_id,
+                                    const Params &params,
+                                    const Instance &instance){
 
         std::array<float, 10> cumulative_probabilities = computeAlphaCumulativeProbabilities(alpha_probabilities);
         size_t alpha_index = selectAlphaIndexRandomly(cumulative_probabilities);
         float alpha = alpha_values[alpha_index];
-
-
+        
         // initialization of the best solution
-        Solution best_solution = constructAndImproveSolution(alpha, 
-                                                             params, 
-                                                             instance);
-
+        Solution best_solution = all_best_solutions[thread_id];
         std::int64_t best_solution_objective_value = best_solution.getObjectiveValue(instance);
 
         // update of the maximum alpha value score
@@ -127,7 +125,8 @@ namespace spp{
             }
         }
 
-        return best_solution;
+        all_best_solutions[thread_id] = best_solution;
+
 
     }
 
@@ -153,15 +152,15 @@ namespace spp{
 
 
 
-    Solution synchronizeBestSolutions(const std::vector<Solution> &best_solutions, 
+    Solution synchronizeBestSolutions(const std::vector<Solution> &all_best_solutions, 
                                       const Instance &instance){
 
-        Solution elite_solution = best_solutions[0];
+        Solution elite_solution = all_best_solutions[0];
         std::int64_t elite_solution_objective_value = elite_solution.getObjectiveValue(instance);
 
-        for(size_t i = 1; i < best_solutions.size(); i++){
+        for(size_t i = 1; i < all_best_solutions.size(); i++){
 
-            Solution current_solution = best_solutions[i];
+            Solution current_solution = all_best_solutions[i];
             std::int64_t current_solution_objective_value = current_solution.getObjectiveValue(instance);
 
             if(current_solution_objective_value > elite_solution_objective_value){
@@ -172,6 +171,123 @@ namespace spp{
         }
 
         return elite_solution;
+    }
+
+
+
+
+    float findMinimumScore(const std::array<float, 10> &alpha_maximum_scores){
+
+        float min_score = alpha_maximum_scores[0];
+
+        for(size_t i = 1; i < alpha_maximum_scores.size(); i++){
+
+            min_score = std::min(min_score, alpha_maximum_scores[i]);
+        }
+
+        return min_score;
+    }
+
+
+
+
+    void computeBiaisedScores(std::array<float, 10> &alpha_maximum_scores, 
+                              const Params &params){
+
+        float min_score = findMinimumScore(alpha_maximum_scores);
+
+        for(size_t i = 0; i < alpha_maximum_scores.size(); i++){
+
+            alpha_maximum_scores[i] = (alpha_maximum_scores[i] * (2.0f - params.biais)) - min_score;
+
+        }
+    }
+
+
+
+
+
+    float computeInverseCumulativeScore(const std::array<float, 10> &alpha_maximum_scores){
+
+        float cumulative_score = alpha_maximum_scores[0];
+
+        for(size_t i = 1; i < alpha_maximum_scores.size(); i++){
+
+            cumulative_score += alpha_maximum_scores[i];
+        }
+
+        return (1.0f / (cumulative_score + epsilon));
+
+    }
+
+
+
+
+
+    void updateAlphaProbabilities(std::array<float, 10> &alpha_maximum_scores, 
+                                  std::array<float, 10> &alpha_probabilities,
+                                  const Params &params){
+
+        computeBiaisedScores(alpha_maximum_scores, params);
+        float inverse_cumaltive_score = computeInverseCumulativeScore(alpha_maximum_scores);
+
+        for(size_t i = 0; i < alpha_maximum_scores.size(); i++){
+
+            alpha_probabilities[i] = alpha_maximum_scores[i] * inverse_cumaltive_score;
+        }
+
+
+    }
+
+
+
+
+    Solution runMultiThreadIterations(std::array<float, 10> &alpha_probabilities,
+                                      std::array<float, 10> &alpha_maximum_scores,
+                                      Solution &best_solution,
+                                      const Params &params,
+                                      const Instance &instance){
+
+        // initialization
+        int work_size = static_cast<int>(params.update_interval);
+        int nb_threads_used = std::min(params.nb_threads, work_size);
+        std::vector<std::thread> workers(nb_threads_used);
+
+        std::vector<Solution> all_best_solutions(nb_threads_used, best_solution);
+        std::vector<std::array<float, 10>> all_alpha_maximum_scores(nb_threads_used, alpha_maximum_scores);
+
+        for(int id = 0; id < nb_threads_used; id++){
+
+            int start = start_index(id, work_size, nb_threads_used);
+            int end = end_index(id, work_size, nb_threads_used);
+
+            int nb_thread_iterations = (end - start) + 1; 
+
+            workers[id] = std::thread(runSingleThreadIterations,
+                                      std::ref(alpha_probabilities),
+                                      std::ref(all_alpha_maximum_scores[id]),
+                                      nb_thread_iterations,
+                                      std::ref(all_best_solutions),
+                                      id,
+                                      std::ref(params),
+                                      std::ref(instance));
+        }
+
+        // waiting for all threads to finish
+        for(auto &worker : workers){worker.join();}
+
+
+        // synchronization
+        Solution elite_solution = synchronizeBestSolutions(all_best_solutions, instance);
+        alpha_maximum_scores = synchronizeAlphaMaximumScores(all_alpha_maximum_scores);
+
+        // alpha probabilities update
+        updateAlphaProbabilities(alpha_maximum_scores, 
+                                 alpha_probabilities,
+                                 params);
+
+        return elite_solution;
+
     }
 
 

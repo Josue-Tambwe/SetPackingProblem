@@ -33,6 +33,7 @@
         // constructor
         Params();
 
+
         // destructor
         ~Params() = default;
 
@@ -69,6 +70,7 @@
 
         // GRASP 
         double biais;
+        size_t update_interval;
 
 
 

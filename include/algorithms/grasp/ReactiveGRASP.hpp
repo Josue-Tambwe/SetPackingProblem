@@ -28,6 +28,7 @@
 #include "output/Logger.hpp"
 #include "algorithms/greedy/RandomizedConstruction.hpp"
 #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
+#include "hpc/thread/Thread.hpp"
 #include <array>
 #include <vector> 
 #include <algorithm>
@@ -72,11 +73,13 @@ namespace spp{
     /**
      * @brief performs iterations (construction + local search) for a single CPU thread and return the best solution found
      */
-    Solution runThreadIterations(const std::array<float, 10> &alpha_probabilities,
-                                 std::array<float, 10> &alpha_maximum_scores,
-                                 const int nb_iterations,
-                                 const Params &params,
-                                 const Instance &instance);
+    void runSingleThreadIterations(const std::array<float, 10> &alpha_probabilities,
+                                    std::array<float, 10> &alpha_maximum_scores,
+                                    const int nb_iterations,
+                                    std::vector<Solution> &all_best_solutions,
+                                    int thread_id,
+                                    const Params &params,
+                                    const Instance &instance);
 
 
 
@@ -91,7 +94,56 @@ namespace spp{
     /**
      * @brief synchronizes best solutions across all CPU threads
      */
-    Solution synchronizeBestSolutions(const std::vector<Solution> &best_solutions, 
+    Solution synchronizeBestSolutions(const std::vector<Solution> &all_best_solutions, 
+                                      const Instance &instance);
+
+
+
+    /**
+     * @brief finds the lowest alpha value score
+     */
+    float findMinimumScore(const std::array<float, 10> &alpha_maximum_scores);
+
+
+
+
+
+    /**
+     * @brief computes computes biaised scores that emphasize the highest values.
+     */
+    void computeBiaisedScores(std::array<float, 10> &alpha_maximum_scores, 
+                              const Params &params);
+
+
+
+
+
+    /**
+     * @brief computes the inverse cumulative score in order to nomarlize scores
+     */
+    float computeInverseCumulativeScore(const std::array<float, 10> &alpha_maximum_scores);
+
+
+
+
+
+    /**
+     * @brief updates alpha values probabilities after a complete iteration of the GRASP algorithm 
+     */
+    void updateAlphaProbabilities(std::array<float, 10> &alpha_maximum_scores, 
+                                  std::array<float, 10> &alpha_probabilities,
+                                  const Params &params);
+
+
+
+
+    /**
+     * @brief performs iterations (construction + local search) for multiple CPU thread and updates alpha probabilities
+     */
+    Solution runMultiThreadIterations(std::array<float, 10> &alpha_probabilities,
+                                      std::array<float, 10> &alpha_maximum_scores,
+                                      Solution &best_solution,
+                                      const Params &params,
                                       const Instance &instance);
 
 

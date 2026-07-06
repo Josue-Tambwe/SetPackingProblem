@@ -41,57 +41,60 @@
 
     void printRequiredOptions(){
 
-        std::cout << " Required options:\n" << " " << std::string(17, '-') << "\n\n"
+        std::cout << " Required options:\n" << " " << std::string(16, '-') << "\n\n"
 
-                  << "  "  << "--algorithm=value" << std::string(5, ' ')
+                  << "  "  << "--algorithm=value" << std::string(11, ' ')
                   << "Algorithm to use (values: bab, genetic, grasp, greedy, milp, sa, ts)\n \n"
 
-                  << "  "  << "--instance=path" << std::string(7, ' ')
+                  << "  "  << "--instance=path" << std::string(13, ' ')
                   << "Path to the instance file\n\n"
 
-                  << "  " << "--pop-size=value" << std::string(6, ' ')
+                  << "  " << "--update-interval=value" << std::string(5, ' ')
+                  << "Number of iterations before updating alpha probabilities for the GRASP Algorithm \n\n"
+
+                  << "  " << "--pop-size=value" << std::string(12, ' ')
                   << "Population size for the Genetic Algorithm \n\n"
 
-                  << "  " << "--solver=value" << std::string(8, ' ')
+                  << "  " << "--solver=value" << std::string(14, ' ')
                   << "Solver backend to use (values: gurobi, highs, hexaly). Hexaly is only used for a MILP resolution approach \n\n\n";
     }
 
 
     void printOptionalOptions(){
 
-        std::cout << " Optional options:\n" << " " << std::string(17, '-') << "\n\n"
+        std::cout << " Optional options:\n" << " " << std::string(18, '-') << "\n\n"
 
-                << "  "  << "--nb-threads=value" << std::string(9, ' ')
+                << "  "  << "--nb-threads=value" << std::string(10, ' ')
                 << "Number of threads to use (default: number of physical CPU cores)\n \n"
 
-                << "  " << "--simd" << std::string(21, ' ')
+                << "  " << "--simd" << std::string(22, ' ')
                 << "Enable SIMD-accelerated kernels (AVX2/NEON)\n \n"
 
-                << "  " << "--warm-start" << std::string(15, ' ')
+                << "  " << "--warm-start" << std::string(16, ' ')
                 << "Provide a feasible starting point for the MILP resolution approach\n \n"
 
-                << "  " << "--verbose" << std::string(18, ' ')
+                << "  " << "--verbose" << std::string(19, ' ')
                 << "Enable verbose mode\n \n"
 
-                << "  " << "--intensification" << std::string(10, ' ')
+                << "  " << "--intensification" << std::string(11, ' ')
                 << "Enable an intensified Variable Neighborhood Descent local search\n \n"
 
-                << "  "  << "--time-limit=value" << std::string(9, ' ')
+                << "  "  << "--time-limit=value" << std::string(10, ' ')
                 << "Set the time limit in seconds (default: 10)\n \n"
 
-                << "  "  << "--branching-rule=value" << std::string(5, ' ')
+                << "  "  << "--branching-rule=value" << std::string(6, ' ')
                 << "Branching rule strategy for the Branch and Bound algorithm (values: one, zero, fractional)\n \n"
 
-                << "  "  << "--exploration=value" << std::string(8, ' ')
+                << "  "  << "--exploration=value" << std::string(9, ' ')
                 << "Node exploration strategy for the Branch and Bound algorithm (values: bfs, dfs)\n \n"
 
-                << "  "  << "--gap=value" << std::string(16, ' ')
+                << "  "  << "--gap=value" << std::string(17, ' ')
                 << "Target optimality gap in [0,1] for the Branch and Bound algorithm (default: 0.0)\n \n"
 
-                << "  "  << "--iterations=value" << std::string(9, ' ')
+                << "  "  << "--iterations=value" << std::string(10, ' ')
                 << "Number of iterations for GRASP, Genetic Algorithm, Simulated Annealing and Tabu Search\n \n"
                 
-                << "  "  << "--biais=value" << std::string(14, ' ')
+                << "  "  << "--biais=value" << std::string(15, ' ')
                 << "Biais factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
 
     }

@@ -30,6 +30,7 @@
         bool has_algorithm = false;
         bool has_instance = false;
         bool use_milp_solver = false;
+        bool has_update_interval = false;
         
 
         for(int i = 1; i < argc; i++){
@@ -38,6 +39,7 @@
             if (arg.find("--instance=") == 0) {has_instance = true;}
             if (arg.find("--algorithm=") == 0) {has_algorithm = true;}
             if (arg.find("--solver=") == 0) {use_milp_solver = true;}
+            if (arg.find("--update-interval=") == 0) {has_update_interval = true;}
         }
 
         if(!has_algorithm){log.error(" Missing required option : --algorithm=value");}
@@ -49,6 +51,12 @@
             !use_milp_solver){
 
             log.error(" Missing required option : --solver=value");
+
+        }
+
+        if(params.algorithm == Algorithm::Grasp && !has_update_interval){
+
+            log.error(" Missing required option : --update-interval=value");
 
         }
 
@@ -77,6 +85,7 @@
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the greedy algorithm! ");}
             if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the greedy algorithm! ");}
+            if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -98,6 +107,7 @@
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
             if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the bab algorithm! ");}
+            if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the bab algorithm! ");}
         }
 
     }
@@ -121,6 +131,7 @@
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
             if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the milp algorithm! ");}
+            if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the milp algorithm! ");}
         }
 
     }
@@ -198,6 +209,13 @@
                     continue;
                 }
 
+
+
+                if(name == "--update-interval"){
+                    params.update_interval = std::stoi(value);
+                    if(params.update_interval < 1){log.error(" update-interval must be >= 1");}
+                    continue;
+                }
 
 
                 
