@@ -89,7 +89,6 @@ namespace spp{
                 elite_objective_value = best_solution_objective_value;
             }
 
-
             current_iteration += 1;
         }
 
