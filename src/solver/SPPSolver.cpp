@@ -35,6 +35,7 @@
    #include "algorithms/milpSolver/HexalyBackend.hpp" // to remove
    #include "algorithms/greedy/RandomizedConstruction.hpp" // to remove
    #include "algorithms/grasp/ReactiveGRASP.hpp" // to remove
+   #include "algorithms/grasp/RunGRASP.hpp"
 
    #if USE_BRANCH_AND_BOUND
    #include "algorithms/branchAndBound/RunBranchAndBound.hpp"
@@ -52,20 +53,9 @@
       const Params params = parseOptions(argc, argv);
       const Instance instance(params);
 
-      //Timer timer;
+      if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
 
-      //float alpha = 1.0f;
-
-      /*// construction
-        timer.start();
-        Solution solution = constructAndImproveSolution(alpha, 
-                                                        params, 
-                                                        instance);
-        solution.print(instance);
-        std::cout << " time : " << timer.getElapsedTime() << " (s) " << "   status : " << solution.getStatus() << " \n\n";*/
-
-
-      /*if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
+      else if(params.algorithm == Algorithm::Grasp){runReactiveGRASP(params);}
 
       else if(params.algorithm == Algorithm::BranchAndBound){
 
@@ -79,7 +69,7 @@
          #if USE_MILP
          runMilpSolver(params);
          #endif
-      }*/
+      }
 
    
          

@@ -71,6 +71,7 @@
         // GRASP 
         double biais;
         size_t update_interval;
+        bool use_path_relinking;
 
 
 

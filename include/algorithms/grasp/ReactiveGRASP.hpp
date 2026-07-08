@@ -46,11 +46,20 @@ namespace spp{
 
 
     /**
-     * @brief generates a solution by a greedy randomized construction and a Variable Neighboorhood Descent local search
+     * @brief generates a solution by a greedy randomized construction and a Variable Neighboorhood Descent (VND) local search
      */
     Solution constructAndImproveSolution(float alpha, 
                                          const Params &params, 
                                          const Instance &instance);
+
+
+
+
+    /**
+     * @brief provides an initial elite solution by a greedy randomized construction and VND
+     */
+    Solution initializeEliteSolution(const Params &params, 
+                                     const Instance &instance);
 
 
     

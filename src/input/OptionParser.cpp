@@ -82,10 +82,12 @@
             if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the greedy algorithm! ");}
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the greedy algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
+            if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the greedy algorithm! ");}
             if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the greedy algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the greedy algorithm! ");}
+            if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -105,9 +107,11 @@
 
             if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the bab algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
+            if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
             if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the bab algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the bab algorithm! ");}
+            if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the bab algorithm! ");}
         }
 
     }
@@ -123,8 +127,7 @@
 
             std::string arg = argv[i];
 
-            if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
-            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+            if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the milp algorithm! ");}
             if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the milp algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the milp algorithm! ");}
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the milp algorithm! ");}
@@ -132,6 +135,28 @@
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
             if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the milp algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the milp algorithm! ");}
+            if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the milp algorithm! ");}
+        }
+
+    }
+
+
+
+
+    void unsupportedOptionsGRASP(int argc, char** argv){
+        
+        Logger log; 
+
+        for(int i = 1; i < argc; i++){
+
+            std::string arg = argv[i];
+
+            if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the grasp algorithm! ");}
+            if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the grasp algorithm! ");}
+            if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the grasp algorithm! ");}
+            if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the grasp algorithm! ");}
+            if (arg.find("--solver=") == 0) {log.error(" --solver option is not supported by the grasp algorithm! ");}
+            if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the grasp algorithm! ");}
         }
 
     }
@@ -163,6 +188,7 @@
                 if(arg == "--simd"){params.use_simd = true; continue;}
                 if(arg == "--intensification"){params.use_intensification = true; continue;}
                 if(arg == "--warm-start"){params.warm_start = true; continue;}
+                if(arg == "--path-relinking"){params.use_path_relinking = true; continue;}
 
                 else{log.error(" Unknown flag: " + arg);}
             }
@@ -205,6 +231,14 @@
                 if(name == "--iterations"){
                     params.nb_max_iterations = std::stoi(value);
                     if(params.nb_max_iterations < 1){log.error(" iterations must be >= 1");}
+                    params.use_max_iterations = true;
+                    continue;
+                }
+
+
+                if(name == "--nb-cycles"){
+                    params.nb_max_iterations = std::stoi(value);
+                    if(params.nb_max_iterations < 1){log.error(" nb-cycles must be >= 1");}
                     params.use_max_iterations = true;
                     continue;
                 }
@@ -295,8 +329,12 @@
         }
 
         if(params.algorithm == Algorithm::Greedy){unsupportedOptionsGreedy(argc, argv);}
+
         else if(params.algorithm == Algorithm::BranchAndBound){unsupportedOptionsBaB(argc, argv);}
+
         else if(params.algorithm == Algorithm::Milp){unsupportedOptionsMilp(argc, argv);}
+
+        else if(params.algorithm == Algorithm::Grasp){unsupportedOptionsGRASP(argc, argv);}
 
         if(params.algorithm == Algorithm::BranchAndBound &&
            params.milp_solver == 'x'){

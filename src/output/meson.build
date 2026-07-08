@@ -15,4 +15,5 @@ output_sources = files('Logger.cpp',
                        'GeneralOutput.cpp',
                        'GreedyOutput.cpp',
                        'BranchAndBoundOutput.cpp',
-                       'MilpSolverOutput.cpp')
+                       'MilpSolverOutput.cpp',
+                       'GRASPOutput.cpp')

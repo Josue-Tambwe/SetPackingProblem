@@ -64,9 +64,6 @@
 
         std::cout << " Optional options:\n" << " " << std::string(18, '-') << "\n\n"
 
-                << "  "  << "--nb-threads=value" << std::string(10, ' ')
-                << "Number of threads to use (default: number of physical CPU cores)\n \n"
-
                 << "  " << "--simd" << std::string(22, ' ')
                 << "Enable SIMD-accelerated kernels (AVX2/NEON)\n \n"
 
@@ -78,6 +75,12 @@
 
                 << "  " << "--intensification" << std::string(11, ' ')
                 << "Enable an intensified Variable Neighborhood Descent local search\n \n"
+
+                << "  " << "--path-relinking" << std::string(12, ' ')
+                << "Enable the Path-Relinking procedure to intensify the GRASP algorithm\n \n"
+
+                << "  "  << "--nb-threads=value" << std::string(10, ' ')
+                << "Number of threads to use (default: number of physical CPU cores)\n \n"
 
                 << "  "  << "--time-limit=value" << std::string(10, ' ')
                 << "Set the time limit in seconds (default: 10)\n \n"
@@ -92,7 +95,10 @@
                 << "Target optimality gap in [0,1] for the Branch and Bound algorithm (default: 0.0)\n \n"
 
                 << "  "  << "--iterations=value" << std::string(10, ' ')
-                << "Number of iterations for GRASP, Genetic Algorithm, Simulated Annealing and Tabu Search\n \n"
+                << "Number of iterations for Genetic Algorithm, Simulated Annealing and Tabu Search\n \n"
+
+                << "  "  << "--nb-cycles=value" << std::string(11, ' ')
+                << "Number of cycles for GRASP. Each cycle runs update-interval iterations before updating alpha probabilities\n \n"
                 
                 << "  "  << "--biais=value" << std::string(15, ' ')
                 << "Biais factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
@@ -106,7 +112,7 @@
         std::cout << " Examples:\n" << " " << std::string(9, '-') << "\n\n"
 
             << "    ./bin/spp_solver --algorithm=greedy "
-            << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --simd\n\n"
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --simd  --verbose\n\n"
 
             << "    ./bin/spp_solver --algorithm=bab "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --solver=gurobi --exploration=dfs\n\n"

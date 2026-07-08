@@ -42,6 +42,23 @@ namespace spp{
 
 
 
+    Solution initializeEliteSolution(const Params &params, 
+                                     const Instance &instance){
+
+        // initialization of the thread random number generator (rng)
+        auto& rng = getThreadLocalRng();
+        std::uniform_real_distribution<float> dist(0.0f, 1.0f);
+        float alpha = dist(rng);
+
+        return constructAndImproveSolution(alpha, 
+                                           params, 
+                                           instance);
+
+    }
+
+
+
+
     std::array<float, 10> computeAlphaCumulativeProbabilities(const std::array<float, 10> &alpha_probabilities){
 
         std::array<float, 10> cumulative_probabilities{};

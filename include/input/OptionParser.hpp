@@ -59,6 +59,14 @@
 
 
 
+
+     /**
+    * @brief checks that no unsupported options are given for the GRASP algorithm
+    */
+    void unsupportedOptionsGRASP(int argc, char** argv);
+
+
+
     /**
     * @brief performs the parsing of all options given by the user
     */
