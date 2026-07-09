@@ -159,16 +159,19 @@ namespace spp{
                 // line 1
                 std::cout << "  " << std::setw(25) << std::left << "time (s)"
                         << std::setw(2) << std::right << " : " 
-                        <<  std::setw(16) << std::left << std::fixed << std::setprecision(4) 
+                        <<  std::setw(21) << std::left << std::fixed << std::setprecision(3) 
                         << current_time
 
                         << std::setw(3) << std::left << " "
-                        << std::setw(20) << std::left << "alpha values"
+                        << std::setw(13) << std::left << "alpha values"
                         << std::setw(2) << std::right << " : ";
 
                 for(float alpha : alpha_values){
 
-                        std::cout << std::fixed << std::setprecision(2) << alpha << " | ";
+                        std::cout << YELLOW
+                        << std::fixed << std::setprecision(1) << alpha
+                        << RESET 
+                        << "  | ";
                 }
 
                         
@@ -178,15 +181,26 @@ namespace spp{
                 std::cout << "  " << std::setw(25) << std::left << "iteration"
                         << std::setw(2) << std::right << " : " 
                         <<  std::setw(16) <<  std::left <<  current_iteration
+
+                        << std::setw(24) << std::left << " "
+                        << std::string(69, '-')
+
                         <<  "\n";
 
                 // line 3
                 std::cout << "  " << std::setw(25) << std::left << "elite objective value"
                         << std::setw(2) << std::right << " : " 
                         <<  BRIGHT_YELLOW 
-                        << std::setw(16) <<  std::left <<  elite_objective_value 
+                        << std::setw(21) <<  std::left <<  elite_objective_value 
                         << RESET
-                        <<  "\n\n\n";
+
+                        << std::setw(3) << std::left << " "
+                        << std::setw(13) << std::left << "probabilities"
+                        << std::setw(2) << std::right << " : ";
+                
+                for(float proba : alpha_probabilities){std::cout << std::fixed << std::setprecision(2) << proba << " | ";}
+
+                std::cout <<  "\n\n\n";
 
         }
 
@@ -204,16 +218,19 @@ namespace spp{
                 // line 1
                 std::cout << "  " << std::setw(25) << std::left << "time (s)"
                         << std::setw(2) << std::right << " : " 
-                        <<  std::setw(16) <<  std::left << std::fixed << std::setprecision(4) 
+                        <<  std::setw(21) <<  std::left << std::fixed << std::setprecision(3) 
                         << current_time
 
                         << std::setw(3) << std::left << " "
-                        << std::setw(20) << std::left << "alpha values"
+                        << std::setw(13) << std::left << "alpha values"
                         << std::setw(2) << std::right << " : ";
 
                 for(float alpha : alpha_values){
 
-                        std::cout << std::fixed << std::setprecision(2) << alpha << " | ";
+                        std::cout << YELLOW
+                        << std::fixed << std::setprecision(1) << alpha
+                        << RESET 
+                        << "  | ";
                 }
 
                 std::cout <<  "\n";
@@ -222,15 +239,28 @@ namespace spp{
                 std::cout << "  " << std::setw(25) << std::left << "iteration"
                         << std::setw(2) << std::right << " : " 
                         <<  std::setw(16) <<  std::left <<  current_iteration
+
+                        << std::setw(24) << std::left << " "
+                        << std::string(69, '-')
+
+
                         <<  "\n";
 
                 // line 3
                 std::cout << "  " << std::setw(25) << std::left << "elite objective value"
                         << std::setw(2) << std::right << " : " 
                         <<  BRIGHT_YELLOW 
-                        << std::setw(16) <<  std::left <<  elite_objective_value 
+                        << std::setw(21) <<  std::left <<  
+                        std::max(elite_objective_value, local_best_solution_objective_value)
                         << RESET
-                        <<  "\n";
+
+                        << std::setw(3) << std::left << " "
+                        << std::setw(13) << std::left << "probabilities"
+                        << std::setw(2) << std::right << " : ";
+
+                for(float proba : alpha_probabilities){std::cout << std::fixed << std::setprecision(2) << proba << " | ";}
+
+                std::cout <<  "\n";
 
                 double improvement_gap = ((local_best_solution_objective_value - elite_objective_value) * 100.0) / (elite_objective_value + 1e-9);
                 improvement_gap = std::max(0.0, improvement_gap);

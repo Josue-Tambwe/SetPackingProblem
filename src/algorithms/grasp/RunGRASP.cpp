@@ -58,9 +58,6 @@ namespace spp{
         Solution elite_solution = initializeEliteSolution(params, instance);
         std::int64_t elite_objective_value = elite_solution.getObjectiveValue(instance);
 
-        // initialization of alpha values scores
-        std::array<float, 10> alpha_maximum_scores{};
-
         // initialization of alpha values probailities (1/10 for each alpha value)
         std::array<float, 10> alpha_probabilities;
         alpha_probabilities.fill(0.1f);
@@ -77,7 +74,6 @@ namespace spp{
         while(!stoppingCriteriaGRASP(timer.getElapsedTime(), current_iteration, params)){
 
             Solution best_solution = runMultiThreadIterations(alpha_probabilities,
-                                                              alpha_maximum_scores,
                                                               elite_solution,
                                                               params,
                                                               instance);

@@ -24,11 +24,11 @@
  #include "dataStructures/Parameters.hpp"
  #include "output/Logger.hpp"
  #include "dataStructures/BitVector.hpp"
- #include <vector>
  #include <iostream>
  #include <iomanip>
  #include <fstream>
  #include <vector>
+ #include <unordered_set>
  #include <string>
  #include <limits>
 
