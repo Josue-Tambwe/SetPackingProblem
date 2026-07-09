@@ -27,6 +27,9 @@
 #include <string>
 #include <iomanip>
 #include <cmath>
+#include <array>
+#include <cstdint>
+#include <algorithm>
 
 
 namespace spp{
@@ -34,4 +37,25 @@ namespace spp{
 
     void printHeaderGRASP(const Params &params, 
                           const Instance &instance);
+
+
+
+
+
+    void printGRASPInitialElite(double current_time, 
+                                size_t current_iteration,
+                                std::int64_t elite_objective_value,
+                                const std::array<float, 10> &alpha_values,
+                                const std::array<float, 10> &alpha_probabilities);
+
+
+
+
+
+    void printGRASPIteration(double current_time, 
+                             size_t current_iteration,
+                             std::int64_t elite_objective_value,
+                             std::int64_t local_best_solution_objective_value,
+                             const std::array<float, 10> &alpha_values,
+                             const std::array<float, 10> &alpha_probabilities);
 }

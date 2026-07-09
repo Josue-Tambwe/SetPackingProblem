@@ -65,10 +65,12 @@ namespace spp{
         std::array<float, 10> alpha_probabilities;
         alpha_probabilities.fill(0.1f);
 
-        std::cout << " initial elite : \n\n";
-        elite_solution.print(instance);
-        std::cout << " time : "  << timer.getElapsedTime() << " (s)" 
-                  << " status : " << elite_solution.getStatus() << "\n\n";
+        printGRASPInitialElite(timer.getElapsedTime(), 
+                               1,
+                               elite_objective_value,
+                               alpha_values,
+                               alpha_probabilities);
+
 
         size_t current_iteration = 0;
 
@@ -82,6 +84,15 @@ namespace spp{
 
             std::int64_t best_solution_objective_value = best_solution.getObjectiveValue(instance);
 
+            current_iteration += 1;
+
+            printGRASPIteration(timer.getElapsedTime(), 
+                                (current_iteration * params.update_interval),
+                                elite_objective_value,
+                                best_solution_objective_value,
+                                alpha_values,
+                                alpha_probabilities);
+
             // update of the elite solution
             if(best_solution_objective_value > elite_objective_value){
 
@@ -89,10 +100,8 @@ namespace spp{
                 elite_objective_value = best_solution_objective_value;
             }
 
-            current_iteration += 1;
         }
 
-        std::cout << "\n";
         log.info("Reactive GRASP algorithm completed. Final best known solution :");
 
 
