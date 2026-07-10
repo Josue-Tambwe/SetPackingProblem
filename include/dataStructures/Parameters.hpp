@@ -69,7 +69,7 @@
         double optimality_gap;
 
         // GRASP 
-        double biais;
+        double bias;
         size_t update_interval;
         bool use_path_relinking;
 

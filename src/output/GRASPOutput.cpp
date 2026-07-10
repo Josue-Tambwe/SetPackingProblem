@@ -119,8 +119,8 @@ namespace spp{
                         <<  std::setw(16) <<  std::left << std::fixed << std::setprecision(3) <<  stats.density
                         << std::setw(66) << std::left << " "
 
-                        << std::setw(18) << std::left << "biais" <<  std::setw(2) << std::right << " : "
-                        << std::fixed << std::setprecision(2) << params.biais
+                        << std::setw(18) << std::left << "bias" <<  std::setw(2) << std::right << " : "
+                        << std::fixed << std::setprecision(2) << params.bias
                         <<  "\n";
 
                 // line 9
@@ -143,7 +143,7 @@ namespace spp{
                         << std::fixed << std::setprecision(2) << params.time_limit << "\n";               
 
 
-                std::cout << "\n\n\n";
+                std::cout << "\n\n";
 
         }
 
@@ -275,4 +275,62 @@ namespace spp{
                         <<  "\n\n\n";
 
         }
+
+
+
+
+        void printSummaryGRASP(double total_time, 
+                               std::int64_t elite_objective_value,
+                               size_t iterations,
+                               Status status,
+                               const Params &params){
+
+                std::cout << "\n";
+
+                std::cout << std::right << std::setw(2)   << ""
+                        << std::right  << YELLOW << "Summary" << RESET << "\n"
+                        << std::string(2, ' ')
+                        << std::string(7, '-')
+                        << "\n\n";
+
+                std::cout << std::string(2, ' ')
+                        << std::right << std::setw(2) 
+                        << std::left << std::setw(17)  << "elapsed time (s)"
+                        << std::right  << " :  " 
+                        << std::left  << std::setprecision(3) << total_time
+                        << "\n\n"
+
+                        << std::string(2, ' ')
+                        << std::left << std::setw(17)  << "update interval"
+                        << std::right  << " :  " 
+                        << std::left <<  params.update_interval
+                        << "\n\n"
+
+                        << std::string(2, ' ')
+                        << std::left << std::setw(17)  << "number of cycles"
+                        << std::right  << " :  " 
+                        << std::left <<  iterations
+                        << "\n\n"
+
+                        << std::string(2, ' ')
+                        << std::left << std::setw(17)  << "total iterations"
+                        << std::right  << " :  " 
+                        << std::left <<  (params.update_interval * iterations)
+                        << "\n\n"
+
+                        << std::string(2, ' ')
+                        << std::left << std::setw(17)   << "objective value"
+                        << std::right  << " :  "
+                        << std::setprecision(0) << BRIGHT_YELLOW
+                        << std::left << elite_objective_value << RESET
+                        << "\n\n"
+
+                        << std::string(2, ' ')
+                        << std::left << std::setw(17)   << "status"
+                        << std::right  << " :  "
+                        << std::left << status << "\n\n";
+        }
+
+
+
 }

@@ -85,7 +85,7 @@
             if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the greedy algorithm! ");}
-            if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the greedy algorithm! ");}
+            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the greedy algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the greedy algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the greedy algorithm! ");}
             
@@ -109,7 +109,7 @@
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
-            if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the bab algorithm! ");}
+            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the bab algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the bab algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the bab algorithm! ");}
         }
@@ -133,7 +133,7 @@
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the milp algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
-            if (arg.find("--biais=") == 0) {log.error(" --biais option is not supported by the milp algorithm! ");}
+            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the milp algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the milp algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the milp algorithm! ");}
         }
@@ -311,11 +311,11 @@
                     continue;
                 }
 
-                if(name == "--biais"){
-                    params.biais = std::stod(value);
-                    if(params.biais < 0.0 || params.biais > 1.0){
+                if(name == "--bias"){
+                    params.bias = std::stod(value);
+                    if(params.bias < 0.0 || params.bias > 1.0){
 
-                        log.error(" biais must be in the interval [0,1]");
+                        log.error(" bias must be in the interval [0,1]");
                     }
                     continue;
                 }

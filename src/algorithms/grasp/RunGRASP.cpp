@@ -102,11 +102,13 @@ namespace spp{
 
 
         elite_solution.print(instance);
-        std::cout << " time : "  << timer.getElapsedTime() << " (s)" 
-                  << " status : " << elite_solution.getStatus() << "\n\n";
 
+        printSummaryGRASP(timer.getElapsedTime(), 
+                          elite_objective_value,
+                          current_iteration,
+                          elite_solution.getStatus(),
+                          params);
 
-        
     }
 
 

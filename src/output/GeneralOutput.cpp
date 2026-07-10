@@ -100,8 +100,8 @@
                 << "  "  << "--nb-cycles=value" << std::string(11, ' ')
                 << "Number of cycles for GRASP. Each cycle runs update-interval iterations before updating alpha probabilities\n \n"
                 
-                << "  "  << "--biais=value" << std::string(15, ' ')
-                << "Biais factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
+                << "  "  << "--bias=value" << std::string(15, ' ')
+                << "Bias factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
 
     }
 

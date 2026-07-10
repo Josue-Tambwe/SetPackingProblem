@@ -120,10 +120,10 @@ namespace spp{
 
 
     /**
-     * @brief computes computes biaised scores that emphasize the highest values.
+     * @brief computes computes biased scores that emphasize the highest values.
      */
-    void computeBiaisedScores(std::array<float, 10> &alpha_scores, 
-                              const Params &params);
+    void computeBiasedScores(std::array<float, 10> &alpha_scores, 
+                             const Params &params);
 
 
 

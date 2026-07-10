@@ -45,6 +45,18 @@ It produces slightly better solutions on most difficult benchmark instances (not
 Although the intensified strategy often yields better results on challenging cases, it does not systematically outperform the classical VND — which is the default mode and remains highly competitive thanks to its exceptional speed.
 
 
+## 4. Reactive Greedy Randomized Adaptative Search Procedure (Reactive GRASP)
+
+
+The Reactive GRASP uses a **discrete set of 10 $\alpha$‑values**, each controlling the **balance between greediness and randomness** during construction.
+Each constructed solution is systematically **refined through a Variable Neighborhood Descent** (VND) local search, ensuring that the adaptive mechanism evaluates the true performance of every $\alpha$  under full improvement.
+
+After a **fixed number of iterations** (update interval), the solver computes the **average performance** obtained by each $\alpha$ and updates their selection probabilities adaptively.
+A **bias parameter** reinforces the most effective $\alpha$‑values, increasing their probability while maintaining controlled exploration across all candidates.
+
+
+
+
 ## 8. Branch & Bound
 
 
@@ -217,6 +229,31 @@ The executable is located in the **bin/** directory after installation.
 
 
 
+## Run Reactive GRASP algorithm (randomized construction + VND local search)
+
+```bash
+./bin/spp_solver --algorithm=grasp --instance=benchmarks/pb_1000rnd0700.dat --update-interval=100 --time-limit=60 --bias=0.9 --nb-threads=4 --simd --intensification
+```
+
+- **--update-interval** (mandatory) : Number of iterations between two probability updates of the 10 $\alpha$‑values.
+
+- **--biais** (optional) : Controls how strongly the probability update favors the best‑performing $\alpha$‑values.
+
+- **--time-limit** (optional) : Maximum runtime in seconds.
+
+
+- **--nb-cycles** (optional) : Number of update cycles to execute. Each cycle runs update-interval iterations, followed by an adaptive probability update.
+
+Total GRASP iterations = update-interval $\times$ nb-cycles.
+
+- **--nb-threads** (optional) : Number of CPU threads used to accelerate the execution of the update-interval iterations inside each GRASP cycle. By default, the solver uses the number of physical CPU cores.
+
+- additional options : **--simd** and **--intensification**
+
+![](docs/images/run_reactive_grasp.png)
+
+
+
 ## Run Branch & Bound algorithm (with greedy primal solution)
 
 ```bash
@@ -229,11 +266,9 @@ The executable is located in the **bin/** directory after installation.
 
 - **--gap** (optional) : Target optimality gap.
 
-- **--solver** (mandatory) : Selects the solver for the Linear Relaxation (Gurobi or Highs) .
+- **--solver** (mandatory) : Selects the solver for the Linear Relaxation (Gurobi or Highs).
 
-- **--time-limit** (optional) : Maximum runtime in seconds.
-
-- additional options : **--simd** and **--intensification**
+- additional options : **--simd** , **--intensification** and **--time-limit=value**
 
 
 

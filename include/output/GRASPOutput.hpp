@@ -58,4 +58,13 @@ namespace spp{
                              std::int64_t local_best_solution_objective_value,
                              const std::array<float, 10> &alpha_values,
                              const std::array<float, 10> &alpha_probabilities);
+
+
+
+
+    void printSummaryGRASP(double total_time, 
+                           std::int64_t elite_objective_value,
+                           size_t iterations,
+                           Status status,
+                           const Params &params);
 }

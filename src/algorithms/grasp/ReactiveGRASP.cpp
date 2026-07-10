@@ -216,14 +216,14 @@ namespace spp{
 
 
 
-    void computeBiaisedScores(std::array<float, 10> &alpha_scores, 
-                              const Params &params){
+    void computeBiasedScores(std::array<float, 10> &alpha_scores, 
+                             const Params &params){
 
         float min_score = findMinimumScore(alpha_scores);
 
         for(size_t i = 0; i < alpha_scores.size(); i++){
 
-            alpha_scores[i] = (alpha_scores[i] * (2.0f - params.biais)) - min_score;
+            alpha_scores[i] = (alpha_scores[i] * (2.0f - params.bias)) - min_score;
 
         }
     }
@@ -253,7 +253,7 @@ namespace spp{
                                   std::array<float, 10> &alpha_probabilities,
                                   const Params &params){
 
-        computeBiaisedScores(alpha_scores, params);
+        computeBiasedScores(alpha_scores, params);
         float inverse_cumaltive_score = computeInverseCumulativeScore(alpha_scores);
 
         for(size_t i = 0; i < alpha_scores.size(); i++){

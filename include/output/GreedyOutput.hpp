@@ -56,9 +56,9 @@
 
 
 
-    void printSummaryGreedy(double &construction_time, 
+    void printSummaryGreedy(double construction_time, 
                             double total_time,
-                            std::int64_t &construction_objective,
+                            std::int64_t construction_objective,
                             std::int64_t local_search_objective,
                             Status status);
 
