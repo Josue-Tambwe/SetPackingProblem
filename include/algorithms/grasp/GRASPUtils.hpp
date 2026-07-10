@@ -12,10 +12,10 @@
 
 
 /** 
- * @file ReactiveGRASP.hpp
- * @brief defines the Reactive Greedy Randomized Adaptive Search Procedure (GRASP) method for the Set Packing Solver
+ * @file GRASPUtils.hpp
+ * @brief defines some functions used in the Reactive GRASP algorithm
  * @author Josué Tambwe
- * @date 2 July 2026
+ * @date 10 July 2026
  */
 
 #pragma once
@@ -25,33 +25,65 @@
 #include "dataStructures/Solution.hpp"
 #include "dataStructures/Status.hpp"
 #include "dataStructures/Parameters.hpp"
-#include "output/Logger.hpp"
 #include "algorithms/greedy/RandomizedConstruction.hpp"
 #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
-#include "algorithms/grasp/GRASPUtils.hpp"
 #include "hpc/thread/Thread.hpp"
 #include <array>
-#include <vector> 
-#include <algorithm>
+#include <vector>
+#include <algorithm> 
 #include <cstdint>
-
 
 namespace spp{
 
+    /**
+     * @brief different alpha values used in the GRASP algorithm
+     */
+    const std::array<float, 10> alpha_values = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f,0.9f, 1.0f};
+
+
+
 
     /**
-     * @brief performs iterations (construction + local search) for a single CPU thread and saves the best solution found
+     * @brief generates a solution by a greedy randomized construction and a Variable Neighboorhood Descent (VND) local search
      */
-    void runSingleThreadIterations(const std::array<float, 10> &alpha_probabilities,
-                                    std::array<float, 10> &alpha_cumulative_scores,
-                                    std::array<float, 10> &alpha_selection_count,
-                                    const int nb_iterations,
-                                    std::vector<Solution> &all_best_solutions,
-                                    int thread_id,
-                                    const Params &params,
-                                    const Instance &instance);
+    Solution constructAndImproveSolution(float alpha, 
+                                         const Params &params, 
+                                         const Instance &instance);
 
 
+
+
+    /**
+     * @brief provides an initial elite solution by a greedy randomized construction and VND
+     */
+    Solution initializeEliteSolution(const Params &params, 
+                                     const Instance &instance);
+
+
+
+
+    /**
+     * @brief computes the array of the alpha values cumulative probabilities
+     */
+    std::array<float, 10> computeAlphaCumulativeProbabilities(const std::array<float, 10> &alpha_probabilities);
+
+
+
+
+
+    /**
+     * @brief selects randomdly the index of an alpha value using the alpha values cumulative  distribution
+     */
+    size_t selectAlphaIndexRandomly(const std::array<float, 10> &cumulative_probabilities);
+
+
+
+
+    /**
+     * @brief synchornizes the alpha values scores across all CPU threads
+     */
+    std::array<float, 10> synchronizeAlphaScores(const std::vector<std::array<float, 10>> &all_alpha_cumulative_scores,
+                                                 const std::vector<std::array<float, 10>> &all_alpha_selection_count);
 
 
     /**
@@ -96,17 +128,6 @@ namespace spp{
     void updateAlphaProbabilities(std::array<float, 10> &alpha_scores, 
                                   std::array<float, 10> &alpha_probabilities,
                                   const Params &params);
-
-
-
-
-    /**
-     * @brief performs iterations (construction + local search) for multiple CPU thread and updates alpha probabilities
-     */
-    Solution runMultiThreadIterations(std::array<float, 10> &alpha_probabilities,
-                                      Solution &best_solution,
-                                      const Params &params,
-                                      const Instance &instance);
 
 
 }

@@ -28,6 +28,7 @@
 #include "output/Logger.hpp"
 #include "dataStructures/Timer.hpp"
 #include "algorithms/grasp/ReactiveGRASP.hpp"
+#include "algorithms/grasp/GRASPUtils.hpp"
 #include "output/GeneralOutput.hpp"
 #include "output/GRASPOutput.hpp"
 #include <array>

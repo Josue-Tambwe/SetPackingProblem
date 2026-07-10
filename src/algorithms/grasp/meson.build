@@ -12,4 +12,6 @@
 
 # all source files of the grasp subdirectory 
 grasp_sources = files('ReactiveGRASP.cpp',
-                      'RunGRASP.cpp')
+                      'RunGRASP.cpp',
+                      'GRASPUtils.cpp',
+                      'PathRelinking.cpp')
