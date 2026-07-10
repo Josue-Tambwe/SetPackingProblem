@@ -13,7 +13,7 @@
 
 /** 
  * @file ReactiveGRASP.hpp
- * @brief defines the Reactive Greedy Randomized Adaptative Search Procedure (GRASP) method for the Set Packing Solver
+ * @brief defines the Reactive Greedy Randomized Adaptive Search Procedure (GRASP) method for the Set Packing Solver
  * @author Josué Tambwe
  * @date 2 July 2026
  */

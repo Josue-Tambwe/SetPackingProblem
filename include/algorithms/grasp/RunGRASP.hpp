@@ -13,7 +13,7 @@
 
 /** 
  * @file RunGRASP.hpp
- * @brief implements the Reactive Greedy Randomized Adaptative Search Procedure (GRASP)  for the Set Packing Solver
+ * @brief implements the Reactive Greedy Randomized Adaptive Search Procedure (GRASP)  for the Set Packing Solver
  * @author Josué Tambwe
  * @date 8 July 2026
  */
@@ -50,7 +50,7 @@ namespace spp{
 
 
     /**
-     * @brief runs the Reactive Greedy Randomized Adaptative Search Procedure (GRASP) without Path-Relinking
+     * @brief runs the Reactive Greedy Randomized Adaptive Search Procedure (GRASP) without Path-Relinking
      */
     void runReactiveGRASP(const Params &params);
 

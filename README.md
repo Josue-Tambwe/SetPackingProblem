@@ -45,7 +45,7 @@ It produces slightly better solutions on most difficult benchmark instances (not
 Although the intensified strategy often yields better results on challenging cases, it does not systematically outperform the classical VND — which is the default mode and remains highly competitive thanks to its exceptional speed.
 
 
-## 4. Reactive Greedy Randomized Adaptative Search Procedure (Reactive GRASP)
+## 4. Reactive Greedy Randomized Adaptive Search Procedure (Reactive GRASP)
 
 
 The Reactive GRASP uses a **discrete set of 10 $\alpha$‑values**, each controlling the **balance between greediness and randomness** during construction.
