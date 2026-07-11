@@ -31,6 +31,7 @@
 #include <array>
 #include <vector> 
 #include <cstdint>
+#include <unordered_set>
 
 
 namespace spp{
@@ -47,6 +48,32 @@ namespace spp{
                                                 int thread_id,
                                                 const Params &params,
                                                 const Instance &instance);
+
+
+
+
+    /**
+     * @brief finds the index of the guinding (target) solution for the path-relinking process
+     */
+    size_t findGuidingSolutionIndex(Solution &current_elite_solution, 
+                                    std::vector<Solution> &all_local_best_solutions,
+                                    const Instance &instance);
+
+
+
+
+    /**
+     * @brief computes the pool of initial elite solution (starting point) for the path-relinking process
+     */
+    std::vector<Solution> computeInitialSolutionPool(size_t guiding_solution_index, 
+                                                     Solution &current_elite_solution, 
+                                                     std::vector<Solution> &all_local_best_solutions);
+
+
+    /**
+     * @brief computes the set of non-zero variables indexes of the initial elite (starting point) solution
+     */
+    std::unordered_set<int> computeInitialSolutionNonZeroVarsIndexes(Solution &initial_solution);
 
 
 }
