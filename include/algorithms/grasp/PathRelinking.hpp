@@ -40,14 +40,14 @@ namespace spp{
     /**
      * @brief performs iterations (construction + local search) for a single CPU thread and saves the local best solution found
      */
-    void runSingleThreadIterationsPathRelinking(const std::array<float, 10> &alpha_probabilities,
-                                                std::array<float, 10> &alpha_cumulative_scores,
-                                                std::array<float, 10> &alpha_selection_count,
-                                                const int nb_iterations,
-                                                std::vector<Solution> &all_local_best_solutions,
-                                                int thread_id,
-                                                const Params &params,
-                                                const Instance &instance);
+    void runSingleThreadLocalEliteGeneration(const std::array<float, 10> &alpha_probabilities,
+                                             std::array<float, 10> &alpha_cumulative_scores,
+                                             std::array<float, 10> &alpha_selection_count,
+                                             const int nb_iterations,
+                                             std::vector<Solution> &all_local_best_solutions,
+                                             int thread_id,
+                                             const Params &params,
+                                             const Instance &instance);
 
 
 
@@ -74,6 +74,30 @@ namespace spp{
      * @brief computes the set of non-zero variables indexes of the initial elite (starting point) solution
      */
     std::unordered_set<int> computeInitialSolutionNonZeroVarsIndexes(Solution &initial_solution);
+
+
+    
+
+    /**
+     * @brief deactivates all activated variables which compete for ressources with the variable to active (currently deactivated)
+     *        in order to maintain solution feasibility
+     */
+    void deactivateConflictingVariables(int index_to_activate, 
+                                        Solution &solution, 
+                                        const Instance &instance);
+
+
+
+
+    /**
+     * @brief explores the relinking path between the initial solution and the guiding solution,
+     *        while evaluating intermediate solutions and updating the best elite solution found along the path
+     */
+    void exploreRelinkingPath(Solution &initial_solution,
+                              Solution &guiding_solution,
+                              Solution &local_elite_solution,
+                              const Params &params,
+                              const Instance &instance);
 
 
 }

@@ -54,50 +54,6 @@ namespace spp{
 
 
 
-    /**
-     * @brief synchronizes best solutions across all CPU threads
-     */
-    Solution synchronizeBestSolutions(const std::vector<Solution> &all_best_solutions, 
-                                      const Instance &instance);
-
-
-
-    /**
-     * @brief finds the lowest alpha value score
-     */
-    float findMinimumScore(const std::array<float, 10> &alpha_scores);
-
-
-
-
-
-    /**
-     * @brief computes computes biased scores that emphasize the highest values.
-     */
-    void computeBiasedScores(std::array<float, 10> &alpha_scores, 
-                             const Params &params);
-
-
-
-
-
-    /**
-     * @brief computes the inverse cumulative score in order to nomarlize scores
-     */
-    float computeInverseCumulativeScore(const std::array<float, 10> &alpha_scores);
-
-
-
-
-
-    /**
-     * @brief updates alpha values probabilities after a complete iteration of the GRASP algorithm 
-     */
-    void updateAlphaProbabilities(std::array<float, 10> &alpha_scores, 
-                                  std::array<float, 10> &alpha_probabilities,
-                                  const Params &params);
-
-
 
 
     /**

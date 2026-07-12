@@ -22,14 +22,14 @@
 namespace spp{
 
 
-    void runSingleThreadIterationsPathRelinking(const std::array<float, 10> &alpha_probabilities,
-                                                std::array<float, 10> &alpha_cumulative_scores,
-                                                std::array<float, 10> &alpha_selection_count,
-                                                const int nb_iterations,
-                                                std::vector<Solution> &all_local_best_solutions,
-                                                int thread_id,
-                                                const Params &params,
-                                                const Instance &instance){
+    void runSingleThreadLocalEliteGeneration(const std::array<float, 10> &alpha_probabilities,
+                                             std::array<float, 10> &alpha_cumulative_scores,
+                                             std::array<float, 10> &alpha_selection_count,
+                                             const int nb_iterations,
+                                             std::vector<Solution> &all_local_best_solutions,
+                                             int thread_id,
+                                             const Params &params,
+                                             const Instance &instance){
 
         std::array<float, 10> cumulative_probabilities = computeAlphaCumulativeProbabilities(alpha_probabilities);
 
@@ -151,6 +151,88 @@ namespace spp{
         for(int index : non_zero_vars_vector){non_zero_vars_set.insert(index);}
 
         return non_zero_vars_set;
+    }
+
+
+
+
+    void deactivateConflictingVariables(int index_to_activate, 
+                                        Solution &solution, 
+                                        const Instance &instance){
+
+        // getting all conflicting variables indexes
+        std::vector<int> conflicting_vars = instance.getAllConflictingVarsIndexes(index_to_activate);
+
+        // deactivation of those conflicting variables 
+        for(int var : conflicting_vars){solution.deactivateVar(var, instance);}
+    }
+
+
+
+
+    void exploreRelinkingPath(Solution &initial_solution,
+                              Solution &guiding_solution,
+                              Solution &local_elite_solution,
+                              const Params &params,
+                              const Instance &instance){
+
+        // to performs an intensified VND 
+        bool use_intensified_local_search = true;
+
+        // getting non-zero variables within the guiding solution
+        std::vector<int> guiding_solution_non_zero_vars = guiding_solution.getNonZeroVarsIndexes();
+
+        // getting non-zero variables within the initial solution
+        std::unordered_set<int> initial_solution_non_zero_vars = computeInitialSolutionNonZeroVarsIndexes(initial_solution);
+
+        std::int64_t local_elite_solution_objective_value = local_elite_solution.getObjectiveValue(instance);
+        std::int64_t guiding_solution_objective_value = guiding_solution.getObjectiveValue(instance);
+
+
+        for(int var_in_guiding_solution : guiding_solution_non_zero_vars){
+
+            // when the a non-zero variable in the guiding soluyion is deactivated in the initial solution
+            if(!initial_solution_non_zero_vars.count(var_in_guiding_solution)){
+
+                // deactivation of all conflicting variables in order to maintain feasibility
+                deactivateConflictingVariables(var_in_guiding_solution, 
+                                               initial_solution, 
+                                               instance);
+
+                // activation of the variable in the initial solution
+                initial_solution.activateVar(var_in_guiding_solution, instance);
+
+                // updating the set of non-zero variables within the initial solution
+                initial_solution_non_zero_vars.insert(var_in_guiding_solution);
+
+                std::int64_t intermidiate_solution_objective_value = initial_solution.getObjectiveValue(instance);
+
+                // VDN local search on a promissing intermediate solution (better than the guiding solution)
+                if(intermidiate_solution_objective_value > guiding_solution_objective_value){
+
+                    // local search
+                    variableNeighborhoodDescent(use_intensified_local_search,
+                                                params, 
+                                                initial_solution, 
+                                                instance);
+
+                    // update of the intermediate solution after VND local search
+                    intermidiate_solution_objective_value = initial_solution.getObjectiveValue(instance);
+
+                    // update of the local elite solution
+                    if(intermidiate_solution_objective_value > local_elite_solution_objective_value){
+
+                        local_elite_solution_objective_value = intermidiate_solution_objective_value,
+                        local_elite_solution = initial_solution;
+                    }
+                }
+
+
+            }
+
+        }
+
+
     }
 
 
