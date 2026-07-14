@@ -52,6 +52,18 @@ namespace spp{
 
 
 
+
+    /**
+     * @brief performs iterations (construction + local search) for multiple CPU thread and saves each local best solution found
+     */
+    std::vector<Solution> runMultiThreadLocalEliteGeneration(std::array<float, 10> &alpha_probabilities,
+                                                             Solution &best_solution,
+                                                             const Params &params,
+                                                             const Instance &instance);
+
+
+
+
     /**
      * @brief finds the index of the guinding (target) solution for the path-relinking process
      */
@@ -98,6 +110,22 @@ namespace spp{
                               Solution &local_elite_solution,
                               const Params &params,
                               const Instance &instance);
+
+
+    
+
+    /**
+     * @brief explores the relinking path between the pool of initial solutions and the guiding solution with CPU multi-threading
+     */
+    std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solution_pool,
+                                                    Solution &guiding_solution,
+                                                    const Params &params,
+                                                    const Instance &instance);
+
+
+
+
+    
 
 
 }

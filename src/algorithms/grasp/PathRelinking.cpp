@@ -79,6 +79,62 @@ namespace spp{
 
 
 
+    std::vector<Solution> runMultiThreadLocalEliteGeneration(std::array<float, 10> &alpha_probabilities,
+                                                             Solution &current_elite_solution,
+                                                             const Params &params,
+                                                             const Instance &instance){
+
+        // initialization
+        std::array<float, 10> alpha_selection_count{};
+        std::array<float, 10> alpha_scores{};
+
+        int work_size = static_cast<int>(params.update_interval);
+        int nb_threads_used = std::min(params.nb_threads, work_size);
+        std::vector<std::thread> workers(nb_threads_used);
+
+        std::vector<Solution> all_local_best_solutions(nb_threads_used, current_elite_solution);
+        std::vector<std::array<float, 10>> all_alpha_cumulative_scores(nb_threads_used, alpha_scores);
+        std::vector<std::array<float, 10>> all_alpha_selection_count(nb_threads_used, alpha_selection_count);
+
+        for(int id = 0; id < nb_threads_used; id++){
+
+            int start = start_index(id, work_size, nb_threads_used);
+            int end = end_index(id, work_size, nb_threads_used);
+
+            int nb_thread_iterations = (end - start) + 1; 
+
+            workers[id] = std::thread(runSingleThreadLocalEliteGeneration,
+                                      std::ref(alpha_probabilities),
+                                      std::ref(all_alpha_cumulative_scores[id]),
+                                      std::ref(all_alpha_selection_count[id]),
+                                      nb_thread_iterations,
+                                      std::ref(all_local_best_solutions),
+                                      id,
+                                      std::ref(params),
+                                      std::ref(instance));
+        }
+
+        // waiting for all threads to finish
+        for(auto &worker : workers){worker.join();}
+
+
+        // synchronization
+        alpha_scores = synchronizeAlphaScores(all_alpha_cumulative_scores,
+                                              all_alpha_selection_count);
+
+        // alpha probabilities update
+        updateAlphaProbabilities(alpha_scores, 
+                                 alpha_probabilities,
+                                 params);
+
+        return all_local_best_solutions;
+
+    }
+
+
+
+
+
     size_t findGuidingSolutionIndex(Solution &current_elite_solution, 
                                     std::vector<Solution> &all_local_best_solutions,
                                     const Instance &instance){
@@ -234,6 +290,43 @@ namespace spp{
 
 
     }
+
+
+
+
+
+    std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solution_pool,
+                                                    Solution &guiding_solution,
+                                                    const Params &params,
+                                                    const Instance &instance){
+
+        // the pool of local elite solutions 
+        std::vector<Solution> local_elite_pool(initial_solution_pool);
+
+        // the pool of CPU threads to use 
+        std::vector<std::thread> workers(initial_solution_pool.size());
+
+        for(size_t id = 0; id < workers.size(); id++){
+
+            workers[id] = std::thread(exploreRelinkingPath,
+                                      std::ref(initial_solution_pool[id]),
+                                      std::ref(guiding_solution),
+                                      std::ref(local_elite_pool[id]),
+                                      std::ref(params),
+                                      std::ref(instance));
+
+        }
+
+        // waiting for all threads to finish
+        for(auto &worker : workers){worker.join();}
+
+        return local_elite_pool;
+
+
+    }
+
+
+    
 
 
 
