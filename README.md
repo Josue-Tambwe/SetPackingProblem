@@ -282,7 +282,7 @@ Total GRASP iterations = update-interval $\times$ nb-cycles.
 ./bin/spp_solver --algorithm=milp --instance=benchmarks/pb_1000rnd0700.dat  --solver=hexaly --time-limit=30 
 ```
 
-- **--solver** (mandatory) : Selects the solver for the Linear Relaxation (Gurobi, Hexaly or Highs) .
+- **--solver** (mandatory) : Selects the solver for the Mixed-Integer Linear Programming resolution approach (Gurobi, Hexaly or Highs) .
 
 - **--time-limit** (optional) : Maximum runtime in seconds.
 
