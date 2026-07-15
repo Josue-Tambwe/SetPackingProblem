@@ -75,6 +75,16 @@ namespace spp{
 
 
     /**
+     * @brief sets the guiding solution for the path-relinking process
+     */
+    Solution setGuidingSolution(size_t guiding_solution_index,
+                                Solution &current_elite_solution,
+                                std::vector<Solution> &all_local_best_solutions);
+
+
+
+
+    /**
      * @brief computes the pool of initial elite solution (starting point) for the path-relinking process
      */
     std::vector<Solution> computeInitialSolutionPool(size_t guiding_solution_index, 
@@ -94,7 +104,8 @@ namespace spp{
      * @brief deactivates all activated variables which compete for ressources with the variable to active (currently deactivated)
      *        in order to maintain solution feasibility
      */
-    void deactivateConflictingVariables(int index_to_activate, 
+    void deactivateConflictingVariables(int index_to_activate,
+                                        std::unordered_set<int> &non_zero_vars_set, 
                                         Solution &solution, 
                                         const Instance &instance);
 
@@ -117,10 +128,29 @@ namespace spp{
     /**
      * @brief explores the relinking path between the pool of initial solutions and the guiding solution with CPU multi-threading
      */
-    std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solution_pool,
+    std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solutions_pool,
                                                     Solution &guiding_solution,
                                                     const Params &params,
                                                     const Instance &instance);
+
+
+
+
+    /**
+     * @brief retrieves the elite solution within the local elite solutions pool
+     */
+    Solution retrieveEliteSolution(const std::vector<Solution> &local_elite_pool,
+                                   const Instance &instance);
+
+
+
+    /**
+     * @brief performs one cycle (construction + local search) for multiple CPU thread and updates alpha probabilities
+     */
+    Solution runOnePathRelinkingCycle(std::array<float, 10> &alpha_probabilities,
+                                      Solution &current_elite_solution,
+                                      const Params &params,
+                                      const Instance &instance);
 
 
 

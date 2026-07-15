@@ -73,7 +73,7 @@ namespace spp{
 
         while(!stoppingCriteriaGRASP(timer.getElapsedTime(), current_iteration, params)){
 
-            Solution best_solution = runMultiThreadIterations(alpha_probabilities,
+            Solution best_solution = runOneReactiveGRASPCycle(alpha_probabilities,
                                                               elite_solution,
                                                               params,
                                                               instance);
@@ -109,6 +109,95 @@ namespace spp{
                           elite_solution.getStatus(),
                           params);
 
+    }
+
+
+
+
+
+
+    void runReactiveGRASPWithPathRelinking(const Params &params){
+
+        printHeader();
+
+        // building the instance
+        const Instance instance(params);
+
+        printHeaderGRASP(params, instance);
+
+        Timer timer = Timer();
+        Logger log;
+        timer.start();
+
+        // initialization of the elite solution
+        Solution elite_solution = initializeEliteSolution(params, instance);
+        std::int64_t elite_objective_value = elite_solution.getObjectiveValue(instance);
+
+        // initialization of alpha values probailities (1/10 for each alpha value)
+        std::array<float, 10> alpha_probabilities;
+        alpha_probabilities.fill(0.1f);
+
+        printGRASPInitialElite(timer.getElapsedTime(), 
+                               1,
+                               elite_objective_value,
+                               alpha_values,
+                               alpha_probabilities);
+
+
+        size_t current_iteration = 0;
+
+        while(!stoppingCriteriaGRASP(timer.getElapsedTime(), current_iteration, params)){
+
+            Solution best_solution = runOnePathRelinkingCycle(alpha_probabilities,
+                                                              elite_solution,
+                                                              params,
+                                                              instance);
+
+            std::int64_t best_solution_objective_value = best_solution.getObjectiveValue(instance);
+
+            current_iteration += 1;
+
+            printGRASPIteration(timer.getElapsedTime(), 
+                                (current_iteration * params.update_interval),
+                                elite_objective_value,
+                                best_solution_objective_value,
+                                alpha_values,
+                                alpha_probabilities);
+
+            // update of the elite solution
+            if(best_solution_objective_value > elite_objective_value){
+
+                elite_solution = best_solution;
+                elite_objective_value = best_solution_objective_value;
+            }
+
+        }
+
+        log.info("Reactive GRASP algorithm completed. Final best known solution :");
+
+
+        elite_solution.print(instance);
+
+        printSummaryGRASP(timer.getElapsedTime(), 
+                          elite_objective_value,
+                          current_iteration,
+                          elite_solution.getStatus(),
+                          params);
+
+    }
+
+
+
+
+
+
+    void runGRASP(const Params &params){
+
+        // Reactive GRASP with Path-Relinking intensification process
+        if(params.use_path_relinking){runReactiveGRASPWithPathRelinking(params);}
+
+        // classical Reactive GRASP without Path-Relinking 
+        else{runReactiveGRASP(params);}
     }
 
 

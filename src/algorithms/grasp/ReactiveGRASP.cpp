@@ -71,7 +71,7 @@ namespace spp{
 
 
 
-    Solution runMultiThreadIterations(std::array<float, 10> &alpha_probabilities,
+    Solution runOneReactiveGRASPCycle(std::array<float, 10> &alpha_probabilities,
                                       Solution &best_solution,
                                       const Params &params,
                                       const Instance &instance){

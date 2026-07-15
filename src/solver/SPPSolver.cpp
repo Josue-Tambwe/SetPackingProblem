@@ -55,7 +55,7 @@
 
       if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
 
-      else if(params.algorithm == Algorithm::Grasp){runReactiveGRASP(params);}
+      else if(params.algorithm == Algorithm::Grasp){runGRASP(params);}
 
       else if(params.algorithm == Algorithm::BranchAndBound){
 

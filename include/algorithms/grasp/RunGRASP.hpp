@@ -27,8 +27,9 @@
 #include "dataStructures/Parameters.hpp"
 #include "output/Logger.hpp"
 #include "dataStructures/Timer.hpp"
-#include "algorithms/grasp/ReactiveGRASP.hpp"
 #include "algorithms/grasp/GRASPUtils.hpp"
+#include "algorithms/grasp/ReactiveGRASP.hpp"
+#include "algorithms/grasp/PathRelinking.hpp"
 #include "output/GeneralOutput.hpp"
 #include "output/GRASPOutput.hpp"
 #include <array>
@@ -54,5 +55,24 @@ namespace spp{
      * @brief runs the Reactive Greedy Randomized Adaptive Search Procedure (GRASP) without Path-Relinking
      */
     void runReactiveGRASP(const Params &params);
+
+
+
+
+
+    /**
+     * @brief runs the Reactive Greedy Randomized Adaptive Search Procedure (GRASP) with Path-Relinking
+     */
+    void runReactiveGRASPWithPathRelinking(const Params &params);
+
+
+
+
+
+    /**
+     * @brief runs the Reactive Greedy Randomized Adaptive Search Procedure (GRASP)
+     */
+    void runGRASP(const Params &params);
+
 
 }

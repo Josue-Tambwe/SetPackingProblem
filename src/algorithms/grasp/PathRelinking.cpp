@@ -164,6 +164,26 @@ namespace spp{
 
 
 
+    Solution setGuidingSolution(size_t guiding_solution_index,
+                                Solution &current_elite_solution,
+                                std::vector<Solution> &all_local_best_solutions){
+
+        // when the current elite is also the guiding solution
+        if(guiding_solution_index == all_local_best_solutions.size()){
+
+            return current_elite_solution;
+        }
+
+        // when the guiding solution is a new generated solution
+        return all_local_best_solutions[guiding_solution_index];
+
+    }
+
+
+
+
+
+
     std::vector<Solution> computeInitialSolutionPool(size_t guiding_solution_index, 
                                                      Solution &current_elite_solution, 
                                                      std::vector<Solution> &all_local_best_solutions){
@@ -183,7 +203,7 @@ namespace spp{
 
         for(size_t index = 0; index < all_local_best_solutions.size(); index++){
 
-            if(index != internal_counter){
+            if(index != guiding_solution_index){
 
                 initial_solutions_pool[internal_counter] = all_local_best_solutions[index];
                 internal_counter += 1;
@@ -213,6 +233,7 @@ namespace spp{
 
 
     void deactivateConflictingVariables(int index_to_activate, 
+                                        std::unordered_set<int> &non_zero_vars_set,
                                         Solution &solution, 
                                         const Instance &instance){
 
@@ -220,7 +241,15 @@ namespace spp{
         std::vector<int> conflicting_vars = instance.getAllConflictingVarsIndexes(index_to_activate);
 
         // deactivation of those conflicting variables 
-        for(int var : conflicting_vars){solution.deactivateVar(var, instance);}
+        for(int var : conflicting_vars){
+
+            if(non_zero_vars_set.count(var)){
+
+                solution.deactivateVar(var, instance);
+                non_zero_vars_set.erase(var);
+            }
+            
+        }
     }
 
 
@@ -247,11 +276,12 @@ namespace spp{
 
         for(int var_in_guiding_solution : guiding_solution_non_zero_vars){
 
-            // when the a non-zero variable in the guiding soluyion is deactivated in the initial solution
+            // when the a non-zero variable in the guiding solution is deactivated in the initial solution
             if(!initial_solution_non_zero_vars.count(var_in_guiding_solution)){
 
                 // deactivation of all conflicting variables in order to maintain feasibility
-                deactivateConflictingVariables(var_in_guiding_solution, 
+                deactivateConflictingVariables(var_in_guiding_solution,
+                                               initial_solution_non_zero_vars, 
                                                initial_solution, 
                                                instance);
 
@@ -295,21 +325,21 @@ namespace spp{
 
 
 
-    std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solution_pool,
+    std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solutions_pool,
                                                     Solution &guiding_solution,
                                                     const Params &params,
                                                     const Instance &instance){
 
         // the pool of local elite solutions 
-        std::vector<Solution> local_elite_pool(initial_solution_pool);
+        std::vector<Solution> local_elite_pool(initial_solutions_pool);
 
         // the pool of CPU threads to use 
-        std::vector<std::thread> workers(initial_solution_pool.size());
+        std::vector<std::thread> workers(initial_solutions_pool.size());
 
         for(size_t id = 0; id < workers.size(); id++){
 
             workers[id] = std::thread(exploreRelinkingPath,
-                                      std::ref(initial_solution_pool[id]),
+                                      std::ref(initial_solutions_pool[id]),
                                       std::ref(guiding_solution),
                                       std::ref(local_elite_pool[id]),
                                       std::ref(params),
@@ -322,6 +352,71 @@ namespace spp{
 
         return local_elite_pool;
 
+
+    }
+
+
+
+
+
+    Solution retrieveEliteSolution(const std::vector<Solution> &local_elite_pool,
+                                   const Instance &instance){
+
+        Solution elite = local_elite_pool[0];
+        std::int64_t elite_objective_value = elite.getObjectiveValue(instance);
+
+        for(Solution solution : local_elite_pool){
+
+            std::int64_t solution_objective_value = solution.getObjectiveValue(instance);
+
+            if(solution_objective_value > elite_objective_value){
+
+                elite = solution;
+                elite_objective_value = solution_objective_value;
+            }
+        }
+
+        return elite;
+
+    }
+
+
+
+
+
+    Solution runOnePathRelinkingCycle(std::array<float, 10> &alpha_probabilities,
+                                      Solution &current_elite_solution,
+                                      const Params &params,
+                                      const Instance &instance){
+
+        // generation of local best solutions
+        std::vector<Solution> all_local_best_solutions = runMultiThreadLocalEliteGeneration(alpha_probabilities,
+                                                                                            current_elite_solution,
+                                                                                            params,
+                                                                                            instance);
+        // finding the guiding solution index
+        size_t guiding_solution_index = findGuidingSolutionIndex(current_elite_solution, 
+                                                                 all_local_best_solutions,
+                                                                 instance);
+
+        // setting the guiding solution
+        Solution guiding_solution = setGuidingSolution(guiding_solution_index,
+                                                       current_elite_solution,
+                                                       all_local_best_solutions);
+
+        // computation of the intial solutions pool
+        std::vector<Solution> initial_solutions_pool = computeInitialSolutionPool(guiding_solution_index, 
+                                                                                  current_elite_solution, 
+                                                                                  all_local_best_solutions);
+
+        // computation of local elite solution
+        std::vector<Solution> local_elite_pool = exploreMultiRelinkingPath(initial_solutions_pool,
+                                                                           guiding_solution,
+                                                                           params,
+                                                                           instance);
+
+        // retrieving the gobal elite solution
+        return retrieveEliteSolution(local_elite_pool, instance);
 
     }
 

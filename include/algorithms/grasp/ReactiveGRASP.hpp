@@ -59,7 +59,7 @@ namespace spp{
     /**
      * @brief performs iterations (construction + local search) for multiple CPU thread and updates alpha probabilities
      */
-    Solution runMultiThreadIterations(std::array<float, 10> &alpha_probabilities,
+    Solution runOneReactiveGRASPCycle(std::array<float, 10> &alpha_probabilities,
                                       Solution &best_solution,
                                       const Params &params,
                                       const Instance &instance);
