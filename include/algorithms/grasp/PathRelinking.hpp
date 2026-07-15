@@ -117,7 +117,7 @@ namespace spp{
      *        while evaluating intermediate solutions and updating the best elite solution found along the path
      */
     void exploreRelinkingPath(Solution &initial_solution,
-                              Solution &guiding_solution,
+                              Solution guiding_solution,
                               Solution &local_elite_solution,
                               const Params &params,
                               const Instance &instance);

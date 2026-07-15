@@ -256,7 +256,7 @@ namespace spp{
 
 
     void exploreRelinkingPath(Solution &initial_solution,
-                              Solution &guiding_solution,
+                              Solution guiding_solution,
                               Solution &local_elite_solution,
                               const Params &params,
                               const Instance &instance){
@@ -288,7 +288,7 @@ namespace spp{
                 // activation of the variable in the initial solution
                 initial_solution.activateVar(var_in_guiding_solution, instance);
 
-                // updating the set of non-zero variables within the initial solution
+                // update of the set of non-zero variables within the initial solution
                 initial_solution_non_zero_vars.insert(var_in_guiding_solution);
 
                 std::int64_t intermidiate_solution_objective_value = initial_solution.getObjectiveValue(instance);
@@ -308,7 +308,7 @@ namespace spp{
                     // update of the local elite solution
                     if(intermidiate_solution_objective_value > local_elite_solution_objective_value){
 
-                        local_elite_solution_objective_value = intermidiate_solution_objective_value,
+                        local_elite_solution_objective_value = intermidiate_solution_objective_value;
                         local_elite_solution = initial_solution;
                     }
                 }
@@ -340,7 +340,7 @@ namespace spp{
 
             workers[id] = std::thread(exploreRelinkingPath,
                                       std::ref(initial_solutions_pool[id]),
-                                      std::ref(guiding_solution),
+                                      guiding_solution,
                                       std::ref(local_elite_pool[id]),
                                       std::ref(params),
                                       std::ref(instance));
@@ -375,6 +375,7 @@ namespace spp{
                 elite_objective_value = solution_objective_value;
             }
         }
+
 
         return elite;
 
