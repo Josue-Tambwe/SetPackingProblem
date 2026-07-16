@@ -32,6 +32,7 @@
 #include <vector> 
 #include <cstdint>
 #include <unordered_set>
+#include <algorithm>
 
 
 namespace spp{
@@ -115,9 +116,12 @@ namespace spp{
     /**
      * @brief explores the relinking path between the initial solution and the guiding solution,
      *        while evaluating intermediate solutions and updating the best elite solution found along the path
+     *        This variant performs an intensified VND local search on a promissing soltion (better than the guiding solution)
+     *        in order to reach higher quality solutions even though the promissing solution might not be better than the
+     *        current local elite solution
      */
     void exploreRelinkingPath(Solution &initial_solution,
-                              Solution guiding_solution,
+                              Solution &guiding_solution,
                               Solution &local_elite_solution,
                               const Params &params,
                               const Instance &instance);

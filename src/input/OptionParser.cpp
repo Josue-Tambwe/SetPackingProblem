@@ -83,11 +83,12 @@
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the greedy algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the greedy algorithm! ");}
-            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the greedy algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the greedy algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the greedy algorithm! ");}
             if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the greedy algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the greedy algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the greedy algorithm! ");}
+            if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -108,10 +109,11 @@
             if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the bab algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the bab algorithm! ");}
-            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the bab algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the bab algorithm! ");}
             if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the bab algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the bab algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the bab algorithm! ");}
+            if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the bab algorithm! ");}
         }
 
     }
@@ -132,10 +134,11 @@
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the milp algorithm! ");}
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the milp algorithm! ");}
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
-            if (arg.find("--nb-threads=") == 0) {log.error(" --iterations option is not supported by the milp algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the milp algorithm! ");}
             if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the milp algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the milp algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the milp algorithm! ");}
+            if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the milp algorithm! ");}
         }
 
     }
@@ -320,6 +323,12 @@
                     continue;
                 }
 
+                if(name == "--nb-elites"){
+                    params.nb_elites = std::stoi(value);
+                    if(params.nb_elites < 1){log.error(" nb-elites must be >= 1");}
+                    continue;
+                }
+
                 // case of invalid option
                 log.error("Unknown option: " + name);
                 break;
@@ -334,7 +343,23 @@
 
         else if(params.algorithm == Algorithm::Milp){unsupportedOptionsMilp(argc, argv);}
 
-        else if(params.algorithm == Algorithm::Grasp){unsupportedOptionsGRASP(argc, argv);}
+        else if(params.algorithm == Algorithm::Grasp){
+            
+            unsupportedOptionsGRASP(argc, argv);
+
+            if(!params.use_path_relinking && (params.nb_elites != -1)){
+
+                log.error(" --nb-elites=value must not be used when --path-relinking is not enabled in the grasp algorithm! ");
+            }
+
+            if(params.use_path_relinking && (params.nb_elites == -1)){
+
+                params.nb_elites = NUMBER_PHYSICAL_CORES;
+            }
+        
+        }
+
+
 
         if(params.algorithm == Algorithm::BranchAndBound &&
            params.milp_solver == 'x'){

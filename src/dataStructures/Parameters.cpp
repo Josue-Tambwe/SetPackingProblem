@@ -49,5 +49,6 @@
         bias = 0.0;
         update_interval = 10;
         use_path_relinking = false;
+        nb_elites = -1;
     }
  }

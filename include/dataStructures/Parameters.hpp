@@ -72,6 +72,7 @@
         double bias;
         size_t update_interval;
         bool use_path_relinking;
+        int nb_elites;
 
 
 

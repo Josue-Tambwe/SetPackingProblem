@@ -99,8 +99,12 @@
 
                 << "  "  << "--nb-cycles=value" << std::string(11, ' ')
                 << "Number of cycles for GRASP. Each cycle runs update-interval iterations before updating alpha probabilities\n \n"
+
+                << "  "  << "--nb-elites=value" << std::string(11, ' ')
+                << "Number of elite solutions within the elite solutions pool for Reactive GRASP with Path-Relinking.\n \n"
                 
-                << "  "  << "--bias=value" << std::string(15, ' ')
+                
+                << "  "  << "--bias=value" << std::string(16, ' ')
                 << "Bias factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
 
     }
@@ -114,11 +118,15 @@
             << "    ./bin/spp_solver --algorithm=greedy "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --simd  --verbose\n\n"
 
+            << "    ./bin/spp_solver --algorithm=grasp "
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --update-interval=100  --time-limit=30 --bias=0.7 --simd \n\n"
+
             << "    ./bin/spp_solver --algorithm=bab "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --solver=gurobi --exploration=dfs\n\n"
 
             << "    ./bin/spp_solver --algorithm=milp "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --solver=highs  --simd  --time-limit=30 --warm-start\n\n";
+
 
 
 

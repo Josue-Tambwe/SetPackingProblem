@@ -140,8 +140,18 @@ namespace spp{
                 // line 11
                 std::cout << std::setw(109) << std::left << " "
                         << std::setw(18) << std::left << "time limit (s)" <<  std::setw(2) << std::right << " : "
-                        << std::fixed << std::setprecision(2) << params.time_limit << "\n";               
+                        << std::fixed << std::setprecision(2) << params.time_limit << "\n";    
+                        
+                        
+                // line 12
+                if(params.use_path_relinking){
 
+                        std::cout << std::setw(109) << std::left << " "
+                        << std::setw(18) << std::left << "elite pool size" <<  std::setw(2) << std::right << " : "
+                        << params.nb_elites << "\n";  
+
+                }
+                
 
                 std::cout << "\n\n";
 

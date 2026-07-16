@@ -256,7 +256,7 @@ namespace spp{
 
 
     void exploreRelinkingPath(Solution &initial_solution,
-                              Solution guiding_solution,
+                              Solution &guiding_solution,
                               Solution &local_elite_solution,
                               const Params &params,
                               const Instance &instance){
@@ -270,6 +270,7 @@ namespace spp{
         // getting non-zero variables within the initial solution
         std::unordered_set<int> initial_solution_non_zero_vars = computeInitialSolutionNonZeroVarsIndexes(initial_solution);
 
+        // the local elite solution
         std::int64_t local_elite_solution_objective_value = local_elite_solution.getObjectiveValue(instance);
         std::int64_t guiding_solution_objective_value = guiding_solution.getObjectiveValue(instance);
 
@@ -291,25 +292,28 @@ namespace spp{
                 // update of the set of non-zero variables within the initial solution
                 initial_solution_non_zero_vars.insert(var_in_guiding_solution);
 
-                std::int64_t intermidiate_solution_objective_value = initial_solution.getObjectiveValue(instance);
+                std::int64_t intermediate_solution_objective_value = initial_solution.getObjectiveValue(instance);
 
                 // VDN local search on a promissing intermediate solution (better than the guiding solution)
-                if(intermidiate_solution_objective_value > guiding_solution_objective_value){
+                if(intermediate_solution_objective_value > guiding_solution_objective_value){
 
-                    // local search
+                    // the intermediate promissing solution
+                    Solution intermediate_promissing_solution = initial_solution;
+
+                    // local search on the intermediate solution
                     variableNeighborhoodDescent(use_intensified_local_search,
                                                 params, 
-                                                initial_solution, 
+                                                intermediate_promissing_solution, 
                                                 instance);
 
-                    // update of the intermediate solution after VND local search
-                    intermidiate_solution_objective_value = initial_solution.getObjectiveValue(instance);
+                    // update of the intermediate solution objective value after VND local search
+                    intermediate_solution_objective_value = intermediate_promissing_solution.getObjectiveValue(instance);
 
                     // update of the local elite solution
-                    if(intermidiate_solution_objective_value > local_elite_solution_objective_value){
+                    if(intermediate_solution_objective_value > local_elite_solution_objective_value){
 
-                        local_elite_solution_objective_value = intermidiate_solution_objective_value;
-                        local_elite_solution = initial_solution;
+                        local_elite_solution_objective_value = intermediate_solution_objective_value;
+                        local_elite_solution = intermediate_promissing_solution;
                     }
                 }
 
@@ -330,8 +334,8 @@ namespace spp{
                                                     const Params &params,
                                                     const Instance &instance){
 
-        // the pool of local elite solutions 
-        std::vector<Solution> local_elite_pool(initial_solutions_pool);
+        // the pool of local elite solutions (the guiding solution)
+        std::vector<Solution> local_elite_pool(initial_solutions_pool.size(), guiding_solution);
 
         // the pool of CPU threads to use 
         std::vector<std::thread> workers(initial_solutions_pool.size());
@@ -340,7 +344,7 @@ namespace spp{
 
             workers[id] = std::thread(exploreRelinkingPath,
                                       std::ref(initial_solutions_pool[id]),
-                                      guiding_solution,
+                                      std::ref(guiding_solution),
                                       std::ref(local_elite_pool[id]),
                                       std::ref(params),
                                       std::ref(instance));
