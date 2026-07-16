@@ -88,13 +88,19 @@ namespace spp{
         std::array<float, 10> alpha_selection_count{};
         std::array<float, 10> alpha_scores{};
 
+        // number of iterations per GRASP cycle
         int work_size = static_cast<int>(params.update_interval);
+
+        // number of CPU threads to use
         int nb_threads_used = std::min(params.nb_threads, work_size);
         std::vector<std::thread> workers(nb_threads_used);
 
-        std::vector<Solution> all_local_best_solutions(nb_threads_used, current_elite_solution);
-        std::vector<std::array<float, 10>> all_alpha_cumulative_scores(nb_threads_used, alpha_scores);
-        std::vector<std::array<float, 10>> all_alpha_selection_count(nb_threads_used, alpha_selection_count);
+        // vector of local elite generated during the GRASP cycle
+        std::vector<Solution> all_local_best_solutions(params.nb_elites, current_elite_solution);
+
+        // vector of cumulative alpha scores and selection counts
+        std::vector<std::array<float, 10>> all_alpha_cumulative_scores(params.nb_elites, alpha_scores);
+        std::vector<std::array<float, 10>> all_alpha_selection_count(params.nb_elites, alpha_selection_count);
 
         for(int id = 0; id < nb_threads_used; id++){
 
@@ -329,23 +335,56 @@ namespace spp{
 
 
 
+    void exploreRelinkingPathSingleThread(int start_index,
+                                          int end_index,
+                                          std::vector<Solution> &initial_solutions_pool,
+                                          Solution &guiding_solution,
+                                          std::vector<Solution> local_elite_pool,
+                                          const Params &params,
+                                          const Instance &instance){
+
+        for(int index = start_index; index <= end_index; index++){
+
+            exploreRelinkingPath(initial_solutions_pool[index],
+                                 guiding_solution,
+                                 local_elite_pool[index],
+                                 params,
+                                 instance);
+
+        }
+
+
+    }
+
+
+
+
+
     std::vector<Solution> exploreMultiRelinkingPath(std::vector<Solution> &initial_solutions_pool,
                                                     Solution &guiding_solution,
                                                     const Params &params,
                                                     const Instance &instance){
 
-        // the pool of local elite solutions (the guiding solution)
-        std::vector<Solution> local_elite_pool(initial_solutions_pool.size(), guiding_solution);
+        int work_size = params.nb_elites;
+        int nb_threads_used = std::min(params.nb_threads, work_size);
 
         // the pool of CPU threads to use 
-        std::vector<std::thread> workers(initial_solutions_pool.size());
+        std::vector<std::thread> workers(nb_threads_used);
+
+        // the pool of local elite solutions (the guiding solution)
+        std::vector<Solution> local_elite_pool(work_size, guiding_solution);
 
         for(size_t id = 0; id < workers.size(); id++){
 
-            workers[id] = std::thread(exploreRelinkingPath,
-                                      std::ref(initial_solutions_pool[id]),
+            int start = start_index(id, work_size, nb_threads_used);
+            int end = end_index(id, work_size, nb_threads_used);
+
+            workers[id] = std::thread(exploreRelinkingPathSingleThread,
+                                      start,
+                                      end,
+                                      std::ref(initial_solutions_pool),
                                       std::ref(guiding_solution),
-                                      std::ref(local_elite_pool[id]),
+                                      std::ref(local_elite_pool),
                                       std::ref(params),
                                       std::ref(instance));
 
@@ -355,8 +394,6 @@ namespace spp{
         for(auto &worker : workers){worker.join();}
 
         return local_elite_pool;
-
-
     }
 
 

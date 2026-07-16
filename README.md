@@ -55,23 +55,34 @@ After a **fixed number of iterations** (update interval), the solver computes th
 A **bias parameter** reinforces the most effective $\alpha$‑values, increasing their probability while maintaining controlled exploration across all candidates.
 
 
+## 5. Path-Relinking intensification (for the Reactive GRASP algorithm)
+
+During each GRASP cycle, the solver generates many candidate solutions and retains only a **restricted elite pool**. The **best solution in this pool** becomes the **guiding solution**.
+
+Path‑Relinking then performs i**ndependent parallel explorations** between the guiding solution and each remaining elite. Along each path, whenever an **intermediate solution** becomes **better than the guiding solution**, an **intensified VND is applied** — even if this intermediate solution is **not better than the best elite currently found** along that path.
+This allows the algorithm to exploit promising states early and potentially uncover stronger elites.
+
+The best result obtained across all paths is returned as the **intensified elite** for the cycle.
 
 
-## 8. Branch & Bound
+
+
+
+## 9. Branch & Bound
 
 
 An **exact** Branch & Bound method with **optimality guarantee**.  
 The search is warm‑started using the **deterministic greedy construction with VND local search**, providing a strong initial primal bound and improving pruning efficiency.  Linear relaxations are solved through the selected Linear Programming solver backend, with configurable branching rules and exploration strategies.
 
 
-## 9. MILP Solvers interfaces
+## 10. MILP Solvers interfaces
 
 This project includes lightweight interfaces to **HiGHS**, **Gurobi** and **Hexaly** for solving the Set Packing Problem as a Mixed-Integer Linear Program (MILP).  
 These interfaces build the SPP model, call the solver and then extract the resulting solution.
 
 
 
-## 10. High‑Performance Computing (HPC) Enhancements
+## 11. High‑Performance Computing (HPC) Enhancements
 
 Since both the decision variables and the constraint matrix are purely binary, the solver uses a **compact BitVector representation** to efficiently encode solutions and conflicts.
 This enables fast bitwise operations for feasibility checks and neighborhood evaluation.
@@ -252,6 +263,20 @@ Total GRASP iterations = update-interval $\times$ nb-cycles.
 
 ![](docs/images/run_reactive_grasp.png)
 
+
+
+## Run Reactive GRASP algorithm with Path-Relinking intensification
+
+
+```bash
+./bin/spp_solver --algorithm=grasp --instance=benchmarks/pb_1000rnd0700.dat --update-interval=100 --time-limit=60 --bias=0.9 --nb-threads=4 --simd --intensification  --path-relinking  --nb-elites=10
+```
+
+- **--path-relinking** (mandatory) : Enable the path-relinking intensification phase.
+
+- **--nb-elites** (optional) : Defines the size of the elite pool retained during each GRASP cycle. If omitted, the solver defaults to the number of physical CPU cores
+
+![](docs/images/run_reactive_grasp_path_relinking.png)
 
 
 ## Run Branch & Bound algorithm (with greedy primal solution)

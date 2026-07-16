@@ -127,7 +127,21 @@ namespace spp{
                               const Instance &instance);
 
 
-    
+
+
+    /**
+     * @brief explores the relinking path between initial solutions and the guiding solution on a single CPU thread
+     */
+    void exploreRelinkingPathSingleThread(int start_index,
+                                          int end_index,
+                                          std::vector<Solution> &initial_solutions_pool,
+                                          Solution &guiding_solution,
+                                          std::vector<Solution> local_elite_pool,
+                                          const Params &params,
+                                          const Instance &instance);
+
+
+
 
     /**
      * @brief explores the relinking path between the pool of initial solutions and the guiding solution with CPU multi-threading

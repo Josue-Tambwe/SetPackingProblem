@@ -121,6 +121,9 @@
             << "    ./bin/spp_solver --algorithm=grasp "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --update-interval=100  --time-limit=30 --bias=0.7 --simd \n\n"
 
+            << "    ./bin/spp_solver --algorithm=grasp "
+            << "--instance=benchmarks/pb_100rnd0100.dat  --update-interval=50  --time-limit=30  --simd --path-relinking\n\n"
+
             << "    ./bin/spp_solver --algorithm=bab "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --solver=gurobi --exploration=dfs\n\n"
 
