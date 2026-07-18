@@ -14,4 +14,5 @@
 local_search_sources = files('NeighborhoodUtils.cpp',
                              'ConflictCheckerScalar.cpp',
                              'Neighborhoods.cpp',
-                             'VariableNeighborhoodDescent.cpp')
+                             'VariableNeighborhoodDescent.cpp',
+                             'RestrictedNeighborhoods.cpp')

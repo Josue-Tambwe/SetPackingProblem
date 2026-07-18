@@ -170,10 +170,4 @@ namespace spp{
                                       const Params &params,
                                       const Instance &instance);
 
-
-
-
-    
-
-
 }

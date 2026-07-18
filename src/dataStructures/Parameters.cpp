@@ -50,5 +50,9 @@
         update_interval = 10;
         use_path_relinking = false;
         nb_elites = -1;
+
+
+        pruning_rate = 0.7; // Simulated Annealing and Tabu Search
+
     }
  }

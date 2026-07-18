@@ -86,4 +86,33 @@
         return sorted_indexes;
     }
 
+
+
+
+
+    double computeIndexRatio(size_t index, double inverse_original_bound){
+
+        return std::min(1.0, (index * inverse_original_bound));
+    }
+
+
+
+
+    size_t computeLinearPruningIndexBound(double index_ratio, size_t original_bound){
+
+        return std::min(original_bound , 
+                        static_cast<size_t>(std::floor(original_bound * (1.0 - index_ratio))));
+    }
+
+
+
+
+    size_t computeQuadraticPruningIndexBound(double index_ratio, size_t original_bound){
+
+        return std::min(original_bound , 
+                        static_cast<size_t>(std::floor(original_bound * (1.0 - (index_ratio * index_ratio)))));
+    }
+
+
+
  }

@@ -26,6 +26,7 @@
  #include <vector>
  #include <algorithm>
  #include <functional>
+ #include <cmath>
 
  namespace spp{
 
@@ -38,7 +39,7 @@
 
 
     /**
-     * @brief sort all nonzero (1) variables by a increasing order of their heuristic score
+     * @brief sorts all nonzero (1) variables by a increasing order of their heuristic score
      *        heuristic score = profit / nb resource required
      */
     std::vector<int> sortNonZeroVars(Solution &solution,
@@ -46,10 +47,34 @@
 
 
     /**
-     * @brief sort all zero (0) variables by a deacreasing order of their heuristic score
+     * @brief sorts all zero (0) variables by a deacreasing order of their heuristic score
      *        heuristic score = profit / nb resource required
      */
     std::vector<int> sortZeroVars(Solution &solution,
                                   std::vector<float> &scores);
+
+
+
+    /**
+     * @brief computes the index normalization ratio t = index / original bound  = index * (inverse original bound)
+     */
+    double computeIndexRatio(size_t index, double inverse_original_bound);
+
+
+
+
+
+    /**
+     * @brief computes the index bound when applied the linear pruning strategy  f(t) = (1 - t) with 't' = index ratio
+     */
+    size_t computeLinearPruningIndexBound(double index_ratio, size_t original_bound);
+
+
+
+
+     /**
+     * @brief computes the index bound when applied the quadratic pruning strategy  f(t) = (1 - t²) with 't' = index ratio
+     */
+    size_t computeQuadraticPruningIndexBound(double index_ratio, size_t original_bound);
 
  }

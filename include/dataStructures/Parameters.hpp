@@ -74,6 +74,9 @@
         bool use_path_relinking;
         int nb_elites;
 
+        
+        double pruning_rate; // Simulated Annealing and Tabu Search
+
 
 
     };
