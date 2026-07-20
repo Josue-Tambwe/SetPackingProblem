@@ -90,6 +90,16 @@
 
 
 
+    size_t computeDeactiatedVariablesBound(size_t original_bound, const Params &params){
+
+        return (std::max(static_cast<size_t>(0), 
+                         static_cast<size_t>(std::floor(original_bound * (1.0 - params.pruning_rate)))));
+    }
+
+
+
+
+
     double computeIndexRatio(size_t index, double inverse_original_bound){
 
         return std::min(1.0, (index * inverse_original_bound));

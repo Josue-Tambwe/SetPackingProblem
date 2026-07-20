@@ -33,8 +33,13 @@
                             const Instance &instance){
 
 
+        // preprocessing
+        if(sorted_activated_vars.size() < 2 || sorted_deactivated_vars.size() < 1){return false;}
+
+
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
+
 
 
         for(size_t k = 0; k < sorted_deactivated_vars.size(); k++){
@@ -77,6 +82,10 @@
                            Solution &solution,
                            const Instance &instance){
 
+
+        // preprocessing
+        if(sorted_activated_vars.size() < 1 || sorted_deactivated_vars.size() < 1){return false;}
+
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
 
@@ -114,6 +123,9 @@
                              std::vector<int> &sorted_deactivated_vars,
                              Solution &solution,
                              const Instance &instance){
+
+        // preprocessing
+        if(sorted_deactivated_vars.size() < 1){return false;}
 
 
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
@@ -168,6 +180,9 @@
                            std::vector<int> &sorted_deactivated_vars,
                            Solution &solution,
                            const Instance &instance){
+
+        // preprocessing
+        if(sorted_activated_vars.size() < 1 || sorted_deactivated_vars.size() < 2){return false;}
 
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
@@ -225,6 +240,9 @@
                                    Solution &solution,
                                    const Instance &instance){
 
+        // preprocessing
+        if(sorted_activated_vars.size() < 2 || sorted_deactivated_vars.size() < 1){return false;}
+
 
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
@@ -270,6 +288,9 @@
                                    Solution &solution,
                                    const Instance &instance){
 
+        // preprocessing
+        if(sorted_activated_vars.size() < 1 || sorted_deactivated_vars.size() < 1){return false;}
+
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
         const size_t nb_words = solution.getNbConsumedResourceWords();
@@ -310,6 +331,8 @@
                                     Solution &solution,
                                     const Instance &instance){
 
+        // preprocessing
+        if(sorted_deactivated_vars.size() < 1){return false;}
 
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
         const size_t nb_words = solution.getNbConsumedResourceWords();
@@ -340,6 +363,10 @@
                                 std::vector<int> &sorted_deactivated_vars,
                                 Solution &solution,
                                 const Instance &instance){
+
+        // preprocessing
+        if(sorted_activated_vars.size() < 1 || sorted_deactivated_vars.size() < 2){return false;}
+
 
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
@@ -400,6 +427,9 @@
                                    Solution &solution,
                                    const Instance &instance){
 
+        // preprocessing
+        if(sorted_activated_vars.size() < 2 || sorted_deactivated_vars.size() < 1){return false;}
+
 
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
@@ -445,6 +475,9 @@
                                    Solution &solution,
                                    const Instance &instance){
 
+        // preprocessing
+        if(sorted_activated_vars.size() < 1 || sorted_deactivated_vars.size() < 1){return false;}
+
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
         const size_t nb_words = solution.getNbConsumedResourceWords();
@@ -484,6 +517,8 @@
                                     Solution &solution,
                                     const Instance &instance){
 
+        // preprocessing
+        if(sorted_deactivated_vars.size() < 1){return false;}
 
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();
         const size_t nb_words = solution.getNbConsumedResourceWords();
@@ -515,6 +550,10 @@
                                     std::vector<int> &sorted_deactivated_vars,
                                     Solution &solution,
                                     const Instance &instance){
+
+        // preprocessing
+        if(sorted_activated_vars.size() < 1 || sorted_deactivated_vars.size() < 2){return false;}
+
 
         const std::vector<int>& profit = instance.getProfitVector();
         const std::vector<BitVector>& resource_requirements = instance.getResourceRequirements();

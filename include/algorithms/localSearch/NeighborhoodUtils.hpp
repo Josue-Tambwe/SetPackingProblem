@@ -21,6 +21,7 @@
  #pragma once
 
  #include "dataStructures/MoveNode.hpp"
+ #include "dataStructures/Parameters.hpp"
  #include "dataStructures/Instance.hpp"
  #include "dataStructures/Solution.hpp"
  #include <vector>
@@ -54,6 +55,18 @@
                                   std::vector<float> &scores);
 
 
+
+
+    /**
+     * @brief computes the bound on the set of deactivated variables sorted in a decreasing order of their
+     *        heuristic scores (score = profit / nb resources required)
+     *
+     *        The bound = (1 - pruning rate) * original bound
+     */
+    size_t computeDeactiatedVariablesBound(size_t original_bound, const Params &params);
+
+
+   
 
     /**
      * @brief computes the index normalization ratio t = index / original bound  = index * (inverse original bound)
