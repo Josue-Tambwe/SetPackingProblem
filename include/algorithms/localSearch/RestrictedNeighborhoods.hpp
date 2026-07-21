@@ -26,6 +26,21 @@
 #include "dataStructures/Parameters.hpp"
 #include "algorithms/localSearch/NeighborhoodUtils.hpp"
 #include "algorithms/localSearch/ConflictCheckerScalar.hpp"
+
+#if HAS_X86 && HAS_AVX2
+#include "hpc/simd/ConflictCheckerTwoOneSIMDX86.hpp" // 
+#include "hpc/simd/ConflictCheckerOneOneSIMDX86.hpp" //
+#include "hpc/simd/ConflictCheckerZeroOneSIMDX86.hpp" //
+#include "hpc/simd/ConflictCheckerOneTwoSIMDX86.hpp" //
+#endif
+
+#if HAS_ARM && HAS_NEON
+#include "hpc/simd/ConflictCheckerTwoOneSIMDARM.hpp"
+#include "hpc/simd/ConflictCheckerOneOneSIMDARM.hpp"
+#include "hpc/simd/ConflictCheckerZeroOneSIMDARM.hpp"
+#include "hpc/simd/ConflictCheckerOneTwoSIMDARM.hpp"
+#endif
+
 #include <vector>
 #include <algorithm>
 
@@ -51,6 +66,99 @@ namespace spp{
                                     Solution &solution,
                                     const Params &params,
                                     const Instance &instance);
+
+
+
+
+    #if HAS_X86 && HAS_AVX2
+
+    bool findRestrictedTwoOneExchangeSIMDX86(int &first_index_to_deactivate,
+                                            int &second_index_to_deactivate,
+                                            int &index_to_activate,
+                                            std::vector<int> &sorted_activated_vars,
+                                            std::vector<int> &sorted_deactivated_vars,
+                                            Solution &solution,
+                                            const Params &params,
+                                            const Instance &instance);
+
+    #endif
+
+
+
+    #if HAS_ARM && HAS_NEON
+
+    bool findRestrictedTwoOneExchangeSIMDARM(int &first_index_to_deactivate,
+                                            int &second_index_to_deactivate,
+                                            int &index_to_activate,
+                                            std::vector<int> &sorted_activated_vars,
+                                            std::vector<int> &sorted_deactivated_vars,
+                                            Solution &solution,
+                                            const Params &params,
+                                            const Instance &instance);
+
+    #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+    * @brief searches a feasible 1-2 exchange move : 1 variable to deactivate and 2 variables to activate
+    *
+    *        Only a given percentage of the highest‑scoring deactivated variables is explored.
+    *        A quadratic pruning strategy limits the search over deactivated candidates, while
+    *        a linear pruning is applied to the activated variables. These pruning mechanisms
+    *        significantly reduce the neighborhood size and improve efficiency.
+    */
+    bool findRestrictedOneTwoExchange(int &first_index_to_activate,
+                                    int &second_index_to_activate,
+                                    int &to_deactivate,
+                                    std::vector<int> &sorted_activated_vars,
+                                    std::vector<int> &sorted_deactivated_vars,
+                                    Solution &solution,
+                                    const Params &params,
+                                    const Instance &instance);
+
+
+
+    #if HAS_X86 && HAS_AVX2
+
+    bool findRestrictedOneTwoExchangeSIMDX86(int &first_index_to_activate,
+                                            int &second_index_to_activate,
+                                            int &to_deactivate,
+                                            std::vector<int> &sorted_activated_vars,
+                                            std::vector<int> &sorted_deactivated_vars,
+                                            Solution &solution,
+                                            const Params &params,
+                                            const Instance &instance);
+
+    #endif
+
+
+
+
+    #if HAS_ARM && HAS_NEON
+
+    bool findRestrictedOneTwoExchangeSIMDARM(int &first_index_to_activate,
+                                            int &second_index_to_activate,
+                                            int &to_deactivate,
+                                            std::vector<int> &sorted_activated_vars,
+                                            std::vector<int> &sorted_deactivated_vars,
+                                            Solution &solution,
+                                            const Params &params,
+                                            const Instance &instance);
+
+    #endif
 
 
 }
