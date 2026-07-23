@@ -37,6 +37,8 @@
    #include "algorithms/grasp/ReactiveGRASP.hpp" // to remove
    #include "algorithms/grasp/RunGRASP.hpp"
 
+   #include <iostream> // to remove
+
    #if USE_BRANCH_AND_BOUND
    #include "algorithms/branchAndBound/RunBranchAndBound.hpp"
    #endif
@@ -51,7 +53,6 @@
    int main(int argc, char** argv){
 
       const Params params = parseOptions(argc, argv);
-      const Instance instance(params);
 
       if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
 
@@ -69,6 +70,27 @@
          #if USE_MILP
          runMilpSolver(params);
          #endif
+      }
+
+
+      else if(params.algorithm == Algorithm::TabuSearch){
+
+         Timer timer;
+
+         const Instance instance(params);
+
+         timer.start();
+
+         Solution sol = deterministicConstruction(instance);
+         RestrictedVariableNeighborhoodDescent(params.use_intensification,
+                                              params, 
+                                              sol, 
+                                              instance);
+
+         sol.print(instance);
+
+         std::cout << " time " << timer.getElapsedTime() << " (s)   status " << sol.getStatus() << "\n\n";
+
       }
 
    

@@ -27,6 +27,7 @@
  #include "dataStructures/Status.hpp"
  #include "algorithms/localSearch/NeighborhoodUtils.hpp"
  #include "algorithms/localSearch/Neighborhoods.hpp"
+ #include "algorithms/localSearch/RestrictedNeighborhoods.hpp"
  #include <vector>
  #include <cstdint>
 
@@ -39,6 +40,19 @@
     size_t twoOneNeighborhood(std::vector<float> &scores,
                             Solution &solution,
                             const Instance &instance);
+
+
+    /**
+     * @brief performs the restricted 2-1 exchange while an improvement of the objective is possible
+     */
+    size_t restrictedTwoOneNeighborhood(std::vector<float> &scores,
+                                      Solution &solution,
+                                      const Params &params,
+                                      const Instance &instance);
+
+
+    
+
 
     
    /**
@@ -57,6 +71,10 @@
                             const Instance &instance);
 
     
+        
+                            
+
+
 
     /**
      * @brief performs the 1-2 exchange while an improvement of the objective is possible
@@ -66,11 +84,31 @@
                             const Instance &instance);
 
 
+    /**
+     * @brief performs the restricted 1-2 exchange while an improvement of the objective is possible
+     */
+    size_t restrictedOneTwoNeighborhood(std::vector<float> &scores,
+                                        Solution &solution,
+                                        const Params &params,
+                                        const Instance &instance);
+
+
+
+
+
+
     #if HAS_X86 && HAS_AVX2                        
 
     size_t twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
+
+    size_t restrictedTwoOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance);
+
+
 
 
 
@@ -86,11 +124,22 @@
 
 
 
+
+
     size_t oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
 
+
+    size_t restrictedOneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance);
+
+
     #endif
+
+
 
 
 
@@ -100,6 +149,16 @@
     size_t twoOneNeighborhoodSIMDNEON(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
+
+
+    size_t restrictedTwoOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance);
+
+
+
+
 
 
 
@@ -115,9 +174,16 @@
 
 
 
+
+
     size_t oneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance);
+
+    size_t restrictedOneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance);
 
 
 
@@ -132,6 +198,17 @@
                                      const Params &params, 
                                      Solution &solution, 
                                      const Instance &instance);
+
+
+
+
+    /**
+     * @brief VND local search with 1-2 and 2-1 restricted neighborhoods
+     */
+    void RestrictedVariableNeighborhoodDescent(bool intensification,
+                                              const Params &params, 
+                                              Solution &solution, 
+                                              const Instance &instance);
     
  }
 

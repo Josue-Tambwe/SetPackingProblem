@@ -89,6 +89,7 @@
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the greedy algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the greedy algorithm! ");}
+            //if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the greedy algorithm! ");}
             
         }
 
@@ -114,6 +115,7 @@
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the bab algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the bab algorithm! ");}
+            if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the bab algorithm! ");}
         }
 
     }
@@ -139,6 +141,7 @@
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the milp algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the milp algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the milp algorithm! ");}
+            if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the milp algorithm! ");}
         }
 
     }
@@ -160,6 +163,7 @@
             if (arg.find("--iterations=") == 0) {log.error(" --iterations option is not supported by the grasp algorithm! ");}
             if (arg.find("--solver=") == 0) {log.error(" --solver option is not supported by the grasp algorithm! ");}
             if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the grasp algorithm! ");}
         }
 
     }
@@ -251,6 +255,16 @@
                 if(name == "--update-interval"){
                     params.update_interval = std::stoi(value);
                     if(params.update_interval < 1){log.error(" update-interval must be >= 1");}
+                    continue;
+                }
+
+
+                if(name == "--pruning-rate"){
+                    params.pruning_rate = std::stod(value);
+                    if(params.pruning_rate < 0.0 || params.pruning_rate > 1.0){
+
+                        log.error(" pruning-rate must be in the interval [0,1]");
+                    }
                     continue;
                 }
 

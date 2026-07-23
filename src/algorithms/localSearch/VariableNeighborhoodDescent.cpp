@@ -71,6 +71,55 @@
 
 
 
+    size_t restrictedTwoOneNeighborhood(std::vector<float> &scores,
+                                      Solution &solution,
+                                      const Params &params,
+                                      const Instance &instance){
+
+        bool improvement = true;
+        int first_index_to_deactivate = -1;
+        int second_index_to_deactivate = -1;
+        int index_to_activate = -1;
+        size_t nb_iterations = 0;
+
+        do{
+
+            nb_iterations += 1;
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findRestrictedTwoOneExchange(first_index_to_deactivate,
+                                                    second_index_to_deactivate,
+                                                    index_to_activate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    params,
+                                                    instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(first_index_to_deactivate, instance);
+                solution.deactivateVar(second_index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+        return nb_iterations;
+
+    }
+
+
+
+
     // ------------------------ 1-1 Exchange -----------------------------
 
 
@@ -197,6 +246,65 @@
 
 
 
+    size_t restrictedOneTwoNeighborhood(std::vector<float> &scores,
+                                        Solution &solution,
+                                        const Params &params,
+                                        const Instance &instance){
+
+        bool improvement = true;
+        int to_deactivate = -1;
+        int first_index_to_activate = -1;
+        int second_index_to_activate = -1;
+        size_t nb_iterations = 0;
+        
+
+        do{
+            nb_iterations += 1;
+
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findRestrictedOneTwoExchange(first_index_to_activate,
+                                                    second_index_to_activate,
+                                                    to_deactivate,
+                                                    sorted_activated_vars,
+                                                    sorted_deactivated_vars,
+                                                    solution,
+                                                    params,
+                                                    instance);
+
+
+            // update of the solution 
+            if(improvement){
+                // deactivation
+                solution.deactivateVar(to_deactivate, instance);
+
+                // activation
+                solution.activateVar(first_index_to_activate, instance);
+                solution.activateVar(second_index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+        return nb_iterations;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     #if HAS_X86 && HAS_AVX2
 
     size_t twoOneNeighborhoodSIMDX86(std::vector<float> &scores,
@@ -242,6 +350,61 @@
         return nb_iterations;
 
     }
+
+
+
+
+
+
+    size_t restrictedTwoOneNeighborhoodSIMDX86(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance){
+
+        bool improvement = true;
+        int first_index_to_deactivate = -1;
+        int second_index_to_deactivate = -1;
+        int index_to_activate = -1;
+        size_t nb_iterations = 0;
+
+        do{
+            nb_iterations += 1;
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findRestrictedTwoOneExchangeSIMDX86(first_index_to_deactivate,
+                                                            second_index_to_deactivate,
+                                                            index_to_activate,
+                                                            sorted_activated_vars,
+                                                            sorted_deactivated_vars,
+                                                            solution,
+                                                            params,
+                                                            instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(first_index_to_deactivate, instance);
+                solution.deactivateVar(second_index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+        return nb_iterations;
+
+
+    }
+
+
+
+
 
 
 
@@ -318,6 +481,11 @@
 
 
 
+
+
+
+
+
     size_t oneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
                                    Solution &solution,
                                    const Instance &instance){
@@ -361,7 +529,67 @@
         return nb_iterations;
                                 
     }
+
+
+
+
+
+    size_t restrictedOneTwoNeighborhoodSIMDX86(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance){
+
+        bool improvement = true;
+        int to_deactivate = -1;
+        int first_index_to_activate = -1;
+        int second_index_to_activate = -1;
+        size_t nb_iterations = 0;
+        
+
+        do{
+            nb_iterations += 1;
+
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findRestrictedOneTwoExchangeSIMDX86(first_index_to_activate,
+                                                            second_index_to_activate,
+                                                            to_deactivate,
+                                                            sorted_activated_vars,
+                                                            sorted_deactivated_vars,
+                                                            solution,
+                                                            params,
+                                                            instance);
+
+
+            // update of the solution 
+            if(improvement){
+                // deactivation
+                solution.deactivateVar(to_deactivate, instance);
+
+                // activation
+                solution.activateVar(first_index_to_activate, instance);
+                solution.activateVar(second_index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+        return nb_iterations;
+
+    }
+
+
     #endif
+
+
+
+
+
+
+
+
 
 
     
@@ -411,6 +639,64 @@
         return nb_iterations;
 
     }
+
+
+
+
+
+    size_t restrictedTwoOneNeighborhoodSIMDARM(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance){
+
+        bool improvement = true;
+        int first_index_to_deactivate = -1;
+        int second_index_to_deactivate = -1;
+        int index_to_activate = -1;
+        size_t nb_iterations = 0;
+
+        do{
+            nb_iterations += 1;
+            
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findRestrictedTwoOneExchangeSIMDARM(first_index_to_deactivate,
+                                                            second_index_to_deactivate,
+                                                            index_to_activate,
+                                                            sorted_activated_vars,
+                                                            sorted_deactivated_vars,
+                                                            solution,
+                                                            params,
+                                                            instance);
+
+            // update of the solution 
+            if(improvement){
+
+                // deactivation
+                solution.deactivateVar(first_index_to_deactivate, instance);
+                solution.deactivateVar(second_index_to_deactivate, instance);
+
+                // activation
+                solution.activateVar(index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+        return nb_iterations;
+
+
+    }
+
+
+
+
+
+
+
+
 
 
 
@@ -529,6 +815,57 @@
                                 
     }
 
+
+
+
+    size_t restrictedOneTwoNeighborhoodSIMDARM(std::vector<float> &scores,
+                                              Solution &solution,
+                                              const Params &params,
+                                              const Instance &instance){
+
+        bool improvement = true;
+        int to_deactivate = -1;
+        int first_index_to_activate = -1;
+        int second_index_to_activate = -1;
+        size_t nb_iterations = 0;
+        
+
+        do{
+            nb_iterations += 1;
+
+            std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
+            std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
+
+            improvement = findRestrictedOneTwoExchangeSIMDARM(first_index_to_activate,
+                                                            second_index_to_activate,
+                                                            to_deactivate,
+                                                            sorted_activated_vars,
+                                                            sorted_deactivated_vars,
+                                                            solution,
+                                                            params,
+                                                            instance);
+
+
+            // update of the solution 
+            if(improvement){
+                // deactivation
+                solution.deactivateVar(to_deactivate, instance);
+
+                // activation
+                solution.activateVar(first_index_to_activate, instance);
+                solution.activateVar(second_index_to_activate, instance);
+            }
+
+
+        }
+        while(improvement);
+
+        return nb_iterations;
+
+    }
+
+
+
     #endif
 
 
@@ -598,6 +935,77 @@
         else{solution.setStatus(Status::INFEASIBLE);}
        
 
+    }
+
+
+
+
+
+
+    void RestrictedVariableNeighborhoodDescent(bool intensification,
+                                              const Params &params, 
+                                              Solution &solution, 
+                                              const Instance &instance){
+
+        std::vector<float> scores = computeVariableScores(instance);
+
+        if(params.use_simd){
+
+            #if HAS_AVX2
+                if(intensification){
+
+                    oneOneNeighborhoodSIMDX86(scores, solution, instance);
+                    restrictedOneTwoNeighborhoodSIMDX86(scores, solution, params, instance);
+                }
+                else{
+                    restrictedOneTwoNeighborhoodSIMDX86(scores, solution, params, instance);
+                    oneOneNeighborhoodSIMDX86(scores, solution, instance);
+                }
+                
+                restrictedTwoOneNeighborhoodSIMDX86(scores, solution, params, instance);
+                zeroOneNeighborhoodSIMDX86(scores, solution, instance);
+
+            #elif HAS_NEON
+
+                if(intensification){
+
+                    oneOneNeighborhoodSIMDARM(scores, solution, instance);
+                    restrictedOneTwoNeighborhoodSIMDARM(scores, solution, params, instance);
+                }
+                else{
+                    restrictedOneTwoNeighborhoodSIMDARM(scores, solution, params, instance);
+                    oneOneNeighborhoodSIMDARM(scores, solution, instance);
+                }
+
+                restrictedTwoOneNeighborhoodSIMDARM(scores, solution, params, instance);
+                zeroOneNeighborhoodSIMDARM(scores, solution, instance);
+                
+
+            #endif
+        }
+
+        else{
+
+            if(intensification){
+
+                oneOneNeighborhood(scores, solution, instance);
+                restrictedOneTwoNeighborhood(scores, solution, params, instance);
+            }
+            else{
+                restrictedOneTwoNeighborhood(scores, solution, params, instance);
+                oneOneNeighborhood(scores, solution, instance);
+            }
+
+            restrictedTwoOneNeighborhood(scores, solution, params, instance);
+            zeroOneNeighborhood(scores, solution, instance);
+
+        }
+
+        // feasibility certification
+        if(solution.isFeasible(instance)){solution.setStatus(Status::FEASIBLE);}
+        else{solution.setStatus(Status::INFEASIBLE);}
+                                            
+                                            
     }
 
 
