@@ -25,7 +25,6 @@
  #include "dataStructures/Solution.hpp"
  #include "dataStructures/Parameters.hpp"
  #include "dataStructures/Status.hpp"
- #include "algorithms/localSearch/NeighborhoodUtils.hpp"
  #include "algorithms/localSearch/Neighborhoods.hpp"
  #include "algorithms/localSearch/RestrictedNeighborhoods.hpp"
  #include <vector>
