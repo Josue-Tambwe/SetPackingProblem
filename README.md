@@ -332,18 +332,32 @@ The theoretical foundations and algorithmic components implemented in this solve
 - **Xavier Delorme, Xavier Gandibleux, Joaquin Rodriguez** — *GRASP for Set Packing Problems*.  
   *European Journal of Operational Research*, 153(3), 564–580, 2004.
 
+
 - **Xavier Delorme** — *Modélisation et résolution de problèmes liés à l’exploitation d’infrastructures ferroviaires*.  
   PhD Thesis, Université de Valenciennes, 2003.
+
 
 - **Jacques Teghem** — *Recherche Opérationnelle, Tome 1*.  
   Éditions Ellipses, 2012.
 
+
+- **Pierre Hansen, Nenad Mladenović, Jack Brimberg, José A. Moreno Pérez** — *Variable Neighborhood Search*.  
+  In **Handbook of Metaheuristics**, International Series in Operations Research & Management Science, vol. 146, Springer, 2010.
+
+
+- **Mauricio G.C. Resende, Celso C. Ribeiro** — *Greedy Randomized Adaptive Search Procedures: Advances, Hybridizations, and Applications*.  
+  In *Handbook of Metaheuristics*, International Series in Operations Research & Management Science, vol. 146, Springer, 2010.
+
+
+- **Fred Glover, Manuel Laguna** — *Tabu Search*.  
+  In *Handbook of Combinatorial Optimization*, 2nd Edition, Panos Pardalos, Ding-Zu Du, Ronald Graham (eds.), Springer, 2013.
+
+
 - **Edmund K. Burke, Michel Gendreau, Matthew Hyde, Graham Kendall, Gabriela Ochoa, Ender Özcan, Rong Qu** — *Hyper‑heuristics: A Survey of the State of the Art*.  
   *Journal of the Operational Research Society*, 2013.
+  
 
 - **Johann Dréo, Alain Petrowski, Patrick Siarry, Éric Taillard** — *Métaheuristiques pour l’optimisation difficile*.  
   Eyrolles, 2006.
 
-- **Mauricio G.C. Resende, Celso C. Ribeiro** — *Greedy Randomized Adaptive Search Procedures: Advances, Hybridizations, and Applications*.  
-  In *Handbook of Metaheuristics*, International Series in Operations Research & Management Science, vol. 146, Springer, 2010.
 
