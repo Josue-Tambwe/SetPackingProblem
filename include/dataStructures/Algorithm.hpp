@@ -34,7 +34,7 @@
         GeneticAlgorithm,
         BranchAndBound,
         Milp,
-        Unknown,
+        Unknown
     };
 
  }

@@ -82,7 +82,7 @@
          timer.start();
 
          Solution sol = deterministicConstruction(instance);
-         RestrictedVariableNeighborhoodDescent(params.use_intensification,
+         restrictedVariableNeighborhoodDescent(params.use_intensification,
                                               params, 
                                               sol, 
                                               instance);

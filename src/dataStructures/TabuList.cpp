@@ -25,7 +25,7 @@ namespace spp{
 
     // constructors
 
-    TabuMove::TabuMove(){this->type = TabuMoveType::Unknown;}
+    TabuMove::TabuMove(){this->type = TabuMoveType::UnknownMove;}
 
 
     TabuMove::TabuMove(TabuMoveType t, std::vector<size_t> idx) : type(t), indexes(idx) {}

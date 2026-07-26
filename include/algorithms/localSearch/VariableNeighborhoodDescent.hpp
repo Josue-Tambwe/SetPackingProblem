@@ -204,7 +204,7 @@
     /**
      * @brief VND local search with 1-2 and 2-1 restricted neighborhoods
      */
-    void RestrictedVariableNeighborhoodDescent(bool intensification,
+    void restrictedVariableNeighborhoodDescent(bool intensification,
                                               const Params &params, 
                                               Solution &solution, 
                                               const Instance &instance);

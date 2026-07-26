@@ -35,7 +35,7 @@ namespace spp{
         OneOne,
         OneTwo,
         TwoOne,
-        Unknown
+        UnknownMove
     };
 
 

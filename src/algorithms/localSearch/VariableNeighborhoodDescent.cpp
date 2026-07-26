@@ -942,7 +942,7 @@
 
 
 
-    void RestrictedVariableNeighborhoodDescent(bool intensification,
+    void restrictedVariableNeighborhoodDescent(bool intensification,
                                               const Params &params, 
                                               Solution &solution, 
                                               const Instance &instance){
