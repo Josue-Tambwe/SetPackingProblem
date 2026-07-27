@@ -12,33 +12,36 @@
 
 
 /** 
- * @file TabuSearch.hpp
- * @brief defines  functions used in the Tabu Search local search
+ * @file TabuSearchUtils.hpp
+ * @brief defines some useful functions used in the Tabu Search local search
  * @author Josué Tambwe
- * @date 25 July 2026
+ * @date 27 July 2026
  */
 
 #pragma once
 
-#include "dataStructures/Instance.hpp"
-#include "dataStructures/Solution.hpp"
 #include "dataStructures/Parameters.hpp"
 #include "dataStructures/TabuList.hpp"
-#include "algorithms/localSearch/Neighborhoods.hpp"
-#include "algorithms/localSearch/RestrictedNeighborhoods.hpp"
-#include <vector>
-#include <cstdint>
+
 
 namespace spp{
 
 
     /**
-     * @brief Identifies the best admissible move in the neighborhood which means the best non‑tabu move that improves
-     *        or least degrades the current solution according to the evaluation criteria.
+     * @brief updates the tabu list by adding the best non-tabu move found in the neighborhoods
      */
-    TabuMove findBestMove(TabuList &tabu_list,
-                          Solution &solution,
-                          const Params &params,
-                          const Instance &instance);
+    void updateTabuList(const TabuMove &best_move, TabuList &tabu_list);
+
+
+
+
+    /**
+     * @brief check of the stopping criteria for the Tabu Search algorithm
+     */
+    bool stoppingCriteriaTabuSearch(double current_time, 
+                                    size_t current_iteration, 
+                                    const Params &params);
+
+
 
 }

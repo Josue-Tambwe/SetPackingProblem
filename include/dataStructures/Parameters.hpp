@@ -74,8 +74,13 @@
         bool use_path_relinking;
         int nb_elites;
 
+        // Simulated Annealing and Tabu Search
+        double pruning_rate; 
+        float alpha;
+
+        // Tabu Search
+        size_t tabu_tenure; 
         
-        double pruning_rate; // Simulated Annealing and Tabu Search
 
 
 

@@ -92,9 +92,11 @@ namespace spp{
 
         public : 
 
-            // constructor
+            // constructors
 
             TabuList() = default;
+
+            TabuList(size_t tenure);
 
             // destructor
 

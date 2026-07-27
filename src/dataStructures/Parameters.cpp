@@ -52,7 +52,12 @@
         nb_elites = -1;
 
 
-        pruning_rate = 0.7; // Simulated Annealing and Tabu Search
+        // Simulated Annealing and Tabu Search
+        pruning_rate = 0.7; 
+        alpha = 0.5;
+
+        
+        
 
     }
  }

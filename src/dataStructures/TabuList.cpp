@@ -102,11 +102,6 @@ namespace spp{
 
         }
 
-        else{
-
-            Logger log;
-            log.error("Empty Tabu move");
-        }
     }
 
 
@@ -114,6 +109,12 @@ namespace spp{
 
 
     // ------------------ TabuList -------------------
+
+
+    // constructor
+
+    TabuList::TabuList(size_t tenure):tabu_tenure(tenure){}
+
 
     bool TabuList::contains(const TabuMove &move) const{
 

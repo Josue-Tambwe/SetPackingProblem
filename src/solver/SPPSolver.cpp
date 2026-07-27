@@ -22,20 +22,9 @@
    #include "dataStructures/Parameters.hpp"
    #include "dataStructures/Instance.hpp" // to remove
    #include <iostream> // to remove
-   #include "dataStructures/Solution.hpp" // to remove 
-   #include "algorithms/greedy/DeterministicConstruction.hpp" // to remove
-   #include "dataStructures/Timer.hpp" // to remove
-   #include "algorithms/localSearch/VariableNeighborhoodDescent.hpp" // to remove
    #include "algorithms/greedy/RunGreedy.hpp"
-   #include "dataStructures/BaBNode.hpp"
-   #include "algorithms/branchAndBound/BestFirst.hpp" // to remove
-   #include "algorithms/branchAndBound/DepthFirst.hpp" // to remove
-   #include "algorithms/milpSolver/GurobiBackend.hpp" // to remove
-   #include "algorithms/milpSolver/HighsBackend.hpp" // to remove
-   #include "algorithms/milpSolver/HexalyBackend.hpp" // to remove
-   #include "algorithms/greedy/RandomizedConstruction.hpp" // to remove
-   #include "algorithms/grasp/ReactiveGRASP.hpp" // to remove
    #include "algorithms/grasp/RunGRASP.hpp"
+   #include "algorithms/tabuSearch/RunTabuSearch.hpp"
 
    #include <iostream> // to remove
 
@@ -73,27 +62,8 @@
       }
 
 
-      else if(params.algorithm == Algorithm::TabuSearch){
+      else if(params.algorithm == Algorithm::TabuSearch){runTabuSearch(params);}
 
-         Timer timer;
-
-         const Instance instance(params);
-
-         timer.start();
-
-         Solution sol = deterministicConstruction(instance);
-         restrictedVariableNeighborhoodDescent(params.use_intensification,
-                                              params, 
-                                              sol, 
-                                              instance);
-
-         sol.print(instance);
-
-         std::cout << " time " << timer.getElapsedTime() << " (s)   status " << sol.getStatus() << "\n\n";
-
-      }
-
-   
          
       return 0;
    }

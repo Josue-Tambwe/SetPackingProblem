@@ -11,4 +11,6 @@
 
 
 # all source files of the tabuSearch subdirectory 
-tabu_search_sources = files('TabuSearch.cpp')
+tabu_search_sources = files('TabuSearchNeighborhoods.cpp',
+                            'TabuSearchUtils.cpp',
+                            'RunTabuSearch.cpp')

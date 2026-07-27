@@ -89,7 +89,9 @@
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the greedy algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the greedy algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the greedy algorithm! ");}
-            //if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -116,6 +118,8 @@
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the bab algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the bab algorithm! ");}
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the bab algorithm! ");}
+            if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the bab algorithm! ");}
+            if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the bab algorithm! ");}
         }
 
     }
@@ -142,6 +146,8 @@
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the milp algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the milp algorithm! ");}
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the milp algorithm! ");}
+            if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the milp algorithm! ");}
+            if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the milp algorithm! ");}
         }
 
     }
@@ -164,6 +170,8 @@
             if (arg.find("--solver=") == 0) {log.error(" --solver option is not supported by the grasp algorithm! ");}
             if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the grasp algorithm! ");}
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the grasp algorithm! ");}
         }
 
     }
@@ -342,6 +350,22 @@
                     if(params.nb_elites < 1){log.error(" nb-elites must be >= 1");}
                     continue;
                 }
+
+                if(name == "--tabu-tenure"){
+                    params.tabu_tenure = std::stoi(value);
+                    if(params.tabu_tenure < 1){log.error(" tabu-tenure must be >= 1");}
+                    continue;
+                }
+
+                if(name == "--alpha"){
+                    params.alpha = std::stof(value);
+                    if(params.alpha < 0.0f || params.alpha > 1.0f){
+
+                        log.error(" alpha must be in the interval [0,1]");
+                    }
+                    continue;
+                }
+
 
                 // case of invalid option
                 log.error("Unknown option: " + name);
