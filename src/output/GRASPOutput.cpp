@@ -56,7 +56,7 @@ namespace spp{
 
                         std::cout << std::setw(8) << std::left << " "
                                 << std::setw(18) << std::left << "threads used" <<  std::setw(2) << std::right << " : "
-                                << params.nb_threads << "\n"; // always 1 thread
+                                << params.nb_threads << "\n";
 
                 //line 4
                 std::cout << "  " << std::setw(22) << std::left << "number of constraints"

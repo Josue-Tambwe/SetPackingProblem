@@ -34,7 +34,7 @@
 
         use_time_limit = false;
         use_max_iterations = false;
-        nb_max_iterations = 5;
+        nb_max_iterations = 1;
         time_limit = 10.0;
 
         // Branch and Bound & Milp solver

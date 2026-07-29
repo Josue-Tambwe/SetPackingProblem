@@ -95,7 +95,7 @@
                 << "Target optimality gap in [0,1] for the Branch and Bound algorithm (default: 0.0)\n \n"
 
                 << "  "  << "--iterations=value" << std::string(10, ' ')
-                << "Number of iterations for Genetic Algorithm, Simulated Annealing and Tabu Search\n \n"
+                << "Number of iterations for Genetic Algorithm, Simulated Annealing and Tabu Search (default: 1)\n \n"
 
                 << "  "  << "--nb-cycles=value" << std::string(11, ' ')
                 << "Number of cycles for GRASP. Each cycle runs update-interval iterations before updating alpha probabilities\n \n"

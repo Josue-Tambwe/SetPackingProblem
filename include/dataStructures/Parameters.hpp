@@ -52,14 +52,14 @@
 
         // Branch and Bound & Milp solver
         char milp_solver;
-        /* Possible value for the attribute "milp_solver"
+        /* Possible values for the attribute "milp_solver"
          - 'g' : gurobi
          - 'h' : highs
          - 'x ': hexaly 
         */
 
         char exploration_strategy;
-        /* Possible value
+        /* Possible values
          - 'b' : best first search
          - 'd' : depth first search
         */

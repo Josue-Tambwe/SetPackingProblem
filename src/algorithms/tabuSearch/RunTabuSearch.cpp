@@ -31,8 +31,8 @@ namespace spp{
         // building the instance
         const Instance instance(params);
 
-        //printHeaderGRASP(params, instance);
-
+        printHeaderTabuSearch(params, instance);
+        
         Timer timer = Timer();
         //Logger log;
         timer.start();
@@ -64,7 +64,7 @@ namespace spp{
                                            best_move, 
                                            instance);
 
-            // adding the best move to the tabu list
+            // adding the best non-tabu move to the tabu list
             updateTabuList(best_move, tabu_list);
 
             // updating the best solution

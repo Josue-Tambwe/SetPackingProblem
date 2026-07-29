@@ -12,38 +12,28 @@
 
 
 /** 
- * @file RunTabuSeach.hpp
- * @brief runs the Tabu Search algorithm with a greedy randomized construction
+ * @file TabuSearchOutput.hpp 
  * @author Josué Tambwe
- * @date 27 July 2026
+ * @date 30 July 2026
  */
 
 #pragma once
 
-#include "dataStructures/Instance.hpp"
-#include "dataStructures/Solution.hpp"
+#include "configuration/OutputConfig.hpp"
 #include "dataStructures/Parameters.hpp"
-#include "dataStructures/TabuList.hpp"
+#include "dataStructures/Instance.hpp"
 #include "dataStructures/Status.hpp"
-#include "dataStructures/Timer.hpp"
-#include "output/Logger.hpp"
-#include "output/GeneralOutput.hpp"
-#include "algorithms/greedy/RandomizedConstruction.hpp"
-#include "algorithms/tabuSearch/TabuSearchNeighborhoods.hpp"
-#include "algorithms/tabuSearch/TabuSearchUtils.hpp"
-#include "output/TabuSearchOutput.hpp"
+#include <iostream>
+#include <string>
+#include <iomanip>
 #include <cstdint>
-#include <iostream> // to remove
 
 
 namespace spp{
 
 
-    /**
-     * @brief runs the Tabu Search algorithm
-     */
-    void runTabuSearch(const Params &params);
+    void printHeaderTabuSearch(const Params &params, 
+                               const Instance &instance);
 
 
 }
-
