@@ -120,13 +120,22 @@ namespace spp{
                         << std::fixed << std::setprecision(2) << params.pruning_rate
                         <<  "\n";
 
+
                 // line 9
                 std::cout << std::setw(109) << std::left << " "
                         << std::setw(18) << std::left << "tabu tenure" <<  std::setw(2) << std::right << " : "
                         << params.tabu_tenure          
                         <<  "\n";
 
+
                 // line 10
+                std::cout << std::setw(109) << std::left << " "
+                        << std::setw(18) << std::left << "restart interval" <<  std::setw(2) << std::right << " : "
+                        << params.restart_interval          
+                        <<  "\n";
+
+
+                // line 11
                 if(params.use_max_iterations){
 
                 std::cout << std::setw(109) << std::left << " "
@@ -135,17 +144,164 @@ namespace spp{
                 }
 
 
-                // line 11
+                // line 12
                 if(params.use_time_limit){
 
                     std::cout << std::setw(109) << std::left << " "
                         << std::setw(18) << std::left << "time limit (s)" <<  std::setw(2) << std::right << " : "
                         << std::fixed << std::setprecision(2) << params.time_limit << "\n";  
                 
-                }
-                
+                }  
 
                 std::cout << "\n\n";
+        }
+
+
+
+
+
+        std::string formatImprovement(double value){
+        
+                double truncated = std::floor(value * 100000.0) / 100000.0;
+
+                return "+ " + std::to_string(truncated);
+        }
+
+
+
+
+
+        std::string formatDegradation(double value){
+
+                double truncated = std::floor(value * 100000.0) / 100000.0;
+
+                return "- " + std::to_string(truncated);
+        }
+
+
+
+
+
+
+        void printTabuSearchIterations(double current_time, 
+                                   size_t current_iteration,
+                                   size_t variation_iteration_count,
+                                   std::int64_t current_solution_objective_value,
+                                   std::int64_t best_solution_objective_value,
+                                   double relative_cumulative_improvement,
+                                   double relative_cumulative_degradation){
+
+                double inverse_variation_iteration_count = 1.0 / (std::max(static_cast<size_t>(1), variation_iteration_count));
+
+                // line 1
+                std::cout << "  " << std::setw(13) << std::left << "time (s)"
+                        << std::setw(2) << std::right << " : " 
+                        <<  std::setw(21) <<  std::left << std::fixed << std::setprecision(3) 
+                        << current_time
+
+                        << std::setw(7) << std::left << " "
+                        << std::setw(21) << std::left << "current solution"
+
+                        << std::setw(10) << std::left << " "
+                        << std::setw(23) << std::left << "average improvement (%)"
+
+                        << std::setw(10) << std::left << " "
+                        << std::setw(23) << std::left << "average degradation (%)"
+                        <<  "\n";
+
+
+                // line 2
+                std::cout << "  " << std::setw(13) << std::left << "iteration"
+                        << std::setw(2) << std::right << " : " 
+                        <<  std::setw(21) <<  std::left <<  current_iteration
+
+                        << std::setw(7) << std::left << " "
+                        << std::string(16, '-')
+
+                        << std::setw(15) << std::left << " "
+                        << std::string(23, '-')
+
+                        << std::setw(10) << std::left << " "
+                        << std::string(23, '-')
+
+
+
+                        <<  "\n";
+
+                // line 3
+                std::cout << "  " << std::setw(13) << std::left << "best solution"
+                        << std::setw(2) << std::right << " : " 
+                        <<  BRIGHT_YELLOW 
+                        << std::setw(21) <<  std::left 
+                        <<  best_solution_objective_value
+                        << RESET
+
+                        << std::setw(7) << std::left << " "
+                        << std::setw(16) << std::right << current_solution_objective_value
+
+                        << std::setw(28) << std::left << " "
+                        << BRIGHT_CYAN
+                        <<  std::setw(8) <<  std::right << std::fixed << std::setprecision(5)
+                        << formatImprovement(relative_cumulative_improvement * inverse_variation_iteration_count)
+                        << RESET
+
+                        << std::setw(23) << std::left << " "
+                        << SOFT_RED
+                        <<  std::setw(8) <<  std::right << std::fixed << std::setprecision(5)
+                        << formatDegradation(relative_cumulative_degradation * inverse_variation_iteration_count)
+                        << RESET
+
+                        <<  "\n\n\n";
 
         }
+
+
+
+
+
+
+        void printSummaryTabuSearch(double construction_time, 
+                                    double total_time,
+                                    size_t iterations,
+                                    std::int64_t construction_objective,
+                                    std::int64_t local_search_objective,
+                                    Status status){
+
+                std::cout << "\n";
+                std::cout << "  " << YELLOW <<  "Summary" << RESET << "\n"
+                          << "  "  << std::string(7, '-') << "\n\n"
+
+                          << "  " << std::setw(29) << std::left << "construction time (s)"
+                          << " : " << std::fixed << std::setprecision(5) << construction_time << "\n"
+                          << "  " << std::setw(29) << std::left << "objective value"
+                          << " : " << construction_objective << "\n\n"
+
+                          << "  " << std::setw(29) << std::left << "local search time (s)"
+                          << " : " << std::fixed << std::setprecision(5) << (total_time - construction_time) << "\n"
+
+                          << "  " << std::setw(29) << std::left << "total iterations"
+                          << " : " << iterations << "\n"
+
+
+                          << "  " <<  std::setw(29) << std::left << "objective value"
+                          << " : " << BRIGHT_YELLOW << local_search_objective << RESET << "\n\n"
+                        
+                          << "  " << std::setw(29) << std::left << "absolute improvement gap"
+                          << " : "  << (local_search_objective - construction_objective) << "\n"
+                          << "  " << std::setw(29) << std::left << "relative improvement gap (%)"
+                          << " : " << "+ "
+                          <<  BRIGHT_CYAN 
+                          << (100.0 * (local_search_objective - construction_objective) / (construction_objective + 1e-9))
+                          << RESET
+                          << "\n\n"
+
+                          << "  " << std::setw(29) << std::left << "total elapsed time (s)"
+                          << " : " << std::fixed << std::setprecision(5) << total_time  << "\n"
+                          << "  " <<  std::setw(29) << std::left << "solution status"
+                          << " : " << status << "\n\n";
+
+        }
+
+
+
 }

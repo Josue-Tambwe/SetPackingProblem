@@ -52,6 +52,12 @@
                   << "  " << "--update-interval=value" << std::string(5, ' ')
                   << "Number of iterations before updating alpha probabilities for the GRASP Algorithm \n\n"
 
+                  << "  " << "--tabu-tenure=value" << std::string(9, ' ')
+                  << "Number of iterations that a move remains tabu for the Tabu Search Algorithm \n\n"
+
+                  << "  " << "--restart-interval=value" << std::string(4, ' ')
+                  << "Number of iterations before rebulding the current solution for the Tabu Search Algorithm \n\n"
+
                   << "  " << "--pop-size=value" << std::string(12, ' ')
                   << "Population size for the Genetic Algorithm \n\n"
 
@@ -101,11 +107,17 @@
                 << "Number of cycles for GRASP. Each cycle runs update-interval iterations before updating alpha probabilities\n \n"
 
                 << "  "  << "--nb-elites=value" << std::string(11, ' ')
-                << "Number of elite solutions within the elite solutions pool for Reactive GRASP with Path-Relinking.\n \n"
+                << "Number of elite solutions within the elite solutions pool for Reactive GRASP with Path-Relinking\n \n"
                 
                 
                 << "  "  << "--bias=value" << std::string(16, ' ')
-                << "Bias factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n";
+                << "Bias factor in [0,1] for GRASP and Genetic algorithm (low = 0.0, high = 1.0, default: 0.0)\n \n"
+
+                << "  "  << "--alpha=value" << std::string(15, ' ')
+                << "Greedy-randomness level in [0,1] (low = highly random, high = highly greedy, default: 0.5)\n\n"
+
+                << "  "  << "--pruning-rate=value" << std::string(8, ' ')
+                << "Proportion in [0,1] of elite inactive variables tested in restricted 1-2 and 2-1 neighborhoods\n\n\n \n";
 
     }
 
@@ -123,6 +135,9 @@
 
             << "    ./bin/spp_solver --algorithm=grasp "
             << "--instance=benchmarks/pb_100rnd0100.dat  --update-interval=50  --time-limit=30  --simd --path-relinking\n\n"
+
+            << "    ./bin/spp_solver --algorithm=ts "
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --tabu-tenure=10 --restart-interval=50  --time-limit=60  --simd\n\n"
 
             << "    ./bin/spp_solver --algorithm=bab "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --solver=gurobi --exploration=dfs\n\n"

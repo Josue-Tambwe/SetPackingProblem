@@ -33,10 +33,30 @@
 #include "algorithms/tabuSearch/TabuSearchUtils.hpp"
 #include "output/TabuSearchOutput.hpp"
 #include <cstdint>
-#include <iostream> // to remove
+#include <algorithm>
 
 
 namespace spp{
+
+
+    /**
+     * @brief computes the relative improvement of a single iteration on the incumbent solution
+     */
+    double computeRelativeImprovement(std::int64_t new_objective_value, 
+                                      std::int64_t old_objective_value);
+
+
+
+
+    /**
+     * @brief computes the relative degradation of a single iteration on the incumbent solution
+     */
+    double computeRelativeDegradation(std::int64_t new_objective_value, 
+                                      std::int64_t old_objective_value);
+
+
+
+
 
 
     /**

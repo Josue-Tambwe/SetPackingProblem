@@ -30,6 +30,7 @@
     static constexpr const char* YELLOW = "\033[33m";
     static constexpr const char* BRIGHT_YELLOW  = "\033[93m";
     static constexpr const char* RED    = "\033[31m";
+    static constexpr const char* SOFT_RED = "\033[38;5;132m";
     static constexpr const char* MAGENTA = "\033[35m";
     static constexpr const char* CYAN    = "\033[36m";
     static constexpr const char* BRIGHT_CYAN    = "\033[96m";

@@ -79,7 +79,8 @@
         float alpha;
 
         // Tabu Search
-        size_t tabu_tenure; 
+        size_t tabu_tenure;
+        size_t restart_interval; 
         
 
 

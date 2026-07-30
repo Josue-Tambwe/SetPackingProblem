@@ -66,6 +66,24 @@ The best result obtained across all paths is returned as the **intensified elite
 
 
 
+## 6. Tabu Search (multi-neighborhood, pruning and periodic restart)
+
+The Tabu Search implemented in this solver relies on a multi‑neighborhood exploration, using the four operators previously defined: 1‑2, 1‑1, 2‑1, and 0‑1.
+At each iteration, the algorithm evaluates the best admissible move across all neighborhoods, while **respecting the tabu list**.
+
+To avoid the **combinatorial explosion** inherent to the 1‑2 and 2‑1 neighborhoods, the solver applies **selective pruning** : only the most promising candidate combinations (according to an internal heuristic score) are evaluated.
+
+In addition to this filtering, the inner loops of these neighborhoods are pruned using linear or quadratic bounds, depending on the structure of the move:
+
+- the outer loop over deactivated variables is restricted by a quadratic decay bound, reducing the number of candidates as their heuristic score decreases;
+
+- the inner loop over activated variables uses a linear pruning rule, dynamically adjusting the exploration range based on the relative position of the variable in the sorted list.
+
+These pruning strategies drastically reduce the number of evaluated combinations while preserving strong exploration capabilities, making multi‑neighborhood Tabu Search feasible even on large‑scale SPP instances.
+
+
+To introduce diversification, each Tabu Search phase starts from a **randomized construction** similar to the one used in Reactive GRASP. In addition, a periodic restart further enhances diversification : after a fixed number of iterations (**restart interval**), the solver rebuilds a new randomized initial solution and resets the tabu list. This mechanism helps the algorithm escape local optima and improve robustness on difficult benchmark instances.
+
 
 
 ## 9. Branch & Bound
@@ -277,6 +295,32 @@ Total GRASP iterations = update-interval $\times$ nb-cycles.
 - **--nb-elites** (optional) : Defines the size of the elite pool retained during each GRASP cycle. If omitted, the solver defaults to the number of physical CPU cores
 
 ![](docs/images/run_reactive_grasp_path_relinking.png)
+
+
+
+## Tabu Search with greedy randomized construction
+
+
+```bash
+./bin/spp_solver --algorithm=ts --instance=benchmarks/pb_1000rnd0700.dat --simd --verbose --pruning-rate=0.3 --time-limit=60 --tabu-tenure=10 --alpha=0.7 --restart-interval=30
+```
+
+- **--tabu-tenure** (mandatory) : Length of time a move stays tabu. Higher values increase diversification.
+
+- **--restart-interval** (mandatory) : Number of iterations before restarting Tabu Search from a new randomized construction. The tabu list is reset at each restart.
+
+
+- **--alpha** (optional) : in \[0,1] controls randomness in the greedy construction used at each restart. $\alpha$ close to zero is highly random and $\alpha$  close to one is highly greedy.
+
+
+- **--pruning-rate** (optional) : in \[0,1] is the proportion of the top‑scored inactive variables considered in the 1‑2 and 2‑1 neighborhoods. Higher values explore more inactive **elite** candidates; lower values prune aggressively and reduce the combinatorial cost.
+
+- additional options : **--simd** and **--intensification**
+
+![](docs/images/run_tabu_search.png)
+
+
+
 
 
 ## Run Branch & Bound algorithm (with greedy primal solution)

@@ -32,27 +32,27 @@
  namespace spp{
 
 
-    /**
+   /**
     * @brief checks that all required options have been given by the user
     */
     void checkRequiredOptions(int argc, char** argv, const Params &params);
 
 
-    /**
+   /**
     * @brief checks that no unsupported options are given for the greedy algorithm
     */
     void unsupportedOptionsGreedy(int argc, char** argv);
 
 
 
-    /**
+   /**
     * @brief checks that no unsupported options are given for the B&B algorithm
     */
     void unsupportedOptionsBaB(int argc, char** argv);
 
 
 
-    /**
+   /**
     * @brief checks that no unsupported options are given for the MILP algorithm
     */
     void unsupportedOptionsMilp(int argc, char** argv);
@@ -60,10 +60,18 @@
 
 
 
-     /**
+   /**
     * @brief checks that no unsupported options are given for the GRASP algorithm
     */
     void unsupportedOptionsGRASP(int argc, char** argv);
+
+
+
+
+    /**
+    * @brief checks that no unsupported options are given for the Tabu Search algorithm
+    */
+    void unsupportedOptionsTabuSearch(int argc, char** argv);
 
 
 

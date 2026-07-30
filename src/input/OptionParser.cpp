@@ -31,6 +31,8 @@
         bool has_instance = false;
         bool use_milp_solver = false;
         bool has_update_interval = false;
+        bool has_tabu_tenure = false;
+        bool has_restart_interval = false;
         
 
         for(int i = 1; i < argc; i++){
@@ -40,6 +42,8 @@
             if (arg.find("--algorithm=") == 0) {has_algorithm = true;}
             if (arg.find("--solver=") == 0) {use_milp_solver = true;}
             if (arg.find("--update-interval=") == 0) {has_update_interval = true;}
+            if (arg.find("--tabu-tenure=") == 0) {has_tabu_tenure = true;}
+            if (arg.find("--restart-interval=") == 0) {has_restart_interval = true;}
         }
 
         if(!has_algorithm){log.error(" Missing required option : --algorithm=value");}
@@ -57,6 +61,20 @@
         if(params.algorithm == Algorithm::Grasp && !has_update_interval){
 
             log.error(" Missing required option : --update-interval=value");
+
+        }
+
+
+        if(params.algorithm == Algorithm::TabuSearch && !has_tabu_tenure){
+
+            log.error(" Missing required option : --tabu-tenure=value");
+
+        }
+
+
+        if(params.algorithm == Algorithm::TabuSearch && !has_restart_interval){
+
+            log.error(" Missing required option : --restart-interval=value");
 
         }
 
@@ -92,6 +110,7 @@
             if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the greedy algorithm! ");}
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the greedy algorithm! ");}
             if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the greedy algorithm! ");}
+            if (arg.find("--restart-interval=") == 0) {log.error(" --restart-interval option is not supported by the greedy algorithm! ");}
             
         }
 
@@ -120,6 +139,7 @@
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the bab algorithm! ");}
             if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the bab algorithm! ");}
             if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the bab algorithm! ");}
+            if (arg.find("--restart-interval=") == 0) {log.error(" --restart-interval option is not supported by the bab algorithm! ");}
         }
 
     }
@@ -148,6 +168,7 @@
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the milp algorithm! ");}
             if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the milp algorithm! ");}
             if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the milp algorithm! ");}
+            if (arg.find("--restart-interval=") == 0) {log.error(" --restart-interval option is not supported by the milp algorithm! ");}
         }
 
     }
@@ -172,7 +193,37 @@
             if (arg.find("--pruning-rate") == 0) {log.error(" --pruning-rate flag is not supported by the grasp algorithm! ");}
             if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the grasp algorithm! ");}
             if (arg.find("--alpha=") == 0) {log.error(" --alpha option is not supported by the grasp algorithm! ");}
+            if (arg.find("--restart-interval=") == 0) {log.error(" --restart-interval option is not supported by the grasp algorithm! ");}
         }
+
+    }
+
+
+
+
+
+    void unsupportedOptionsTabuSearch(int argc, char** argv){
+        
+        Logger log; 
+
+        for(int i = 1; i < argc; i++){
+
+            std::string arg = argv[i];
+
+            if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the ts algorithm! ");}
+            if (arg.find("--solver=") == 0) {log.error(" --solver option is not supported by the ts algorithm! ");}
+            if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the ts algorithm! ");}
+            if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the ts algorithm! ");}
+            if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the ts algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the ts algorithm! ");}
+            if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the ts algorithm! ");}
+            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the ts algorithm! ");}
+            if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the ts algorithm! ");}
+            if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the ts algorithm! ");}
+            if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the ts algorithm! ");}
+            
+        }
+
 
     }
 
@@ -366,6 +417,12 @@
                     continue;
                 }
 
+                if(name == "--restart-interval"){
+                    params.restart_interval = std::stoi(value);
+                    if(params.restart_interval < 1){log.error(" restart-interval must be >= 1");}
+                    continue;
+                }
+
 
                 // case of invalid option
                 log.error("Unknown option: " + name);
@@ -396,6 +453,8 @@
             }
         
         }
+
+        else if(params.algorithm == Algorithm::TabuSearch){unsupportedOptionsTabuSearch(argc, argv);}
 
 
 
