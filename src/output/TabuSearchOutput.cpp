@@ -280,11 +280,11 @@ namespace spp{
                           << " : " << std::fixed << std::setprecision(5) << (total_time - construction_time) << "\n"
 
                           << "  " << std::setw(29) << std::left << "total iterations"
-                          << " : " << iterations << "\n"
+                          << " : " << iterations << "\n\n"
 
 
                           << "  " <<  std::setw(29) << std::left << "objective value"
-                          << " : " << BRIGHT_YELLOW << local_search_objective << RESET << "\n\n"
+                          << " : " << BRIGHT_YELLOW << local_search_objective << RESET << "\n"
                         
                           << "  " << std::setw(29) << std::left << "absolute improvement gap"
                           << " : "  << (local_search_objective - construction_objective) << "\n"
