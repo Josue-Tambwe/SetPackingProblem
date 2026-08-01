@@ -9,14 +9,6 @@
 # See the LICENSE file for more details.
 #------------------------------------------------------------------------------
 
-subdir('greedy')
-subdir('localSearch')
-subdir('branchAndBound')
-subdir('milpSolver')
-subdir('grasp')
-subdir('tabuSearch')
-subdir('simulatedAnnealing')
 
-
-# all source files of the algorithm subdirectory 
-algorithm_sources = greedy_sources + local_search_sources + BaB_sources + milp_solver_sources + grasp_sources + tabu_search_sources + simulated_annealing_sources
+# all source files of the simulatedAnnealing subdirectory 
+simulated_annealing_sources = files('SimulatedAnnealingNeighborhoods.cpp')
