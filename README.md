@@ -68,7 +68,7 @@ The best result obtained across all paths is returned as the **intensified elite
 
 ## 6. Tabu Search (multi-neighborhood, pruning and periodic restart)
 
-The Tabu Search implemented in this solver relies on a multi‑neighborhood exploration, using the four operators previously defined: 1‑2, 1‑1, 2‑1, and 0‑1.
+The Tabu Search implemented in this solver relies on a multi‑neighborhood exploration, using the four operators previously defined: 1‑2, 1‑1, 2‑1 and 0‑1.
 At each iteration, the algorithm evaluates the best admissible move across all neighborhoods, while **respecting the tabu list**.
 
 To avoid the **combinatorial explosion** inherent to the 1‑2 and 2‑1 neighborhoods, the solver applies **selective pruning** : only the most promising candidate combinations (according to an internal heuristic score) are evaluated.
