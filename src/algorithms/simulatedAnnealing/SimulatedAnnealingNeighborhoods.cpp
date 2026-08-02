@@ -214,30 +214,32 @@ namespace spp{
         std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
         std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
+        bool move_found = false;
+
         if(params.use_simd){
 
             #if HAS_AVX2
                 
-                return  findRestrictedTwoOneExchangeSIMDX86SimulatedAnnealing(first_index_to_deactivate,
-                                                                            second_index_to_deactivate,
-                                                                            index_to_activate,
-                                                                            sorted_activated_vars,
-                                                                            sorted_deactivated_vars,
-                                                                            solution,
-                                                                            params,
-                                                                            instance);
+                move_found = findRestrictedTwoOneExchangeSIMDX86SimulatedAnnealing(first_index_to_deactivate,
+                                                                                second_index_to_deactivate,
+                                                                                index_to_activate,
+                                                                                sorted_activated_vars,
+                                                                                sorted_deactivated_vars,
+                                                                                solution,
+                                                                                params,
+                                                                                instance);
 
             #elif HAS_NEON
 
-                return  findRestrictedTwoOneExchangeSIMDARMSimulatedAnnealing(first_index_to_deactivate,
-                                                                            second_index_to_deactivate,
-                                                                            index_to_activate,
-                                                                            sorted_activated_vars,
-                                                                            sorted_deactivated_vars,
-                                                                            solution,
-                                                                            params,
-                                                                            instance);
-                
+                move_found = findRestrictedTwoOneExchangeSIMDARMSimulatedAnnealing(first_index_to_deactivate,
+                                                                                second_index_to_deactivate,
+                                                                                index_to_activate,
+                                                                                sorted_activated_vars,
+                                                                                sorted_deactivated_vars,
+                                                                                solution,
+                                                                                params,
+                                                                                instance);
+                    
 
             #endif
 
@@ -245,15 +247,28 @@ namespace spp{
 
         else{
 
-            return  findRestrictedTwoOneExchangeScalarSimulatedAnnealing(first_index_to_deactivate,
-                                                                        second_index_to_deactivate,
-                                                                        index_to_activate,
-                                                                        sorted_activated_vars,
-                                                                        sorted_deactivated_vars,
-                                                                        solution,
-                                                                        params,
-                                                                        instance);
+            move_found = findRestrictedTwoOneExchangeScalarSimulatedAnnealing(first_index_to_deactivate,
+                                                                            second_index_to_deactivate,
+                                                                            index_to_activate,
+                                                                            sorted_activated_vars,
+                                                                            sorted_deactivated_vars,
+                                                                            solution,
+                                                                            params,
+                                                                            instance);
         }
+
+        // performing the exchange
+        if(move_found){
+
+            // deactivation
+            solution.deactivateVar(first_index_to_deactivate, instance);
+            solution.deactivateVar(second_index_to_deactivate, instance);
+
+            // activation
+            solution.activateVar(index_to_activate, instance);
+        }
+
+        return move_found;
 
     }
 
@@ -401,25 +416,27 @@ namespace spp{
         std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
         std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
+        bool move_found = false;
+
         if(params.use_simd){
 
             #if HAS_AVX2
                 
-                return  findOneOneExchangeSIMDX86SimulatedAnnealing(index_to_deactivate,
-                                                                    index_to_activate,
-                                                                    sorted_activated_vars,
-                                                                    sorted_deactivated_vars,
-                                                                    solution,
-                                                                    instance);
+                move_found = findOneOneExchangeSIMDX86SimulatedAnnealing(index_to_deactivate,
+                                                                        index_to_activate,
+                                                                        sorted_activated_vars,
+                                                                        sorted_deactivated_vars,
+                                                                        solution,
+                                                                        instance);
 
             #elif HAS_NEON
 
-                return  findOneOneExchangeSIMDARMSimulatedAnnealing(index_to_deactivate,
-                                                                    index_to_activate,
-                                                                    sorted_activated_vars,
-                                                                    sorted_deactivated_vars,
-                                                                    solution,
-                                                                    instance);
+                move_found = findOneOneExchangeSIMDARMSimulatedAnnealing(index_to_deactivate,
+                                                                        index_to_activate,
+                                                                        sorted_activated_vars,
+                                                                        sorted_deactivated_vars,
+                                                                        solution,
+                                                                        instance);
                 
 
             #endif
@@ -428,14 +445,25 @@ namespace spp{
 
         else{
 
-            return  findOneOneExchangeScalarSimulatedAnnealing(index_to_deactivate,
-                                                               index_to_activate,
-                                                               sorted_activated_vars,
-                                                               sorted_deactivated_vars,
-                                                               solution,
-                                                               instance);
+            move_found = findOneOneExchangeScalarSimulatedAnnealing(index_to_deactivate,
+                                                                    index_to_activate,
+                                                                    sorted_activated_vars,
+                                                                    sorted_deactivated_vars,
+                                                                    solution,
+                                                                    instance);
         }
 
+
+        if(move_found){
+
+            // deactivation
+            solution.deactivateVar(index_to_deactivate, instance);
+
+            // activation
+            solution.activateVar(index_to_activate, instance);
+        }
+
+        return move_found;
     }
 
 
@@ -557,21 +585,23 @@ namespace spp{
         int index_to_activate = -1;
         std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
+        bool move_found = false;
+
         if(params.use_simd){
 
             #if HAS_AVX2
                 
-                return findZeroOneExchangeSIMDX86SimulatedAnnealing(index_to_activate,
-                                                                    sorted_deactivated_vars,
-                                                                    solution,
-                                                                    instance);
+                move_found = findZeroOneExchangeSIMDX86SimulatedAnnealing(index_to_activate,
+                                                                        sorted_deactivated_vars,
+                                                                        solution,
+                                                                        instance);
 
             #elif HAS_NEON
 
-                return findZeroOneExchangeSIMDARMSimulatedAnnealing(index_to_activate,
-                                                                    sorted_deactivated_vars,
-                                                                    solution,
-                                                                    instance);
+                move_found = findZeroOneExchangeSIMDARMSimulatedAnnealing(index_to_activate,
+                                                                        sorted_deactivated_vars,
+                                                                        solution,
+                                                                        instance);
                 
 
             #endif
@@ -580,12 +610,20 @@ namespace spp{
 
         else{
 
-            return findZeroOneExchangeScalarSimulatedAnnealing(index_to_activate,
-                                                               sorted_deactivated_vars,
-                                                               solution,
-                                                               instance);
+            move_found = findZeroOneExchangeScalarSimulatedAnnealing(index_to_activate,
+                                                                    sorted_deactivated_vars,
+                                                                    solution,
+                                                                    instance);
         }
 
+
+        if(move_found){
+
+            // activation
+            solution.activateVar(index_to_activate, instance);
+        }
+
+        return move_found;
     }
 
 
@@ -809,29 +847,31 @@ namespace spp{
         std::vector<int> sorted_activated_vars = sortNonZeroVars(solution, scores);
         std::vector<int> sorted_deactivated_vars = sortZeroVars(solution, scores);
 
+        bool move_found = false;
+
         if(params.use_simd){
 
             #if HAS_AVX2
                 
-                return  findRestrictedOneTwoExchangeSIMDX86SimulatedAnnealing(first_index_to_activate,
-                                                                            second_index_to_activate,
-                                                                            to_deactivate,
-                                                                            sorted_activated_vars,
-                                                                            sorted_deactivated_vars,
-                                                                            solution,
-                                                                            params,
-                                                                            instance);
+                move_found = findRestrictedOneTwoExchangeSIMDX86SimulatedAnnealing(first_index_to_activate,
+                                                                                second_index_to_activate,
+                                                                                to_deactivate,
+                                                                                sorted_activated_vars,
+                                                                                sorted_deactivated_vars,
+                                                                                solution,
+                                                                                params,
+                                                                                instance);
 
             #elif HAS_NEON
 
-                return  findRestrictedOneTwoExchangeSIMDARMSimulatedAnnealing(first_index_to_activate,
-                                                                            second_index_to_activate,
-                                                                            to_deactivate,
-                                                                            sorted_activated_vars,
-                                                                            sorted_deactivated_vars,
-                                                                            solution,
-                                                                            params,
-                                                                            instance);
+                move_found = findRestrictedOneTwoExchangeSIMDARMSimulatedAnnealing(first_index_to_activate,
+                                                                                second_index_to_activate,
+                                                                                to_deactivate,
+                                                                                sorted_activated_vars,
+                                                                                sorted_deactivated_vars,
+                                                                                solution,
+                                                                                params,
+                                                                                instance);
                 
 
             #endif
@@ -840,17 +880,93 @@ namespace spp{
 
         else{
 
-            return  findRestrictedOneTwoExchangeScalarSimulatedAnnealing(first_index_to_activate,
-                                                                        second_index_to_activate,
-                                                                        to_deactivate,
-                                                                        sorted_activated_vars,
-                                                                        sorted_deactivated_vars,
-                                                                        solution,
-                                                                        params,
-                                                                        instance);
+            move_found = findRestrictedOneTwoExchangeScalarSimulatedAnnealing(first_index_to_activate,
+                                                                            second_index_to_activate,
+                                                                            to_deactivate,
+                                                                            sorted_activated_vars,
+                                                                            sorted_deactivated_vars,
+                                                                            solution,
+                                                                            params,
+                                                                            instance);
         }
 
-    
+
+        if(move_found){
+
+            // deactivation
+            solution.deactivateVar(to_deactivate, instance);
+
+            // activation
+            solution.activateVar(first_index_to_activate, instance);
+            solution.activateVar(second_index_to_activate, instance);
+        }
+
+        return move_found;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    bool findMoveRandomly(Solution &solution,
+                          const Params &params,
+                          const Instance &instance){
+
+        // computation of variable scores
+        std::vector<float> scores = computeVariableScores(instance);
+
+        // initialization of the thread random number generator
+        auto& rng = getThreadLocalRng();
+
+        // initialization of the uniform (discrete) distribution on the 4 neighborhoods
+        std::uniform_int_distribution<int> dist(0, 3);
+
+        int random_number = dist(rng);
+
+        // 0-1 exchange
+        if(random_number == 0){
+
+            return findZeroOneExchangeSimulatedAnnealing(solution,
+                                                         scores,
+                                                         params,
+                                                         instance);
+        }
+
+        // 1-1 exchange
+        else if(random_number == 1){
+
+            return findOneOneExchangeSimulatedAnnealing(solution,
+                                                        scores,
+                                                        params,
+                                                        instance);
+
+        }
+
+        // 2-1 exchange
+        else if(random_number == 2){
+
+            return findRestrictedTwoOneExchangeSimulatedAnnealing(solution,
+                                                                  scores,
+                                                                  params,
+                                                                  instance);
+
+        }
+
+        // 1-2 exchange
+        else{
+
+            return findRestrictedOneTwoExchangeSimulatedAnnealing(solution,
+                                                                  scores,
+                                                                  params,
+                                                                  instance);
+        }
+
     }
 
 

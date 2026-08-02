@@ -24,8 +24,8 @@
 namespace spp{
 
 
-    double computeRelativeImprovement(std::int64_t new_objective_value, 
-                                      std::int64_t old_objective_value){
+    double computeRelativeImprovementTabuSeach(std::int64_t new_objective_value, 
+                                               std::int64_t old_objective_value){
 
         return std::max(0.0,
                             ((new_objective_value - old_objective_value) * 100.0 / 
@@ -38,8 +38,8 @@ namespace spp{
 
 
 
-    double computeRelativeDegradation(std::int64_t new_objective_value, 
-                                      std::int64_t old_objective_value){
+    double computeRelativeDegradationTabuSeach(std::int64_t new_objective_value, 
+                                               std::int64_t old_objective_value){
 
         return std::max(0.0,
                             ((old_objective_value - new_objective_value) * 100.0 / 
@@ -73,7 +73,7 @@ namespace spp{
 
         // initialization of the best solution
         Solution best_solution = current_solution;
-        std::int64_t best_solution_objective_value = best_solution.getObjectiveValue(instance);
+        std::int64_t best_solution_objective_value = construction_objective_value;
 
         // initialization of the tabu list
         TabuList tabu_list(params.tabu_tenure);
@@ -110,13 +110,13 @@ namespace spp{
             std::int64_t new_current_solution_objective_value = current_solution.getObjectiveValue(instance);
 
             // computation of the cumulative improvement gap of the incumbent (current) solution
-            relative_cumulative_improvement += computeRelativeImprovement(new_current_solution_objective_value, 
-                                                                          old_current_solution_objective_value);
+            relative_cumulative_improvement += computeRelativeImprovementTabuSeach(new_current_solution_objective_value, 
+                                                                                   old_current_solution_objective_value);
 
 
             // computation of the cumulative degradation gap of the incumbent (current) solution
-            relative_cumulative_degradation += computeRelativeDegradation(new_current_solution_objective_value, 
-                                                                          old_current_solution_objective_value);
+            relative_cumulative_degradation += computeRelativeDegradationTabuSeach(new_current_solution_objective_value, 
+                                                                                   old_current_solution_objective_value);
 
             if(current_iteration == 1 || (current_iteration % 50) == 0){
 

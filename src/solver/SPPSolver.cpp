@@ -25,6 +25,7 @@
    #include "algorithms/greedy/RunGreedy.hpp"
    #include "algorithms/grasp/RunGRASP.hpp"
    #include "algorithms/tabuSearch/RunTabuSearch.hpp"
+   #include "algorithms/simulatedAnnealing/RunSimulatedAnnealing.hpp"
 
    #include <iostream> // to remove
 
@@ -47,6 +48,10 @@
 
       else if(params.algorithm == Algorithm::Grasp){runGRASP(params);}
 
+      else if(params.algorithm == Algorithm::TabuSearch){runTabuSearch(params);}
+
+      else if(params.algorithm == Algorithm::SimulatedAnnealing){runSimulatedAnnealing(params);}
+
       else if(params.algorithm == Algorithm::BranchAndBound){
 
          #if USE_BRANCH_AND_BOUND
@@ -60,9 +65,6 @@
          runMilpSolver(params);
          #endif
       }
-
-
-      else if(params.algorithm == Algorithm::TabuSearch){runTabuSearch(params);}
 
          
       return 0;

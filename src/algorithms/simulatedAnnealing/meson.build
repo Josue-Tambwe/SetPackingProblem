@@ -11,4 +11,6 @@
 
 
 # all source files of the simulatedAnnealing subdirectory 
-simulated_annealing_sources = files('SimulatedAnnealingNeighborhoods.cpp')
+simulated_annealing_sources = files('SimulatedAnnealingNeighborhoods.cpp',
+                                    'SimulatedAnnealingUtils.cpp',
+                                    'RunSimulatedAnnealing.cpp')

@@ -77,10 +77,17 @@
         // Simulated Annealing and Tabu Search
         double pruning_rate; 
         float alpha;
+        size_t restart_interval;
 
         // Tabu Search
         size_t tabu_tenure;
-        size_t restart_interval; 
+
+
+        // Simulated Annealing
+        double initial_temperature;
+        double final_temperature;
+        double cooling_factor;
+        size_t cooling_interval;
         
 
 

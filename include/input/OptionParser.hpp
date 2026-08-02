@@ -76,6 +76,13 @@
 
 
     /**
+    * @brief checks that no unsupported options are given for the Simulated Annealing algorithm
+    */
+    void unsupportedOptionsSimulatedAnnealing(int argc, char** argv);
+
+
+
+    /**
     * @brief performs the parsing of all options given by the user
     */
     Params parseOptions(int argc, char** argv);

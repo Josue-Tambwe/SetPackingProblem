@@ -12,10 +12,10 @@
 
 
 /** 
- * @file RunTabuSeach.hpp
- * @brief runs the Tabu Search algorithm with a greedy randomized construction
+ * @file RunSimulatedAnnealing.hpp
+ * @brief runs the Simulated Annealing algorithm with a greedy randomized construction
  * @author Josué Tambwe
- * @date 27 July 2026
+ * @date 2 August 2026
  */
 
 #pragma once
@@ -29,11 +29,9 @@
 #include "output/Logger.hpp"
 #include "output/GeneralOutput.hpp"
 #include "algorithms/greedy/RandomizedConstruction.hpp"
-#include "algorithms/tabuSearch/TabuSearchNeighborhoods.hpp"
-#include "algorithms/tabuSearch/TabuSearchUtils.hpp"
-#include "output/TabuSearchOutput.hpp"
+#include "algorithms/simulatedAnnealing/SimulatedAnnealingNeighborhoods.hpp"
+#include "algorithms/simulatedAnnealing/SimulatedAnnealingUtils.hpp"
 #include <cstdint>
-#include <algorithm>
 
 
 namespace spp{
@@ -42,8 +40,8 @@ namespace spp{
     /**
      * @brief computes the relative improvement of a single iteration on the incumbent solution
      */
-    double computeRelativeImprovementTabuSeach(std::int64_t new_objective_value, 
-                                               std::int64_t old_objective_value);
+    double computeRelativeImprovementSimulatedAnnealing(std::int64_t new_objective_value, 
+                                                        std::int64_t old_objective_value);
 
 
 
@@ -51,19 +49,15 @@ namespace spp{
     /**
      * @brief computes the relative degradation of a single iteration on the incumbent solution
      */
-    double computeRelativeDegradationTabuSeach(std::int64_t new_objective_value, 
-                                               std::int64_t old_objective_value);
-
-
+    double computeRelativeDegradationSimulatedAnnealing(std::int64_t new_objective_value, 
+                                                        std::int64_t old_objective_value);
 
 
 
 
     /**
-     * @brief runs the Tabu Search algorithm
+     * @brief runs the Simulated Annealing algorithm
      */
-    void runTabuSearch(const Params &params);
-
+    void runSimulatedAnnealing(const Params &params);
 
 }
-

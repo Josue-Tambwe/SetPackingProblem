@@ -10,7 +10,6 @@
  *------------------------------------------------------------------------------
  */
 
-
 /** 
  * @file SimulatedAnnealingNeighborhoods.hpp
  * @brief defines  neighborhoods used in the Simulated Annealing local search
@@ -24,6 +23,7 @@
 #include "dataStructures/Solution.hpp"
 #include "dataStructures/Parameters.hpp"
 #include "dataStructures/Status.hpp"
+#include "hpc/thread/Thread.hpp"
 #include "algorithms/localSearch/RestrictedNeighborhoods.hpp"
 #include <vector>
 #include <cstdint>
@@ -243,6 +243,19 @@ namespace spp{
                                                         std::vector<float> &scores,
                                                         const Params &params,
                                                         const Instance &instance);
+
+
+
+
+
+
+
+    /**
+     * @brief finds the best admissible move within a neighborhood which was selected randomly.
+     */
+    bool findMoveRandomly(Solution &solution,
+                          const Params &params,
+                          const Instance &instance);
     
 
 

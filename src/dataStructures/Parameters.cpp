@@ -56,6 +56,12 @@
         pruning_rate = 0.7; 
         alpha = 0.5;
 
+
+        // Simulated Annealing
+        initial_temperature = 100.0;
+        final_temperature = 1.0;
+        cooling_factor = 0.9;
+
         
         
 
