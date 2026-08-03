@@ -41,7 +41,7 @@
 
     void printRequiredOptions(){
 
-        std::cout << " Required options:\n" << " " << std::string(16, '-') << "\n\n"
+        std::cout << " Required options:\n" << " " << std::string(17, '-') << "\n\n"
 
                   << "  "  << "--algorithm=value" << std::string(11, ' ')
                   << "Algorithm to use (values: bab, genetic, grasp, greedy, milp, sa, ts)\n \n"
@@ -71,7 +71,7 @@
 
     void printOptionalOptions(){
 
-        std::cout << " Optional options:\n" << " " << std::string(23, '-') << "\n\n"
+        std::cout << " Optional options:\n" << " " << std::string(17, '-') << "\n\n"
 
                 << "  " << "--simd" << std::string(27, ' ')
                 << "Enable SIMD-accelerated kernels (AVX2/NEON)\n \n"
