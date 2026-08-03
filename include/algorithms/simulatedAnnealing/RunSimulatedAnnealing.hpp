@@ -28,6 +28,7 @@
 #include "dataStructures/Timer.hpp"
 #include "output/Logger.hpp"
 #include "output/GeneralOutput.hpp"
+#include "output/SimulatedAnnealingOutput.hpp"
 #include "algorithms/greedy/RandomizedConstruction.hpp"
 #include "algorithms/simulatedAnnealing/SimulatedAnnealingNeighborhoods.hpp"
 #include "algorithms/simulatedAnnealing/SimulatedAnnealingUtils.hpp"

@@ -282,8 +282,6 @@
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the sa algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the sa algorithm! ");}
             if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the sa algorithm! ");}
-            if (arg.find("--restart-interval=") == 0) {log.error(" --restart-interval option is not supported by the sa algorithm! ");}
-            
         }
 
 

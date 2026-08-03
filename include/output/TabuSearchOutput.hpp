@@ -40,12 +40,12 @@ namespace spp{
 
 
 
-    std::string formatImprovement(double value);
+    std::string formatImprovementTabuSearch(double value);
 
 
 
 
-    std::string formatDegradation(double value);
+    std::string formatDegradationTabuSearch(double value);
 
 
 

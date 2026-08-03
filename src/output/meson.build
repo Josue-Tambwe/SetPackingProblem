@@ -17,4 +17,5 @@ output_sources = files('Logger.cpp',
                        'BranchAndBoundOutput.cpp',
                        'MilpSolverOutput.cpp',
                        'GRASPOutput.cpp',
-                       'TabuSearchOutput.cpp')
+                       'TabuSearchOutput.cpp',
+                       'SimulatedAnnealingOutput.cpp')

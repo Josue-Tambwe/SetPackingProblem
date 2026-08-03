@@ -77,10 +77,10 @@
         // Simulated Annealing and Tabu Search
         double pruning_rate; 
         float alpha;
-        size_t restart_interval;
 
         // Tabu Search
         size_t tabu_tenure;
+        size_t restart_interval;
 
 
         // Simulated Annealing

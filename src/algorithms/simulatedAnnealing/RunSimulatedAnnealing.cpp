@@ -59,7 +59,7 @@
         // building the instance
         const Instance instance(params);
 
-        //printHeaderTabuSearch(params, instance);
+        printHeaderSimulatedAnnealing(params, instance);
         
         Timer timer = Timer();
         Logger log;
@@ -67,7 +67,7 @@
 
         // construction
         Solution current_solution = randomizedConstruction(params.alpha, instance);
-        //double construction_time = timer.getElapsedTime();
+        double construction_time = timer.getElapsedTime();
         std::int64_t construction_objective_value = current_solution.getObjectiveValue(instance);
 
         // initialization of the best solution
@@ -83,6 +83,7 @@
 
         double relative_cumulative_improvement = 0.0;
         double relative_cumulative_degradation = 0.0;
+        size_t variation_iteration_count = 0;
 
         while(!stoppingCriteriaSimulatedAnnealing(timer.getElapsedTime(), 
                                                   current_iteration, 
@@ -90,6 +91,7 @@
                                                   params)){
 
             current_iteration += 1;
+            variation_iteration_count += 1;
 
             std::int64_t old_current_solution_objective_value = current_solution.getObjectiveValue(instance);
 
@@ -156,12 +158,34 @@
 
             }
 
-
+            
             // update of the temperature (geometric cooling)
             if((current_iteration % params.cooling_interval) == 0){
 
                 current_temperature = current_temperature * params.cooling_factor;
+            }
 
+            // periodic restart: rebuild a new initial solution to diversify the search
+            if((current_iteration % params.restart_interval) == 0){
+
+                current_solution = randomizedConstruction(params.alpha, instance);
+
+            }
+
+            if(current_iteration == 1 || (current_iteration % 500) == 0){
+
+                printSimulatedAnnealingIterations(timer.getElapsedTime(), 
+                                                  current_iteration,
+                                                  variation_iteration_count,
+                                                  current_temperature,
+                                                  new_current_solution_objective_value,
+                                                  best_solution_objective_value,
+                                                  relative_cumulative_improvement,
+                                                  relative_cumulative_degradation);
+
+                variation_iteration_count = 0;
+                relative_cumulative_improvement = 0.0;
+                relative_cumulative_degradation = 0.0;
             }
 
         }
@@ -169,6 +193,14 @@
         log.info("Simulated Annealing algorithm completed. Final best known solution :");
 
         best_solution.print(instance);
+
+        printSummarySimulatedAnnealing(construction_time, 
+                                       timer.getElapsedTime(),
+                                       current_temperature,
+                                       current_iteration,
+                                       construction_objective_value,
+                                       best_solution.getObjectiveValue(instance),
+                                       best_solution.getStatus());
     }
 
 

@@ -85,6 +85,18 @@ These pruning strategies drastically reduce the number of evaluated combinations
 To introduce diversification, each Tabu Search phase starts from a **randomized construction** similar to the one used in Reactive GRASP. In addition, a periodic restart further enhances diversification : after a fixed number of iterations (**restart interval**), the solver rebuilds a new randomized initial solution and resets the tabu list. This mechanism helps the algorithm escape local optima and improve robustness on difficult benchmark instances.
 
 
+## 7. Simulated Annealing 
+
+The Simulated Annealing implemented in this solver follows a **multi‑neighborhood** strategy: at each iteration, the algorithm **randomly** selects **one of the four neighborhoods** (0‑1, 1‑1, 1‑2, 2‑1), evaluates the best admissible move within that neighborhood, and applies the **Simulated Annealing acceptance test** based on the current temperature and the move degradation.
+
+To prevent the **combinatorial explosion** of the 1‑2 and 2‑1 neighborhoods, the solver uses **pruning rules** identical to those employed in **Tabu Search**. Only the most promising candidate combinations are evaluated, and both outer and inner loops are restricted using linear or quadratic bounds. This significantly reduces the number of explored moves while preserving strong search capability.
+
+A **periodic restart** mechanism, also inspired by Tabu Search, enhances **diversification** : after a fixed number of iterations, the solver rebuilds a new randomized initial solution. This helps the algorithm escape deep local optima and improves robustness on difficult benchmark instances.
+
+Finally, the classical **Boltzmann acceptance function** has been **replaced by a polynomial approximation**, reducing the computational **cost of evaluating exponentials** while maintaining a temperature‑dependent acceptance behavior consistent with the Simulated Annealing formalism.
+
+![](docs/images/boltzmann_vs_polynomial.png)
+
 
 ## 9. Branch & Bound
 
@@ -298,7 +310,7 @@ Total GRASP iterations = update-interval $\times$ nb-cycles.
 
 
 
-## Tabu Search with greedy randomized construction
+## Run Tabu Search with greedy randomized construction
 
 
 ```bash
@@ -315,9 +327,39 @@ Total GRASP iterations = update-interval $\times$ nb-cycles.
 
 - **--pruning-rate** (optional) : in \[0,1] is the proportion of the top‑scored inactive variables considered in the 1‑2 and 2‑1 neighborhoods. Higher values explore more inactive **elite** candidates; lower values prune aggressively and reduce the combinatorial cost.
 
-- additional options : **--simd** and **--intensification**
+- additional options : **--simd**, **iterations** and **time-limit**.
 
 ![](docs/images/run_tabu_search.png)
+
+
+
+
+## Run Simulated Annealing with greedy randomized construction
+
+
+```bash
+./bin/spp_solver --algorithm=sa --instance=benchmarks/pb_1000rnd0700.dat --simd  --pruning-rate=0.6 --time-limit=5 --cooling-interval=100 --alpha=0.75 --initial-temperature=200 --cooling-factor=0.95 --restart-interval=150
+```
+
+- **--cooling-interval** (mandatory) : Number of iterations between two temperature updates. Every cooling‑interval iterations, the temperature is multiplied by the cooling factor (geometric decay).
+
+- **--restart-interval** (mandatory) : Number of iterations before restarting Tabu Search from a new randomized construction. The tabu list is reset at each restart.
+
+
+- **--cooling-factor** (optional) : Geometric decay coefficient in \[0,1], applied to the temperature. A value close to 1.0 produces slow cooling; lower values accelerate cooling and reduce the acceptance of worsening moves.
+
+- **--initial-temperature** (optional) : Starting temperature of the Simulated Annealing schedule. Higher values increase the probability of accepting worsening moves at the beginning of the search.
+
+- **--final-temperature** (optional) : Minimum temperature allowed by the cooling schedule. The algorithm stops when the temperature reaches this threshold or when the time limit is exceeded.
+
+- **--alpha** (optional) : in \[0,1] controls randomness in the greedy construction used at each restart. $\alpha$ close to zero is highly random and $\alpha$  close to one is highly greedy.
+
+
+- **--pruning-rate** (optional) : in \[0,1] is the proportion of the top‑scored inactive variables considered in the 1‑2 and 2‑1 neighborhoods. Higher values explore more inactive **elite** candidates; lower values prune aggressively and reduce the combinatorial cost.
+
+- additional options : **--simd** , **iterations** and **time-limit**.
+
+![](docs/images/run_simulated_annealing.png)
 
 
 
