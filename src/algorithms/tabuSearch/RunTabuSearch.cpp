@@ -154,6 +154,11 @@ namespace spp{
 
         }
 
+        // feasibility certification
+        if(best_solution.isFeasible(instance)){best_solution.setStatus(Status::FEASIBLE);}
+
+        else{best_solution.setStatus(Status::INFEASIBLE);}
+
         log.info("Tabu Search algorithm completed. Final best known solution :");
 
         best_solution.print(instance);

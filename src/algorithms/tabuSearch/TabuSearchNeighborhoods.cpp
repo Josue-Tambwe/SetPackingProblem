@@ -1225,11 +1225,6 @@ namespace spp{
             solution.activateVar(to_activate, instance);
         }
 
-        // feasibility certification
-        if(solution.isFeasible(instance)){solution.setStatus(Status::FEASIBLE);}
-
-        else{solution.setStatus(Status::INFEASIBLE);}
-
 
     }
 

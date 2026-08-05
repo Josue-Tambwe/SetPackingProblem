@@ -76,9 +76,6 @@
 
 
         size_t current_iteration = 0;
-        size_t improvement_acceptance = 0;
-        size_t worsening_acceptance = 0;
-        size_t rejection = 0;
         double current_temperature = params.initial_temperature;
 
         double relative_cumulative_improvement = 0.0;
@@ -124,8 +121,6 @@
                 // case of the improvement of the current solution
                 if(degradation <= 0){
 
-                    improvement_acceptance += 1;
-
                     current_solution = temporary_solution;
 
                     // case of the improvement of the best solution
@@ -143,17 +138,8 @@
                                                           current_temperature);
 
                     // case of accepting current solution degradation
-                    if(acceptance){
+                    if(acceptance){current_solution = temporary_solution;}
 
-                        worsening_acceptance += 1;
-
-                        current_solution = temporary_solution;
-                    }
-
-                    else{
-
-                        rejection += 1;
-                    }
                 }
 
             }
@@ -189,6 +175,11 @@
             }
 
         }
+
+        // feasibility certification
+        if(best_solution.isFeasible(instance)){best_solution.setStatus(Status::FEASIBLE);}
+
+        else{best_solution.setStatus(Status::INFEASIBLE);}
 
         log.info("Simulated Annealing algorithm completed. Final best known solution :");
 

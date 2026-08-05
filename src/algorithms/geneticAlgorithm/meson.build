@@ -9,15 +9,6 @@
 # See the LICENSE file for more details.
 #------------------------------------------------------------------------------
 
-subdir('greedy')
-subdir('localSearch')
-subdir('branchAndBound')
-subdir('milpSolver')
-subdir('grasp')
-subdir('tabuSearch')
-subdir('simulatedAnnealing')
-subdir('geneticAlgorithm')
 
-
-# all source files of the algorithm subdirectory 
-algorithm_sources = greedy_sources + local_search_sources + BaB_sources + milp_solver_sources + grasp_sources + tabu_search_sources + simulated_annealing_sources + genetic_algorithm_sources
+# all source files of the geneticAlgorithm subdirectory 
+genetic_algorithm_sources = files('LowlevelMetaheuristics.cpp')

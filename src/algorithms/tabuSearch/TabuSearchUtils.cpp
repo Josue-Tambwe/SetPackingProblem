@@ -17,7 +17,6 @@
  * @date 27 July 2026
  */
 
-
 #include "algorithms/tabuSearch/TabuSearchUtils.hpp"
 
 
