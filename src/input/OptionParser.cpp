@@ -516,6 +516,14 @@
                 }
 
 
+
+                if(name == "--improvement-time"){
+                    params.improvement_time = std::stod(value);
+                    if(params.improvement_time < 0.0){log.error(" improvement-time must be >= 0.0");}
+                    continue;
+                }
+
+
                 // case of invalid option
                 log.error("Unknown option: " + name);
                 break;

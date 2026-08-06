@@ -88,6 +88,11 @@
         double final_temperature;
         double cooling_factor;
         size_t cooling_interval;
+
+
+        // Genetic Algorithm 
+        double improvement_time; // time limit for low-level metaheuristics (VND, Tabu Search and Simulated Annealing)
+        double survivors_rate; // proportion of elite individuals to keep for the next generation
         
 
 

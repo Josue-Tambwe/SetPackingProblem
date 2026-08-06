@@ -21,6 +21,7 @@
    #include "input/OptionParser.hpp"
    #include "dataStructures/Parameters.hpp"
    #include "dataStructures/Instance.hpp" // to remove
+   #include "dataStructures/Solution.hpp" // to remove
    #include <iostream> // to remove
    #include "algorithms/greedy/RunGreedy.hpp"
    #include "algorithms/grasp/RunGRASP.hpp"

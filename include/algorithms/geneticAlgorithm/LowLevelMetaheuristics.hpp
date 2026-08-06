@@ -33,9 +33,12 @@
 #include "algorithms/simulatedAnnealing/SimulatedAnnealingUtils.hpp"
 #include <vector>
 #include <cstdint>
+#include <array>
+#include <cmath>
 
 
 namespace spp{
+
 
     // ------------- Variable Neighborhood Descent -----------------
 
@@ -54,8 +57,7 @@ namespace spp{
     /**
      * @brief performs Tabu Search with 1-2 and 2-1 restricted neighborhoods with periodic restart
      */
-    void tabuSearchImprovement(double time_limit_local_search,
-                               double alpha,
+    void tabuSearchImprovement(double alpha,
                                Solution &solution,
                                const Params &params,
                                const Instance &instance);
@@ -68,11 +70,11 @@ namespace spp{
     /**
      * @brief performs Simulated Annealing with 1-2 and 2-1 restricted neighborhoods with periodic restart
      */
-    void simulatedAnnealingImprovement(double time_limit_local_search,
-                                       double alpha,
+    void simulatedAnnealingImprovement(double alpha,
                                        Solution &solution,
                                        const Params &params,
                                        const Instance &instance);
+
 
 
 }

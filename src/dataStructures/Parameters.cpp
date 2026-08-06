@@ -63,6 +63,10 @@
         final_temperature = 1.0;
         cooling_factor = 0.9;
 
+
+        // Genetic Algorithm
+        improvement_time = 1.0;
+
         
         
 

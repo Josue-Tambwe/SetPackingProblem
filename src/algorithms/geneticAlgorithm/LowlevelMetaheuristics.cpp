@@ -41,8 +41,7 @@ namespace spp{
 
     // ------------- Tabu Search -----------------
 
-    void tabuSearchImprovement(double time_limit_local_search,
-                               double alpha,
+    void tabuSearchImprovement(double alpha,
                                Solution &solution,
                                const Params &params,
                                const Instance &instance){
@@ -63,7 +62,7 @@ namespace spp{
 
         size_t iteration = 0;
 
-        while(timer.getElapsedTime() < time_limit_local_search){
+        while(timer.getElapsedTime() < params.improvement_time){
 
             iteration += 1;
 
@@ -118,8 +117,7 @@ namespace spp{
 
     // ------------- Simulated Annealing -----------------
 
-    void simulatedAnnealingImprovement(double time_limit_local_search,
-                                       double alpha,
+    void simulatedAnnealingImprovement(double alpha,
                                        Solution &solution,
                                        const Params &params,
                                        const Instance &instance){
@@ -137,7 +135,7 @@ namespace spp{
         size_t iteration = 0;
         double current_temperature = params.initial_temperature;
 
-        while(timer.getElapsedTime() < time_limit_local_search){
+        while(timer.getElapsedTime() < params.improvement_time){
 
             iteration += 1;
 
@@ -205,7 +203,6 @@ namespace spp{
 
         else{solution.setStatus(Status::INFEASIBLE);}
     }
-
 
 
 }
