@@ -168,7 +168,6 @@ namespace spp{
 
 
 
-
     Solution generateIndividual(float alpha,
                                 char local_search,
                                 const Params &params,
@@ -228,9 +227,6 @@ namespace spp{
 
 
     }
-
-
-
 
 
 
