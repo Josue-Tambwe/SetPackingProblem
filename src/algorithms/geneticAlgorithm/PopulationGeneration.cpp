@@ -105,22 +105,6 @@ namespace spp{
                                                                                      nb_individuals_per_alpha_value[i]);
         }
 
-        // to remove
-
-        for(size_t i = 0; i < alpha_values.size(); i++){
-
-            std::cout <<" alpha : " << alpha_values[i] 
-                    << " - nb individuals : " << nb_individuals_per_alpha_value[i]
-                    << " - proportions : [ "
-                    << all_proportions[i][0] << " , "
-                    << all_proportions[i][1] << " , "
-                    << all_proportions[i][2] << " ]"
-                    << " - allocations : ( "
-                    << nb_individuals_per_local_search[i][0] << " , "
-                    << nb_individuals_per_local_search[i][1] << " , "
-                    << nb_individuals_per_local_search[i][2] << " ) \n\n";
-        }
-
         individuals_construction_alpha_value.resize(nb_individuals_to_generate);
         individuals_local_search.resize(nb_individuals_to_generate);
 
@@ -154,13 +138,6 @@ namespace spp{
                 inner_counter += 1;
 
             }
-        }
-
-        for(size_t i = 0; i < individuals_construction_alpha_value.size(); i++){
-
-            std::cout << " id : " << (i+1)
-                    << " - alpha : " << individuals_construction_alpha_value[i]
-                    << " - local search : " << individuals_local_search[i] << "\n";
         }
 
     }
