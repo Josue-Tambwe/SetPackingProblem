@@ -20,9 +20,15 @@
 #pragma once
 
 #include "dataStructures/Parameters.hpp"
+#include "dataStructures/Instance.hpp"
+#include "dataStructures/Solution.hpp"
+#include "hpc/thread/Thread.hpp"
+#include "algorithms/greedy/RandomizedConstruction.hpp"
+#include "algorithms/geneticAlgorithm/LowLevelMetaheuristics.hpp"
 #include <array>
 #include <cmath>
 #include <vector>
+#include <iostream> // to remove
 
 namespace spp{
 
@@ -52,10 +58,47 @@ namespace spp{
      *                               't' = Tabu Search
      *                               's' = Simulated Annealing
      */
-    void setAlphaAndLocalSearch(size_t nb_individuals_to_generate, 
+
+    void setAlphaAndLocalSearch(size_t nb_individuals_to_generate,
+                                std::array<size_t, 10> &nb_individuals_per_alpha_value,
+                                std::vector<std::array<size_t, 3>> &nb_individuals_per_local_search, 
                                 std::vector<float> &individuals_construction_alpha_value, 
                                 std::vector<char> &individuals_local_search,
                                 const std::array<float, 10> &alpha_values,
                                 const std::vector<std::array<double, 3>> all_proportions);
+
+
+
+
+    /**
+     * @brief generates an individual with a greedy randomized construction and performs a local search improvement
+     */
+    Solution generateIndividual(float alpha,
+                                char local_search,
+                                const Params &params,
+                                const Instance &instance);
+
+
+
+
+    /**
+     * @brief generates multiple individuals (construction + local search) on a single CPU thread
+     */
+    void generateIndividualsSingleThread(int start,
+                                         int end,
+                                         std::vector<Solution> &individuals,
+                                         const std::vector<float> &individuals_construction_alpha_value,
+                                         const std::vector<char> &individuals_local_search,
+                                         const Params &params,
+                                         const Instance &instance);
+
+
+    /**
+     * @brief generates multiple individuals (construction + local search) on multiple CPU threads
+     */
+    std::vector<Solution> generateIndividuals(const std::vector<float> &individuals_construction_alpha_value,
+                                              const std::vector<char> &individuals_local_search,
+                                              const Params &params,
+                                              const Instance &instance);
 
 }

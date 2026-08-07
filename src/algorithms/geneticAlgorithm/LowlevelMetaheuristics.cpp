@@ -41,7 +41,7 @@ namespace spp{
 
     // ------------- Tabu Search -----------------
 
-    void tabuSearchImprovement(double alpha,
+    void tabuSearchImprovement(float alpha,
                                Solution &solution,
                                const Params &params,
                                const Instance &instance){
@@ -117,7 +117,7 @@ namespace spp{
 
     // ------------- Simulated Annealing -----------------
 
-    void simulatedAnnealingImprovement(double alpha,
+    void simulatedAnnealingImprovement(float alpha,
                                        Solution &solution,
                                        const Params &params,
                                        const Instance &instance){

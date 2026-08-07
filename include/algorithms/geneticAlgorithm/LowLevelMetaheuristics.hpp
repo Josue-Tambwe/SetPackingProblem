@@ -57,7 +57,7 @@ namespace spp{
     /**
      * @brief performs Tabu Search with 1-2 and 2-1 restricted neighborhoods with periodic restart
      */
-    void tabuSearchImprovement(double alpha,
+    void tabuSearchImprovement(float alpha,
                                Solution &solution,
                                const Params &params,
                                const Instance &instance);
@@ -70,7 +70,7 @@ namespace spp{
     /**
      * @brief performs Simulated Annealing with 1-2 and 2-1 restricted neighborhoods with periodic restart
      */
-    void simulatedAnnealingImprovement(double alpha,
+    void simulatedAnnealingImprovement(float alpha,
                                        Solution &solution,
                                        const Params &params,
                                        const Instance &instance);

@@ -334,7 +334,7 @@
                     else if(value == "genetic"){params.algorithm = Algorithm::GeneticAlgorithm; continue;}
                     else if(value == "bab"){params.algorithm = Algorithm::BranchAndBound; continue;}
                     else if(value == "milp"){params.algorithm = Algorithm::Milp; continue;}
-                    else{log.error(" Unknown algorithm: " + name);}
+                    else{log.error(" Unknown algorithm: " + value);}
 
                 }
 

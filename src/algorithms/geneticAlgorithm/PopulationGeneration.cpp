@@ -85,7 +85,9 @@ namespace spp{
 
 
 
-    void setAlphaAndLocalSearch(size_t nb_individuals_to_generate, 
+    void setAlphaAndLocalSearch(size_t nb_individuals_to_generate,
+                                std::array<size_t, 10> &nb_individuals_per_alpha_value,
+                                std::vector<std::array<size_t, 3>> &nb_individuals_per_local_search, 
                                 std::vector<float> &individuals_construction_alpha_value, 
                                 std::vector<char> &individuals_local_search,
                                 const std::array<float, 10> &alpha_values,
@@ -93,14 +95,30 @@ namespace spp{
 
         // initialization
 
-        std::array<size_t, 10> nb_individuals_per_alpha_value = allocateIndividualsToAlphaValues(nb_individuals_to_generate);
+        nb_individuals_per_alpha_value = allocateIndividualsToAlphaValues(nb_individuals_to_generate);
 
-        std::vector<std::array<size_t, 3>> nb_individuals_per_local_search(alpha_values.size());
+        nb_individuals_per_local_search.resize(alpha_values.size());
 
         for(size_t i = 0; i < all_proportions.size(); i++){
 
             nb_individuals_per_local_search[i] = allocateIndividualsToMetaheuristics(all_proportions[i], 
                                                                                      nb_individuals_per_alpha_value[i]);
+        }
+
+        // to remove
+
+        for(size_t i = 0; i < alpha_values.size(); i++){
+
+            std::cout <<" alpha : " << alpha_values[i] 
+                    << " - nb individuals : " << nb_individuals_per_alpha_value[i]
+                    << " - proportions : [ "
+                    << all_proportions[i][0] << " , "
+                    << all_proportions[i][1] << " , "
+                    << all_proportions[i][2] << " ]"
+                    << " - allocations : ( "
+                    << nb_individuals_per_local_search[i][0] << " , "
+                    << nb_individuals_per_local_search[i][1] << " , "
+                    << nb_individuals_per_local_search[i][2] << " ) \n\n";
         }
 
         individuals_construction_alpha_value.resize(nb_individuals_to_generate);
@@ -138,6 +156,118 @@ namespace spp{
             }
         }
 
+        for(size_t i = 0; i < individuals_construction_alpha_value.size(); i++){
+
+            std::cout << " id : " << (i+1)
+                    << " - alpha : " << individuals_construction_alpha_value[i]
+                    << " - local search : " << individuals_local_search[i] << "\n";
+        }
+
+    }
+
+
+
+
+
+    Solution generateIndividual(float alpha,
+                                char local_search,
+                                const Params &params,
+                                const Instance &instance){
+
+        // construction
+        Solution individual = randomizedConstruction(alpha, instance);
+
+        // local search
+
+        if(local_search == 'v'){
+
+            variableNeighborhoodDescentImprovement(individual,
+                                                   params,
+                                                   instance);
+        }
+
+        else if(local_search == 't'){
+
+            tabuSearchImprovement(alpha,
+                                  individual,
+                                  params,
+                                  instance);
+        }
+
+        else{
+
+            simulatedAnnealingImprovement(alpha,
+                                          individual,
+                                          params,
+                                          instance);
+        }
+
+        return individual;
+    }
+
+
+
+
+    void generateIndividualsSingleThread(int start,
+                                         int end,
+                                         std::vector<Solution> &individuals,
+                                         const std::vector<float> &individuals_construction_alpha_value,
+                                         const std::vector<char> &individuals_local_search,
+                                         const Params &params,
+                                         const Instance &instance){
+
+
+        for(int index = start; index <= end; index++){
+
+            individuals[index] = generateIndividual(individuals_construction_alpha_value[index],
+                                                individuals_local_search[index],
+                                                params,
+                                                instance);
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+    std::vector<Solution> generateIndividuals(const std::vector<float> &individuals_construction_alpha_value,
+                                              const std::vector<char> &individuals_local_search,
+                                              const Params &params,
+                                              const Instance &instance){
+
+        // initialization
+        std::vector<Solution> individuals(individuals_local_search.size(), 
+                                          Solution(instance));
+
+        int work_size = static_cast<int>(individuals.size());
+        int nb_threads_used = std::min(params.nb_threads, work_size);
+        std::vector<std::thread> workers(nb_threads_used);
+
+        for(int id = 0; id < nb_threads_used; id++){
+
+            int start = start_index(id, work_size, nb_threads_used);
+            int end = end_index(id, work_size, nb_threads_used);
+
+            workers[id] = std::thread(generateIndividualsSingleThread,
+                                      start,
+                                      end,
+                                      std::ref(individuals),
+                                      std::ref(individuals_construction_alpha_value),
+                                      std::ref(individuals_local_search),
+                                      std::ref(params),
+                                      std::ref(instance));
+        }
+
+        // waiting for all threads to finish
+        for(auto &worker : workers){worker.join();}
+
+        return individuals;
     }
 
 
