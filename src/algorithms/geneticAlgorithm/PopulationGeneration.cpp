@@ -91,7 +91,7 @@ namespace spp{
                                 std::vector<float> &individuals_construction_alpha_value, 
                                 std::vector<char> &individuals_local_search,
                                 const std::array<float, 10> &alpha_values,
-                                const std::vector<std::array<double, 3>> all_proportions){
+                                const std::vector<std::array<double, 3>> &all_proportions){
 
         // initialization
 
@@ -264,6 +264,70 @@ namespace spp{
         for(auto &worker : workers){worker.join();}
 
         return individuals;
+    }
+
+
+
+
+
+    void updateLowLevelLocalSearchProportions(std::vector<std::array<double, 3>> &all_proportions,
+                                              const std::array<size_t, 10> &nb_individuals_per_alpha_value,
+                                              const std::vector<std::array<size_t, 3>> &nb_individuals_per_local_search,
+                                              std::vector<Solution> &individuals,
+                                              const Instance &instance){
+
+        size_t inner_counter = 0;
+
+        for(size_t i = 0; i < nb_individuals_per_alpha_value.size(); i++){
+
+            // Variable Neighborhood Descent
+            std::int64_t cumulative_VND_fitness = 0;
+
+            for(size_t j = 0; j < nb_individuals_per_local_search[i][0]; j++){
+
+                cumulative_VND_fitness += individuals[inner_counter].getObjectiveValue(instance);
+                inner_counter += 1;
+            }
+
+            // Tabu Search
+            std::int64_t cumulative_TS_fitness = 0;
+
+            for(size_t j = 0; j < nb_individuals_per_local_search[i][1]; j++){
+
+                cumulative_TS_fitness += individuals[inner_counter].getObjectiveValue(instance);
+                inner_counter += 1;
+            }
+
+            // Simulated Annealing
+            std::int64_t cumulative_SA_fitness = 0;
+
+            for(size_t j = 0; j < nb_individuals_per_local_search[i][2]; j++){
+
+                cumulative_SA_fitness += individuals[inner_counter].getObjectiveValue(instance);
+                inner_counter += 1;
+            }
+
+            double average_VND_fitness = static_cast<double>(cumulative_VND_fitness) / std::max(static_cast<size_t>(1), nb_individuals_per_local_search[i][0]);
+
+            double average_TS_fitness = static_cast<double>(cumulative_TS_fitness) / std::max(static_cast<size_t>(1), nb_individuals_per_local_search[i][1]);
+
+            double average_SA_fitness = static_cast<double>(cumulative_SA_fitness) / std::max(static_cast<size_t>(1), nb_individuals_per_local_search[i][2]);
+
+            double cumulative_inverse = 1.0 / (average_VND_fitness + average_TS_fitness + average_SA_fitness + 1e-9);
+
+            // updating proportions
+
+            // Variable Neighborhood Descent
+            all_proportions[i][0] = average_VND_fitness * cumulative_inverse;
+
+            // Tabu Search 
+            all_proportions[i][1] = average_TS_fitness * cumulative_inverse;
+
+            // Tabu Search 
+            all_proportions[i][2] = average_SA_fitness * cumulative_inverse;
+
+        }
+
     }
 
 

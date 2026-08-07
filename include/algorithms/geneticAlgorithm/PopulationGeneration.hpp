@@ -28,6 +28,8 @@
 #include <array>
 #include <cmath>
 #include <vector>
+#include <algorithm>
+#include <cstdint>
 #include <iostream> // to remove
 
 namespace spp{
@@ -65,7 +67,7 @@ namespace spp{
                                 std::vector<float> &individuals_construction_alpha_value, 
                                 std::vector<char> &individuals_local_search,
                                 const std::array<float, 10> &alpha_values,
-                                const std::vector<std::array<double, 3>> all_proportions);
+                                const std::vector<std::array<double, 3>> &all_proportions);
 
 
 
@@ -99,6 +101,19 @@ namespace spp{
     std::vector<Solution> generateIndividuals(const std::vector<float> &individuals_construction_alpha_value,
                                               const std::vector<char> &individuals_local_search,
                                               const Params &params,
+                                              const Instance &instance);
+
+
+
+
+    /**
+     * @brief updates the proportions of the three low‑level local search methods (VND, TS, SA) for 
+     *        each alpha value based on the performance of the individuals generated. 
+     */
+    void updateLowLevelLocalSearchProportions(std::vector<std::array<double, 3>> &all_proportions,
+                                              const std::array<size_t, 10> &nb_individuals_per_alpha_value,
+                                              const std::vector<std::array<size_t, 3>> &nb_individuals_per_local_search,
+                                              std::vector<Solution> &individuals,
                                               const Instance &instance);
 
 }

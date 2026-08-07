@@ -51,7 +51,7 @@
 
       const Instance instance(params); // to remove
 
-      size_t nb_individuals_to_generate = 123;
+      size_t nb_individuals_to_generate = 100;
 
       std::vector<float> individuals_construction_alpha_value(nb_individuals_to_generate);
       std::vector<char> individuals_local_search(nb_individuals_to_generate);
@@ -60,7 +60,7 @@
       std::vector<std::array<size_t, 3>> nb_individuals_per_local_search; 
 
       const std::array<float, 10> alpha_values_2 = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f,0.9f, 1.0f};
-      const std::vector<std::array<double, 3>> all_proportions = {
+      std::vector<std::array<double, 3>> all_proportions = {
          {0.33, 0.33, 0.33},
          {0.2, 0.5, 0.3},
          {0.1, 0.3, 0.6},
@@ -97,6 +97,20 @@
       }
 
       std::cout << " elapsed time : " << timer.getElapsedTime() << " (s) \n\n";
+
+      updateLowLevelLocalSearchProportions(all_proportions,
+                                           nb_individuals_per_alpha_value,
+                                           nb_individuals_per_local_search,
+                                           individuals,
+                                           instance);
+
+      setAlphaAndLocalSearch(nb_individuals_to_generate,
+                              nb_individuals_per_alpha_value,
+                              nb_individuals_per_local_search,  
+                              individuals_construction_alpha_value, 
+                              individuals_local_search,
+                              alpha_values_2,
+                              all_proportions);
 
 
       if(params.algorithm == Algorithm::Greedy){runGreedy(params);}
