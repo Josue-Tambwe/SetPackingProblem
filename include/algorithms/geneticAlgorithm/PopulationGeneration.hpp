@@ -30,7 +30,6 @@
 #include <vector>
 #include <algorithm>
 #include <cstdint>
-#include <iostream> // to remove
 
 namespace spp{
 
