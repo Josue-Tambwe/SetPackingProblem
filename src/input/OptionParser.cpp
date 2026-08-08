@@ -524,6 +524,17 @@
                 }
 
 
+
+                if(name == "--crossover-rate"){
+                    params.crossover_rate = std::stod(value);
+                    if(params.crossover_rate < 0.0 || params.crossover_rate > 1.0){
+
+                        log.error(" crossover-rate must be in the interval [0,1]");
+                    }
+                    continue;
+                }
+
+
                 // case of invalid option
                 log.error("Unknown option: " + name);
                 break;

@@ -12,4 +12,6 @@
 
 # all source files of the geneticAlgorithm subdirectory 
 genetic_algorithm_sources = files('LowlevelMetaheuristics.cpp',
-                                  'PopulationGeneration.cpp')
+                                  'PopulationGeneration.cpp',
+                                  'Crossover.cpp',
+                                  'GeneticAlgorithmUtils.cpp')
