@@ -28,6 +28,8 @@
    #include "algorithms/tabuSearch/RunTabuSearch.hpp"
    #include "algorithms/simulatedAnnealing/RunSimulatedAnnealing.hpp"
    #include "algorithms/geneticAlgorithm/PopulationGeneration.hpp" // to remove
+   #include "algorithms/geneticAlgorithm/GeneticAlgorithmUtils.hpp" // to remove
+   #include "algorithms/geneticAlgorithm/Crossover.hpp" // to remove
 
    #include <iostream> // to remove
    #include <array> // to remove
@@ -51,7 +53,7 @@
 
       const Instance instance(params); // to remove
 
-      size_t nb_individuals_to_generate = 100;
+      size_t nb_individuals_to_generate = 137;
 
       std::vector<float> individuals_construction_alpha_value(nb_individuals_to_generate);
       std::vector<char> individuals_local_search(nb_individuals_to_generate);
@@ -98,7 +100,7 @@
 
       std::cout << " elapsed time : " << timer.getElapsedTime() << " (s) \n\n";
 
-      updateLowLevelLocalSearchProportions(all_proportions,
+      /*updateLowLevelLocalSearchProportions(all_proportions,
                                            nb_individuals_per_alpha_value,
                                            nb_individuals_per_local_search,
                                            individuals,
@@ -110,7 +112,33 @@
                               individuals_construction_alpha_value, 
                               individuals_local_search,
                               alpha_values_2,
-                              all_proportions);
+                              all_proportions);*/
+
+      std::vector<double> population_fitness = computePopulationFitness(individuals,
+                                                                        params,
+                                                                        instance);
+
+      std::vector<double> cumulative_population_fitness = computeCumulativeQuadraticBiasedFitness(population_fitness);
+
+
+      std::vector<size_t> crossover_participation = computeIndividualsCrossOverParticipation(cumulative_population_fitness,
+                                                                                              params);
+
+      std::cout << " \n\n";
+
+      size_t cumul = 0;
+
+      for(size_t i = 0; i < crossover_participation.size(); i++){
+
+         std::cout << " ind : " << (i+1)
+                  << " - fitness : " << population_fitness[i]
+                  << " - participation : " << crossover_participation[i]
+                  << "\n\n";
+
+         cumul += crossover_participation[i];
+      }
+
+      std::cout << " total crossover participation : " << cumul << "\n\n";
 
 
       if(params.algorithm == Algorithm::Greedy){runGreedy(params);}

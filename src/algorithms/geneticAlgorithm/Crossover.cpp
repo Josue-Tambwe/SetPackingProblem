@@ -111,9 +111,9 @@ namespace spp{
     std::vector<size_t> computeIndividualsCrossOverParticipation(const std::vector<double> &cumulative_population_fitness,
                                                                  const Params &params){
 
-        size_t total_cross_over_participation = static_cast<size_t>(std::floor((cumulative_population_fitness.size() * params.crossover_rate) / 2.0) * 2.0);
+        size_t total_crossover_participation = static_cast<size_t>(std::floor((cumulative_population_fitness.size() * params.crossover_rate) / 2.0) * 2.0);
 
-        double inverse = 1.0 / (total_cross_over_participation + 1e-9);
+        double inverse = 1.0 / (total_crossover_participation + 1e-9);
 
         // initialization of the thread random number generator
         auto& rng = getThreadLocalRng();
@@ -123,11 +123,11 @@ namespace spp{
 
         double random_number = dist(rng);
 
-        std::vector<size_t> cross_over_participation(cumulative_population_fitness.size());
+        std::vector<size_t> crossover_participation(cumulative_population_fitness.size());
 
         size_t i = 0;
 
-        for(size_t j = 0; j < total_cross_over_participation; j++){
+        for(size_t j = 0; j < total_crossover_participation; j++){
 
             double pointer = random_number + (j * inverse);
 
@@ -137,10 +137,10 @@ namespace spp{
                     i += 1;
             }
 
-            cross_over_participation[i] += 1;
+            crossover_participation[i] += 1;
         }
 
-        return cross_over_participation;
+        return crossover_participation;
     }
 
     
