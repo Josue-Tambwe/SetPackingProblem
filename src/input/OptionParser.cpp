@@ -517,6 +517,14 @@
 
 
 
+                if(name == "--population-size"){
+                    params.population_size = std::stoi(value);
+                    if(params.population_size < 1){log.error(" population-size must be >= 1");}
+                    continue;
+                }
+
+
+
                 if(name == "--improvement-time"){
                     params.improvement_time = std::stod(value);
                     if(params.improvement_time < 0.0){log.error(" improvement-time must be >= 0.0");}

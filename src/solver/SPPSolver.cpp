@@ -53,7 +53,7 @@
 
       const Instance instance(params); // to remove
 
-      size_t nb_individuals_to_generate = 137;
+      size_t nb_individuals_to_generate = params.population_size;
 
       std::vector<float> individuals_construction_alpha_value(nb_individuals_to_generate);
       std::vector<char> individuals_local_search(nb_individuals_to_generate);
@@ -139,6 +139,16 @@
       }
 
       std::cout << " total crossover participation : " << cumul << "\n\n";
+
+      std::vector<size_t> guiding_parents;
+      std::vector<size_t> initial_parents;
+
+
+      setCrossoverCouples(initial_parents,
+                          guiding_parents,
+                          crossover_participation,
+                          population_fitness,
+                          params);
 
 
       if(params.algorithm == Algorithm::Greedy){runGreedy(params);}

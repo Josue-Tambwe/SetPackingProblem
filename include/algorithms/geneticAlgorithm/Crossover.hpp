@@ -28,6 +28,8 @@
 #include <cstdint>
 #include <limits>
 #include <cmath>
+#include <unordered_set>
+#include <iterator>
 
 
 namespace spp{
@@ -67,5 +69,49 @@ namespace spp{
      */
     std::vector<size_t> computeIndividualsCrossOverParticipation(const std::vector<double> &cumulative_population_fitness,
                                                                  const Params &params);
+
+
+
+
+    /**
+     * @brief determines initial and guiding parents according to fitness.
+     */
+    void setInitialAndGuidingParents(size_t inner_index,
+                                     size_t first_parent_index,
+                                     size_t second_parent_index,
+                                     std::vector<size_t> &initial_parents,
+                                     std::vector<size_t> &guiding_parents,
+                                     const std::vector<double> &population_fitness);
+
+
+
+
+    /**
+     * @brief gets the indexes of individuals with non-zero crossover participation
+     */
+    std::unordered_set<size_t> getParentIndexes(const std::vector<size_t> &crossover_participation);
+
+
+
+
+
+    /**
+     * @brief gets a random parent index within the set of parent indexes
+     */
+    size_t getRandomIndex(const std::unordered_set<size_t> &parents_indexes);
+
+
+
+
+
+
+    /**
+     * @brief builds crossover couples and assigns initial and guiding parents based on fitness and participation.
+     */
+    void setCrossoverCouples(std::vector<size_t> &initial_parents,
+                             std::vector<size_t> &guiding_parents,
+                             std::vector<size_t> &crossover_participation,
+                             const std::vector<double> &population_fitness,
+                             const Params &params);
 
 }

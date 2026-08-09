@@ -61,7 +61,7 @@
                   << "  " << "--cooling-interval=value" << std::string(4, ' ')
                   << "Number of iterations between two temperature updates in the Simulated Annealing schedule\n\n"
 
-                  << "  " << "--pop-size=value" << std::string(12, ' ')
+                  << "  " << "--population-size=value" << std::string(12, ' ')
                   << "Population size for the Genetic Algorithm \n\n"
 
                   << "  " << "--solver=value" << std::string(14, ' ')
