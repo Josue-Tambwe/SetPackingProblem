@@ -258,5 +258,198 @@ namespace spp{
 
     }
 
+
+
+
+
+    void performPathRelinkingCrossover(Solution &initial_parent,
+                                       Solution &guiding_parent,
+                                       std::vector<Solution> &children,
+                                       const Params &params,
+                                       const Instance &instance){
+
+        // copy of the initial parent
+        Solution initial_parent_copy = initial_parent;
+
+        // to performs an intensified VND 
+        bool use_intensified_local_search = params.use_intensification;
+
+        // getting non-zero variables within the guiding parent
+        std::vector<int> guiding_parent_non_zero_vars = guiding_parent.getNonZeroVarsIndexes();
+
+        // getting non-zero variables within the initial parent
+        std::unordered_set<int> initial_parent_non_zero_vars = computeInitialSolutionNonZeroVarsIndexes(initial_parent_copy);
+
+        std::int64_t initial_parent_objective_value = initial_parent_copy.getObjectiveValue(instance);
+
+        size_t children_counter = 0;
+        size_t max_children_per_couple = children.size();
+        size_t inner_child_index = 0;
+
+        for(int var_in_guiding_parent : guiding_parent_non_zero_vars){
+
+            // when the a non-zero variable in the guiding parent is deactivated in the initial parent
+            if(!initial_parent_non_zero_vars.count(var_in_guiding_parent)){
+
+                // deactivation of all conflicting variables in order to maintain feasibility
+                deactivateConflictingVariables(var_in_guiding_parent,
+                                               initial_parent_non_zero_vars, 
+                                               initial_parent_copy, 
+                                               instance);
+
+                // activation of the variable in the initial parent
+                initial_parent_copy.activateVar(var_in_guiding_parent, instance);
+
+                // update of the set of non-zero variables within the initial parent
+                initial_parent_non_zero_vars.insert(var_in_guiding_parent);
+
+                std::int64_t child_objective_value = initial_parent_copy.getObjectiveValue(instance);
+
+                // VDN local search on a promissing intermediate child (better than the initial solution)
+                if(child_objective_value > initial_parent_objective_value){
+
+                    // the intermediate promissing child
+                    Solution intermediate_promissing_child = initial_parent_copy;
+
+                    // local search on the intermediate solution
+                    variableNeighborhoodDescent(use_intensified_local_search,
+                                                params, 
+                                                intermediate_promissing_child, 
+                                                instance);
+
+
+                    // adding the child within the children vector
+                    children[inner_child_index] = intermediate_promissing_child;
+                    inner_child_index += 1;
+                    children_counter += 1;
+                }
+            }
+
+            if(children_counter >= max_children_per_couple){break;}
+        }
+    }
+
+
+
+
+
+    void performCrossoverSingleThread(int start,
+                                      int end,
+                                      std::vector<Solution> &population,
+                                      std::vector<std::vector<Solution>> all_children,
+                                      const std::vector<size_t> &initial_parent_indexes,
+                                      const std::vector<size_t> &guiding_parent_indexes,
+                                      const Params &params,
+                                      const Instance &instance){
+
+        for(int i = start; i <= end; i++){
+
+            performPathRelinkingCrossover(population[initial_parent_indexes[i]],
+                                          population[guiding_parent_indexes[i]],
+                                          all_children[i],
+                                          params,
+                                          instance);
+
+        }
+
+    }
+
+
+
+
+
+    
+
+    std::vector<Solution> extractFeasibleChildren(std::vector<std::vector<Solution>> &all_children,
+                                                  const Instance &instance){
+
+        size_t feasible_children_counter = 0;
+
+        // counting feasible children
+
+        for(size_t couple_index = 0; couple_index < all_children.size(); couple_index++){
+
+            for(size_t child_index = 0; child_index < all_children[couple_index].size(); child_index++){
+
+                if(all_children[couple_index][child_index].getStatus() == Status::FEASIBLE){
+
+                    feasible_children_counter += 1;
+                }
+
+            }
+        }
+
+        // extracting feasible children
+
+        std::vector<Solution> feasible_children(feasible_children_counter, Solution(instance));
+
+        size_t inner_index = 0;
+
+        for(size_t couple_index = 0; couple_index < all_children.size(); couple_index++){
+
+            for(size_t child_index = 0; child_index < all_children[couple_index].size(); child_index++){
+
+                if(all_children[couple_index][child_index].getStatus() == Status::FEASIBLE){
+
+                    feasible_children[inner_index] = all_children[couple_index][child_index];
+
+                    inner_index += 1;
+                }
+
+            }
+        }
+
+        return feasible_children;
+
+    }
+
+
+
+
+
+
+
+    std::vector<Solution> performCrossover(std::vector<Solution> &population,
+                                           const std::vector<size_t> &initial_parent_indexes,
+                                           const std::vector<size_t> &guiding_parent_indexes,
+                                           const Params &params,
+                                           const Instance &instance){
+
+        size_t nb_couples = initial_parent_indexes.size();
+
+        size_t max_children_per_couple = 2;
+
+        std::vector<std::vector<Solution>> all_children(nb_couples,
+                                                        std::vector<Solution>(max_children_per_couple,
+                                                                              Solution(instance)));
+
+        int work_size = static_cast<int>(nb_couples);
+        int nb_threads_used = std::min(params.nb_threads, work_size);
+        std::vector<std::thread> workers(nb_threads_used);
+
+        for(int id = 0; id < nb_threads_used; id++){
+
+            int start = start_index(id, work_size, nb_threads_used);
+            int end = end_index(id, work_size, nb_threads_used);
+
+            workers[id] = std::thread(performCrossoverSingleThread,
+                                      start,
+                                      end,
+                                      std::ref(population),
+                                      std::ref(all_children),
+                                      std::ref(initial_parent_indexes),
+                                      std::ref(guiding_parent_indexes),
+                                      std::ref(params),
+                                      std::ref(instance));
+        }
+
+        // waiting for all threads to finish
+        for(auto &worker : workers){worker.join();}
+
+        // extraction of feasible children
+        return extractFeasibleChildren(all_children, instance);
+
+    }
+
     
 }

@@ -24,6 +24,7 @@
 #include "dataStructures/Solution.hpp"
 #include "hpc/thread/Thread.hpp"
 #include "algorithms/geneticAlgorithm/GeneticAlgorithmUtils.hpp"
+#include "algorithms/grasp/PathRelinking.hpp"
 #include <vector>
 #include <cstdint>
 #include <limits>
@@ -113,5 +114,58 @@ namespace spp{
                              std::vector<size_t> &crossover_participation,
                              const std::vector<double> &population_fitness,
                              const Params &params);
+
+
+
+
+
+    /**
+     * @brief performs a path-relinking based crossover and produces up to two VND‑intensified offspring 
+     *        from the trajectory toward the guiding parent.
+     */
+    void performPathRelinkingCrossover(Solution &initial_parent,
+                                       Solution &guiding_parent,
+                                       std::vector<Solution> &children,
+                                       const Params &params,
+                                       const Instance &instance);
+
+
+
+
+
+    /**
+     * @brief performs a path-relinking based crossover on a single CPU thread
+     */
+    void performCrossoverSingleThread(int start,
+                                      int end,
+                                      std::vector<Solution> &population,
+                                      std::vector<std::vector<Solution>> all_children,
+                                      const std::vector<size_t> &initial_parent_indexes,
+                                      const std::vector<size_t> &guiding_parent_indexes,
+                                      const Params &params,
+                                      const Instance &instance);
+
+
+
+
+
+    /**
+     * @brief extracts feasible children after the crossover
+     */
+    std::vector<Solution> extractFeasibleChildren(std::vector<std::vector<Solution>> &all_children,
+                                                  const Instance &instance);
+
+
+
+
+    /**
+     * @brief performs a path-relinking based crossover on a multiple CPU thread
+     */
+    std::vector<Solution> performCrossover(std::vector<Solution> &population,
+                                           const std::vector<size_t> &initial_parent_indexes,
+                                           const std::vector<size_t> &guiding_parent_indexes,
+                                           const Params &params,
+                                           const Instance &instance);
+
 
 }
