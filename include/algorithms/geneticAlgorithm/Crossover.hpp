@@ -12,7 +12,7 @@
 
 /** 
  * @file Crossover.hpp
- * @brief defines  methods for the crossover operator in the hyper-heuristic genetic algorithm
+ * @brief defines  methods for the crossover operator based on Path-Relinking in the hyper-heuristic genetic algorithm
  * @author Josué Tambwe
  * @date 8 August 2026
  */
@@ -24,6 +24,7 @@
 #include "dataStructures/Solution.hpp"
 #include "hpc/thread/Thread.hpp"
 #include "algorithms/geneticAlgorithm/GeneticAlgorithmUtils.hpp"
+#include "algorithms/localSearch/VariableNeighborhoodDescent.hpp"
 #include "algorithms/grasp/PathRelinking.hpp"
 #include <vector>
 #include <cstdint>
@@ -96,15 +97,6 @@ namespace spp{
 
 
 
-    /**
-     * @brief gets a random parent index within the set of parent indexes
-     */
-    size_t getRandomIndex(const std::unordered_set<size_t> &parents_indexes);
-
-
-
-
-
 
     /**
      * @brief builds crossover couples and assigns initial and guiding parents based on fitness and participation.
@@ -139,7 +131,7 @@ namespace spp{
     void performCrossoverSingleThread(int start,
                                       int end,
                                       std::vector<Solution> &population,
-                                      std::vector<std::vector<Solution>> all_children,
+                                      std::vector<std::vector<Solution>> &all_children,
                                       const std::vector<size_t> &initial_parent_indexes,
                                       const std::vector<size_t> &guiding_parent_indexes,
                                       const Params &params,
@@ -159,7 +151,7 @@ namespace spp{
 
 
     /**
-     * @brief performs a path-relinking based crossover on a multiple CPU thread
+     * @brief performs a path-relinking based crossover on multiple CPU threads
      */
     std::vector<Solution> performCrossover(std::vector<Solution> &population,
                                            const std::vector<size_t> &initial_parent_indexes,

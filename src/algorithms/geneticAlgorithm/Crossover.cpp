@@ -14,7 +14,7 @@
 /** 
  * @file Crossover.cpp
  * @author Josué Tambwe
- * @date 6 August 2026
+ * @date 8 August 2026
  */
 
 #include "algorithms/geneticAlgorithm/Crossover.hpp"
@@ -189,21 +189,6 @@ namespace spp{
 
 
 
-    size_t getRandomIndex(const std::unordered_set<size_t> &parents_indexes){
-
-        auto& rng = getThreadLocalRng();
-        std::uniform_int_distribution<size_t> dist(0, (parents_indexes.size() - 1));
-
-        size_t index = dist(rng);
-
-        std::unordered_set<size_t>::const_iterator iterator = parents_indexes.begin();
-        std::advance(iterator, index);
-
-        return *iterator;
-    }
-
-
-
 
 
     void setCrossoverCouples(std::vector<size_t> &initial_parents,
@@ -261,21 +246,18 @@ namespace spp{
 
 
 
-
     void performPathRelinkingCrossover(Solution &initial_parent,
                                        Solution &guiding_parent,
                                        std::vector<Solution> &children,
                                        const Params &params,
                                        const Instance &instance){
 
-        // copy of the initial parent
-        Solution initial_parent_copy = initial_parent;
-
-        // to performs an intensified VND 
-        bool use_intensified_local_search = params.use_intensification;
-
         // getting non-zero variables within the guiding parent
         std::vector<int> guiding_parent_non_zero_vars = guiding_parent.getNonZeroVarsIndexes();
+
+
+        // copy of the initial parent
+        Solution initial_parent_copy = initial_parent;
 
         // getting non-zero variables within the initial parent
         std::unordered_set<int> initial_parent_non_zero_vars = computeInitialSolutionNonZeroVarsIndexes(initial_parent_copy);
@@ -312,7 +294,7 @@ namespace spp{
                     Solution intermediate_promissing_child = initial_parent_copy;
 
                     // local search on the intermediate solution
-                    variableNeighborhoodDescent(use_intensified_local_search,
+                    variableNeighborhoodDescent(params.use_intensification,
                                                 params, 
                                                 intermediate_promissing_child, 
                                                 instance);
@@ -336,7 +318,7 @@ namespace spp{
     void performCrossoverSingleThread(int start,
                                       int end,
                                       std::vector<Solution> &population,
-                                      std::vector<std::vector<Solution>> all_children,
+                                      std::vector<std::vector<Solution>> &all_children,
                                       const std::vector<size_t> &initial_parent_indexes,
                                       const std::vector<size_t> &guiding_parent_indexes,
                                       const Params &params,

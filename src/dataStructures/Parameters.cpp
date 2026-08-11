@@ -67,6 +67,7 @@
         // Genetic Algorithm
         improvement_time = 1.0;
         crossover_rate = 0.7;
+        mutation_rate = 0.4;
 
         
         

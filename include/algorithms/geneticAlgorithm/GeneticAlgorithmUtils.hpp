@@ -48,4 +48,11 @@ namespace spp{
                                                  const Params &params,
                                                  const Instance &instance);
 
+
+
+    /**
+     * @brief gets a random parent index within the set of  indexes
+     */
+    size_t getRandomIndex(const std::unordered_set<size_t> &indexes);
+
 }

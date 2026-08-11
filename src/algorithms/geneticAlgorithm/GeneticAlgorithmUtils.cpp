@@ -38,6 +38,7 @@ namespace spp{
 
 
 
+
     std::vector<double> computePopulationFitness(std::vector<Solution> &population,
                                                  const Params &params,
                                                  const Instance &instance){
@@ -66,6 +67,23 @@ namespace spp{
         for(auto &worker : workers){worker.join();}
 
         return population_fitness;
+    }
+
+
+
+
+
+    size_t getRandomIndex(const std::unordered_set<size_t> &indexes){
+
+        auto& rng = getThreadLocalRng();
+        std::uniform_int_distribution<size_t> dist(0, (indexes.size() - 1));
+
+        size_t index = dist(rng);
+
+        std::unordered_set<size_t>::const_iterator iterator = indexes.begin();
+        std::advance(iterator, index);
+
+        return *iterator;
     }
     
 }

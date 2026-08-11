@@ -30,6 +30,7 @@
    #include "algorithms/geneticAlgorithm/PopulationGeneration.hpp" // to remove
    #include "algorithms/geneticAlgorithm/GeneticAlgorithmUtils.hpp" // to remove
    #include "algorithms/geneticAlgorithm/Crossover.hpp" // to remove
+   #include "algorithms/geneticAlgorithm/Mutation.hpp" // to remove
 
    #include <iostream> // to remove
    #include <array> // to remove
@@ -149,6 +150,44 @@
                           crossover_participation,
                           population_fitness,
                           params);
+
+
+
+      std::vector<Solution> children =  performCrossover(individuals,
+                                                         initial_parents,
+                                                         guiding_parents,
+                                                         params,
+                                                         instance);
+
+      std::vector<double> children_fitness = computePopulationFitness(children,
+                                                                     params,
+                                                                     instance);
+
+      std::cout << " \n\n Children \n\n";
+      for(size_t i = 0; i < children_fitness.size(); i++){
+
+         std::cout << " ind : " << (i+1) 
+                  << " - fitness : " << children_fitness[i]
+                  << "\n\n";
+      }
+
+
+      std::vector<size_t> children_to_mutate_indexes = selectIndexesToMutate(children.size(), params);
+
+
+      performMutation(children,
+                      children_to_mutate_indexes,
+                      params,
+                      instance);
+
+
+      std::cout << " \n\n Mutation \n\n";
+      for(size_t i = 0; i < children_to_mutate_indexes.size(); i++){
+
+         std::cout << " ind : " << (children_to_mutate_indexes[i]+1) 
+                  << " - fitness : " << children_fitness[i]
+                  << "\n\n";
+      }
 
 
       if(params.algorithm == Algorithm::Greedy){runGreedy(params);}

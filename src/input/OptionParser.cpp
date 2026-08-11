@@ -543,6 +543,18 @@
                 }
 
 
+
+                if(name == "--mutation-rate"){
+                    params.mutation_rate = std::stod(value);
+                    if(params.mutation_rate < 0.0 || params.mutation_rate > 1.0){
+
+                        log.error(" mutation-rate must be in the interval [0,1]");
+                    }
+                    continue;
+                }
+
+
+
                 // case of invalid option
                 log.error("Unknown option: " + name);
                 break;
