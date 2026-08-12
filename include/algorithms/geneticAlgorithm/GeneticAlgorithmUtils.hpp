@@ -25,9 +25,11 @@
 #include "hpc/thread/Thread.hpp"
 #include <vector>
 #include <cstdint>
+#include <array>
 
 namespace spp{
 
+    const std::array<float, 10> alpha_values_GA = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f,0.9f, 1.0f};
 
     /**
      * @brief computes the fitness  on a single CPU thread
@@ -54,5 +56,25 @@ namespace spp{
      * @brief gets a random parent index within the set of  indexes
      */
     size_t getRandomIndex(const std::unordered_set<size_t> &indexes);
+
+
+
+
+
+    /**
+     * @brief check of the stopping criteria for the Genetic Algorithm
+     */
+    bool stoppingCriteriaGeneticAlgorithm(double current_time, 
+                                          size_t current_generation, 
+                                          const Params &params);
+
+
+
+
+    /**
+     * @brief finds the fitness top-scoring individual within the population
+     */
+    Solution findBestIndividual(std::vector<Solution> &population, 
+                                const Instance &instance);
 
 }

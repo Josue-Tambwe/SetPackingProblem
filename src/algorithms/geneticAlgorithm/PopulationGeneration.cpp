@@ -308,4 +308,47 @@ namespace spp{
     }
 
 
+
+
+
+
+
+    std::vector<Solution> generateNewIndividuals(size_t nb_individuals_to_generate,
+                                                 std::vector<std::array<double, 3>> &all_proportions,
+                                                 const Params &params,
+                                                 const Instance &instance){
+
+        std::array<size_t, 10> nb_individuals_per_alpha_value;
+        std::vector<std::array<size_t, 3>> nb_individuals_per_local_search; 
+
+        std::vector<float> individuals_construction_alpha_value(nb_individuals_to_generate);
+        std::vector<char> individuals_local_search(nb_individuals_to_generate);
+
+        // setting the alpha value and the low-level metaheuristic local search for each individual
+        setAlphaAndLocalSearch(nb_individuals_to_generate,
+                               nb_individuals_per_alpha_value,
+                               nb_individuals_per_local_search,  
+                               individuals_construction_alpha_value, 
+                               individuals_local_search,
+                               alpha_values_GA,
+                               all_proportions);
+
+        // generating individuals
+        std::vector<Solution> individuals = generateIndividuals(individuals_construction_alpha_value,
+                                                                individuals_local_search,
+                                                                params,
+                                                                instance);
+
+        // updating the low-level metaheuristics probabilities on each alpha value based on the average fitness of individuals generated
+        updateLowLevelLocalSearchProportions(all_proportions,
+                                             nb_individuals_per_alpha_value,
+                                             nb_individuals_per_local_search,
+                                             individuals,
+                                             instance);
+
+        return individuals;
+
+    }
+
+
 }

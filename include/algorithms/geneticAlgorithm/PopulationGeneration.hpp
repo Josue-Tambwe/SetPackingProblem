@@ -24,6 +24,7 @@
 #include "dataStructures/Solution.hpp"
 #include "hpc/thread/Thread.hpp"
 #include "algorithms/greedy/RandomizedConstruction.hpp"
+#include "algorithms/geneticAlgorithm/GeneticAlgorithmUtils.hpp"
 #include "algorithms/geneticAlgorithm/LowLevelMetaheuristics.hpp"
 #include <array>
 #include <cmath>
@@ -114,5 +115,16 @@ namespace spp{
                                               const std::vector<std::array<size_t, 3>> &nb_individuals_per_local_search,
                                               std::vector<Solution> &individuals,
                                               const Instance &instance);
+
+
+
+
+    /**
+     * @brief generates new individuals and updates the proportions of the three low‑level local search methods (VND, TS, SA)
+     */
+    std::vector<Solution> generateNewIndividuals(size_t nb_individuals_to_generate,
+                                                 std::vector<std::array<double, 3>> &all_proportions,
+                                                 const Params &params,
+                                                 const Instance &instance);
 
 }

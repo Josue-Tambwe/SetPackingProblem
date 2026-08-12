@@ -151,11 +151,21 @@ namespace spp{
 
 
     /**
-     * @brief performs a path-relinking based crossover on multiple CPU threads
+     * @brief performs a path-relinking based crossover on multiple CPU threads and extracts feasible children
+     */
+    std::vector<Solution> performCrossoverAndExtractFeasibleChildren(std::vector<Solution> &population,
+                                                                     const std::vector<size_t> &initial_parent_indexes,
+                                                                     const std::vector<size_t> &guiding_parent_indexes,
+                                                                     const Params &params,
+                                                                     const Instance &instance);
+
+
+
+    /**
+     * @brief performs a path-relinking based crossover
      */
     std::vector<Solution> performCrossover(std::vector<Solution> &population,
-                                           const std::vector<size_t> &initial_parent_indexes,
-                                           const std::vector<size_t> &guiding_parent_indexes,
+                                           const std::vector<double> &population_fitness,
                                            const Params &params,
                                            const Instance &instance);
 

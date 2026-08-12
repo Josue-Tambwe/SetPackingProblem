@@ -16,4 +16,5 @@ genetic_algorithm_sources = files('LowlevelMetaheuristics.cpp',
                                   'Crossover.cpp',
                                   'GeneticAlgorithmUtils.cpp',
                                   'Mutation.cpp',
-                                  'Selection.cpp')
+                                  'Selection.cpp',
+                                  'RunGeneticAlgorithm.cpp')

@@ -85,5 +85,50 @@ namespace spp{
 
         return *iterator;
     }
+
+
+
+
+
+    bool stoppingCriteriaGeneticAlgorithm(double current_time, 
+                                          size_t current_generation, 
+                                          const Params &params){
+
+        if(params.use_time_limit && !params.use_max_iterations){return current_time >= params.time_limit;}
+
+        if(!params.use_time_limit && params.use_max_iterations){return current_generation >= params.nb_max_iterations;}
+
+        else{
+            return (current_generation >= params.nb_max_iterations) || (current_time >= params.time_limit);
+        }
+
+    }
+
+
+
+
+
+    Solution findBestIndividual(std::vector<Solution> &population, 
+                                const Instance &instance){
+
+
+        Solution best_individual = population[0];
+        std::int64_t best_individual_objective_value = best_individual.getObjectiveValue(instance);
+
+        for(Solution individual : population){
+
+            std::int64_t individual_objective_value = individual.getObjectiveValue(instance);
+
+            if(individual_objective_value > best_individual_objective_value){
+
+                best_individual_objective_value = individual_objective_value;
+                best_individual = individual;
+
+            }
+        }
+
+        return best_individual;
+
+    }
     
 }

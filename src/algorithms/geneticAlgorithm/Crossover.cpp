@@ -391,11 +391,11 @@ namespace spp{
 
 
 
-    std::vector<Solution> performCrossover(std::vector<Solution> &population,
-                                           const std::vector<size_t> &initial_parent_indexes,
-                                           const std::vector<size_t> &guiding_parent_indexes,
-                                           const Params &params,
-                                           const Instance &instance){
+    std::vector<Solution> performCrossoverAndExtractFeasibleChildren(std::vector<Solution> &population,
+                                                                     const std::vector<size_t> &initial_parent_indexes,
+                                                                     const std::vector<size_t> &guiding_parent_indexes,
+                                                                     const Params &params,
+                                                                     const Instance &instance){
 
         size_t nb_couples = initial_parent_indexes.size();
 
@@ -430,6 +430,37 @@ namespace spp{
 
         // extraction of feasible children
         return extractFeasibleChildren(all_children, instance);
+
+    }
+
+
+
+
+
+    std::vector<Solution> performCrossover(std::vector<Solution> &population,
+                                            const std::vector<double> &population_fitness,
+                                            const Params &params,
+                                            const Instance &instance){
+
+        std::vector<double> cumulative_population_fitness = computeCumulativeQuadraticBiasedFitness(population_fitness);
+
+        std::vector<size_t> crossover_participation = computeIndividualsCrossOverParticipation(cumulative_population_fitness,
+                                                                                               params);
+
+        std::vector<size_t> guiding_parents;
+        std::vector<size_t> initial_parents;
+
+        setCrossoverCouples(initial_parents,
+                            guiding_parents,
+                            crossover_participation,
+                            population_fitness,
+                            params);
+
+        return performCrossoverAndExtractFeasibleChildren(population,
+                                                          initial_parents,
+                                                          guiding_parents,
+                                                          params,
+                                                          instance);
 
     }
 
