@@ -555,6 +555,17 @@
 
 
 
+                if(name == "--survivor-rate"){
+                    params.survivor_rate = std::stod(value);
+                    if(params.survivor_rate < 0.0 || params.survivor_rate > 1.0){
+
+                        log.error(" survivor-rate must be in the interval [0,1]");
+                    }
+                    continue;
+                }
+
+
+
                 // case of invalid option
                 log.error("Unknown option: " + name);
                 break;

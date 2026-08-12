@@ -93,9 +93,9 @@
         // Genetic Algorithm 
         size_t population_size;
         double improvement_time; // time limit for low-level metaheuristics (VND, Tabu Search and Simulated Annealing)
-        double survivors_rate; // proportion of elite individuals to keep for the next generation
         double crossover_rate; // proportion of crossover to perform
         double mutation_rate; // proportion of offspring to mutate
+        double survivor_rate; // proportion of elite individuals to keep for the next generation
         
 
 

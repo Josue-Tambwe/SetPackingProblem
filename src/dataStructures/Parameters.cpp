@@ -68,6 +68,7 @@
         improvement_time = 1.0;
         crossover_rate = 0.7;
         mutation_rate = 0.4;
+        survivor_rate = 0.3;
 
         
         
