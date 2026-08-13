@@ -209,12 +209,12 @@ namespace spp{
 
             // selection of the first parent
             size_t first_parent_index = getRandomIndex(parents_indexes);
-            parents_indexes.erase(first_parent_index);
-            crossover_participation[first_parent_index] -= 1;
-
+            
             // selection of the second parent
             size_t second_parent_index = getRandomIndex(parents_indexes);
-            parents_indexes.erase(second_parent_index);
+
+            // decreasing crossover participation
+            crossover_participation[first_parent_index] -= 1;
             crossover_participation[second_parent_index] -= 1;
 
             setInitialAndGuidingParents(inner_index,
@@ -225,20 +225,11 @@ namespace spp{
                                         population_fitness);
 
 
-            if(crossover_participation[first_parent_index] > 0){parents_indexes.insert(first_parent_index);}
+            // removing parent without crossover participation left
+            if(crossover_participation[first_parent_index] == 0){parents_indexes.erase(first_parent_index);}
 
-            if(crossover_participation[second_parent_index] > 0){parents_indexes.insert(second_parent_index);}
+            if(crossover_participation[second_parent_index] == 0){parents_indexes.erase(second_parent_index);}
 
-        }
-
-
-        for(size_t inner_index = 0; inner_index < nb_couples; inner_index++){
-
-            std::cout << " couple : " << (inner_index + 1)
-                        << " ( " << (initial_parents[inner_index] + 1)
-                        << " - "
-                        << (guiding_parents[inner_index] + 1)
-                        << ") \n\n";
         }
 
     }
