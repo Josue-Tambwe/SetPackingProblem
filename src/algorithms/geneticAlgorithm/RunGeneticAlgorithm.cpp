@@ -29,7 +29,8 @@ namespace spp{
         // building the instance
         const Instance instance(params);
 
-        //printHeaderGRASP(params, instance);
+        printHeaderGeneticAlgorithm(params, instance);
+        
 
         // selection probabilities of low-level metaheuristics
         std::vector<std::array<double, 3>> all_proportions = {

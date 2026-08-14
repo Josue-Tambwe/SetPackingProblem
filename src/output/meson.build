@@ -18,4 +18,5 @@ output_sources = files('Logger.cpp',
                        'MilpSolverOutput.cpp',
                        'GRASPOutput.cpp',
                        'TabuSearchOutput.cpp',
-                       'SimulatedAnnealingOutput.cpp')
+                       'SimulatedAnnealingOutput.cpp',
+                       'GeneticAlgorithmOutput.cpp')

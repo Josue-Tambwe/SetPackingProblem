@@ -33,6 +33,7 @@
 #include "algorithms/geneticAlgorithm/Mutation.hpp"
 #include "algorithms/geneticAlgorithm/Selection.hpp"
 #include "output/GeneralOutput.hpp"
+#include "output/GeneticAlgorithmOutput.hpp"
 #include <array>
 #include <vector> 
 #include <cstdint>
