@@ -130,5 +130,59 @@ namespace spp{
         return best_individual;
 
     }
+
+
+
+
+
+    void computeMaximumMinimumAverageFitness(double &max_fitness,
+                                             double &min_fitness,
+                                             double &average_fitness,
+                                             const std::vector<double> &fitness){
+
+        // initialization
+        max_fitness = fitness[0];
+        min_fitness = fitness[0];
+        average_fitness = 0.0;
+
+        for(double value : fitness){
+
+            average_fitness += value;
+            max_fitness = std::max(value, max_fitness);
+            min_fitness = std::min(value, min_fitness);
+        }
+
+        average_fitness = average_fitness / (std::max(static_cast<size_t>(1), fitness.size()));
+
+    }
+
+
+
+
+
+    void computeMaximumMinimumAverageMutationFitness(double &max_fitness,
+                                                     double &min_fitness,
+                                                     double &average_fitness,
+                                                     const std::vector<size_t> children_to_mutate_indexes,
+                                                     const std::vector<double> &fitness){
+
+        if(children_to_mutate_indexes.size() == 0){return;}
+
+        // initialization
+        max_fitness = fitness[children_to_mutate_indexes[0]];
+        min_fitness = fitness[children_to_mutate_indexes[0]];
+        average_fitness = 0.0;
+
+        for(size_t index : children_to_mutate_indexes){
+
+            double value = fitness[index];
+            average_fitness += value;
+            max_fitness = std::max(value, max_fitness);
+            min_fitness = std::min(value, min_fitness);
+        }
+
+        average_fitness = average_fitness / (std::max(static_cast<size_t>(1), children_to_mutate_indexes.size()));
+
+    }
     
 }

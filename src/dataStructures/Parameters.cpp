@@ -70,8 +70,5 @@
         mutation_rate = 0.4;
         survivor_rate = 0.3;
 
-        
-        
-
     }
  }

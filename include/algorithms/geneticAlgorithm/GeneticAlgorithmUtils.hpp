@@ -26,6 +26,7 @@
 #include <vector>
 #include <cstdint>
 #include <array>
+#include <algorithm>
 
 namespace spp{
 
@@ -76,5 +77,24 @@ namespace spp{
      */
     Solution findBestIndividual(std::vector<Solution> &population, 
                                 const Instance &instance);
+
+
+
+
+    /**
+     * @brief computes fitness statistics : maximum, minimum and average values
+     */
+    void computeMaximumMinimumAverageFitness(double &max_fitness,
+                                             double &min_fitness,
+                                             double &average_fitness,
+                                             const std::vector<double> &fitness);
+
+
+
+    void computeMaximumMinimumAverageMutationFitness(double &max_fitness,
+                                                     double &min_fitness,
+                                                     double &average_fitness,
+                                                     const std::vector<size_t> children_to_mutate_indexes,
+                                                     const std::vector<double> &fitness);
 
 }

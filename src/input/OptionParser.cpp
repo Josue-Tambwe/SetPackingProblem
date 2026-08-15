@@ -519,7 +519,7 @@
 
                 if(name == "--population-size"){
                     params.population_size = std::stoi(value);
-                    if(params.population_size < 1){log.error(" population-size must be >= 1");}
+                    if(params.population_size < 2){log.error(" population-size must be >= 2");}
                     continue;
                 }
 

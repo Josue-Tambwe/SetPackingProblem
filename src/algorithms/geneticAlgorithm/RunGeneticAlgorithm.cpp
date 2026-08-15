@@ -49,6 +49,8 @@ namespace spp{
         size_t fixed_population_size = params.population_size;
         size_t nb_survivors = static_cast<size_t>(std::floor(fixed_population_size * params.survivor_rate));
         size_t nb_new_individuals_per_generation = fixed_population_size - nb_survivors;
+        size_t nb_couples = static_cast<size_t>(std::floor(fixed_population_size * params.crossover_rate) / 2.0);
+
 
         Timer timer = Timer();
         Logger log;
@@ -67,9 +69,22 @@ namespace spp{
 
         size_t current_generation = 0;
 
-        while(!stoppingCriteriaGeneticAlgorithm(timer.getElapsedTime(), current_generation, params)){
+        do{
 
             current_generation += 1;
+
+            std::vector<double> population_fitness = computePopulationFitness(current_population,
+                                                                              params,
+                                                                              instance);
+
+            double max_population_fitness = 0.0;
+            double min_population_fitness = 0.0;
+            double average_population_fitness = 0.0;
+
+            computeMaximumMinimumAverageFitness(max_population_fitness,
+                                                min_population_fitness,
+                                                average_population_fitness,
+                                                population_fitness);
 
             Solution local_best_individual = findBestIndividual(current_population, instance);
             std::int64_t local_best_individual_objective_value = local_best_individual.getObjectiveValue(instance);
@@ -82,38 +97,89 @@ namespace spp{
             }
 
 
-            std::vector<double> population_fitness = computePopulationFitness(current_population,
-                                                                              params,
-                                                                              instance);
-
-
             std::vector<Solution> children = performCrossover(current_population,
                                                               population_fitness,
                                                               params,
                                                               instance);
 
-        
-            Solution best_child = findBestIndividual(children, instance);
-            std::int64_t best_child_objective_value = best_child.getObjectiveValue(instance);
+            // crossover statistics
+            double max_children_fitness = 0.0;
+            double min_children_fitness = 0.0;
+            double average_children_fitness = 0.0;
 
-            // update of the best solution before mutation
-            if(best_child_objective_value > best_individual_objective_value){
+            // mutation statistics
+            double max_mutated_children_fitness = 0.0;
+            double min_mutated_children_fitness = 0.0;
+            double average_mutated_children_fitness = 0.0;
 
-                best_individual_objective_value = best_child_objective_value;
-                best_individual = best_child;
-            }
+            size_t nb_mutated_children = 0;
 
-            
             // when the crossover is not childless
             if(children.size() > 0){
 
+                std::vector<double> children_fitness = computePopulationFitness(children,
+                                                                                params,
+                                                                                instance);
+
+                computeMaximumMinimumAverageFitness(max_children_fitness,
+                                                    min_children_fitness,
+                                                    average_children_fitness,
+                                                    children_fitness);
+
+
+                Solution best_child = findBestIndividual(children, instance);
+                std::int64_t best_child_objective_value = best_child.getObjectiveValue(instance);
+
+                // update of the best solution before mutation
+                if(best_child_objective_value > best_individual_objective_value){
+
+                    best_individual_objective_value = best_child_objective_value;
+                    best_individual = best_child;
+                }
+
+                // mutation
+
                 std::vector<size_t> children_to_mutate_indexes = selectIndexesToMutate(children.size(), params);
 
-                performMutation(children,
-                                children_to_mutate_indexes,
-                                params,
-                                instance);
+                nb_mutated_children = children_to_mutate_indexes.size();
+
+                if(children_to_mutate_indexes.size() > 0){
+
+                    performMutation(children,
+                                    children_to_mutate_indexes,
+                                    params,
+                                    instance);
+
+
+                    computeMaximumMinimumAverageMutationFitness(max_mutated_children_fitness,
+                                                                min_mutated_children_fitness,
+                                                                average_mutated_children_fitness,
+                                                                children_to_mutate_indexes,
+                                                                children_fitness);
+
+                }
+                
             }
+
+
+            printGeneticAlgorithmIteration(timer.getElapsedTime(), 
+                                           current_generation,
+                                           nb_couples,
+                                           children.size(),
+                                           nb_mutated_children,
+                                           best_individual_objective_value,
+                                           max_population_fitness,
+                                           min_population_fitness,
+                                           average_population_fitness,
+                                           max_children_fitness,
+                                           min_children_fitness,
+                                           average_children_fitness,
+                                           max_mutated_children_fitness,
+                                           min_mutated_children_fitness,
+                                           average_mutated_children_fitness,
+                                           alpha_values_GA,
+                                           all_proportions);
+
 
             // the unified population : old generation + new generation
             std::vector<Solution> unified_population = unifyPopulation(current_population,
@@ -148,16 +214,16 @@ namespace spp{
             }
 
         }
+        while(!stoppingCriteriaGeneticAlgorithm(timer.getElapsedTime(), current_generation, params));
 
         log.info("Genetic Algorithm completed. Final best known solution :");
 
 
         best_individual.print(instance);
 
-        std::cout << "\n time : " << timer.getElapsedTime() << " (s)"
-                << " status : "  << best_individual.getStatus() 
-                << " nb generations : " << current_generation << " \n\n";
-
-
+        printSummaryGeneticAlgorithm(timer.getElapsedTime(), 
+                                     best_individual.getObjectiveValue(instance),
+                                     current_generation,
+                                     best_individual.getStatus());
     }
 }
