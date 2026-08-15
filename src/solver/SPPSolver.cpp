@@ -20,23 +20,11 @@
    #include "dataStructures/Parameters.hpp"
    #include "input/OptionParser.hpp"
    #include "dataStructures/Parameters.hpp"
-   #include "dataStructures/Instance.hpp" // to remove
-   #include "dataStructures/Solution.hpp" // to remove
-   #include "dataStructures/Timer.hpp" // to remove
    #include "algorithms/greedy/RunGreedy.hpp"
    #include "algorithms/grasp/RunGRASP.hpp"
    #include "algorithms/tabuSearch/RunTabuSearch.hpp"
    #include "algorithms/simulatedAnnealing/RunSimulatedAnnealing.hpp"
    #include "algorithms/geneticAlgorithm/RunGeneticAlgorithm.hpp"
-   #include "algorithms/geneticAlgorithm/PopulationGeneration.hpp" // to remove
-   #include "algorithms/geneticAlgorithm/GeneticAlgorithmUtils.hpp" // to remove
-   #include "algorithms/geneticAlgorithm/Crossover.hpp" // to remove
-   #include "algorithms/geneticAlgorithm/Mutation.hpp" // to remove
-
-   #include <iostream> // to remove
-   #include <array> // to remove
-   #include <cmath> // to remove
-   #include <vector> // to remove
 
    #if USE_BRANCH_AND_BOUND
    #include "algorithms/branchAndBound/RunBranchAndBound.hpp"
