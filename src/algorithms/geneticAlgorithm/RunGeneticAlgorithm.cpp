@@ -77,6 +77,7 @@ namespace spp{
                                                                               params,
                                                                               instance);
 
+            // population statistics
             double max_population_fitness = 0.0;
             double min_population_fitness = 0.0;
             double average_population_fitness = 0.0;

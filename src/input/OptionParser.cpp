@@ -34,6 +34,7 @@
         bool has_tabu_tenure = false;
         bool has_restart_interval = false;
         bool has_cooling_interval = false;
+        bool has_population_size = false;
         
 
         for(int i = 1; i < argc; i++){
@@ -46,6 +47,7 @@
             if (arg.find("--tabu-tenure=") == 0) {has_tabu_tenure = true;}
             if (arg.find("--restart-interval=") == 0) {has_restart_interval = true;}
             if (arg.find("--cooling-interval=") == 0) {has_cooling_interval = true;}
+            if (arg.find("--population-size=") == 0) {has_population_size = true;}
         }
 
         if(!has_algorithm){log.error(" Missing required option : --algorithm=value");}
@@ -86,6 +88,12 @@
 
         }
 
+        if(params.algorithm == Algorithm::GeneticAlgorithm && !has_population_size){
+
+            log.error(" Missing required option : --population-size=value");
+
+        }
+
 
         
     }
@@ -123,6 +131,11 @@
             if (arg.find("--cooling-factor=") == 0) {log.error(" --cooling-factor option is not supported by the greedy algorithm! ");}
             if (arg.find("--initial-temperature=") == 0) {log.error(" --initial-temperature option is not supported by the greedy algorithm! ");}
             if (arg.find("--final-temperature=") == 0) {log.error(" --final-temperature option is not supported by the greedy algorithm! ");}
+            if (arg.find("--improvement-time") == 0) {log.error(" --improvement-time flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--crossover-rate") == 0) {log.error(" --crossover-rate flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--mutation-rate") == 0) {log.error(" --mutation-rate flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--survivor-rate") == 0) {log.error(" --survivor-rate flag is not supported by the greedy algorithm! ");}
+            if (arg.find("--population-size") == 0) {log.error(" ---population-size flag is not supported by the greedy algorithm! ");}
             
             
         }
@@ -157,6 +170,11 @@
             if (arg.find("--cooling-factor=") == 0) {log.error(" --cooling-factor option is not supported by the bab algorithm! ");}
             if (arg.find("--initial-temperature=") == 0) {log.error(" --initial-temperature option is not supported by the bab algorithm! ");}
             if (arg.find("--final-temperature=") == 0) {log.error(" --final-temperature option is not supported by the bab algorithm! ");}
+            if (arg.find("--improvement-time") == 0) {log.error(" --improvement-time flag is not supported by the bab algorithm! ");}
+            if (arg.find("--crossover-rate") == 0) {log.error(" --crossover-rate flag is not supported by the bab algorithm! ");}
+            if (arg.find("--mutation-rate") == 0) {log.error(" --mutation-rate flag is not supported by the bab algorithm! ");}
+            if (arg.find("--survivor-rate") == 0) {log.error(" --survivor-rate flag is not supported by the bab algorithm! ");}
+            if (arg.find("--population-size") == 0) {log.error(" ---population-size flag is not supported by the bab algorithm! ");}
             
         }
 
@@ -191,6 +209,11 @@
             if (arg.find("--cooling-factor=") == 0) {log.error(" --cooling-factor option is not supported by the milp algorithm! ");}
             if (arg.find("--initial-temperature=") == 0) {log.error(" --initial-temperature option is not supported by the milp algorithm! ");}
             if (arg.find("--final-temperature=") == 0) {log.error(" --final-temperature option is not supported by the milp algorithm! ");}
+            if (arg.find("--improvement-time") == 0) {log.error(" --improvement-time flag is not supported by the milp algorithm! ");}
+            if (arg.find("--crossover-rate") == 0) {log.error(" --crossover-rate flag is not supported by the milp algorithm! ");}
+            if (arg.find("--mutation-rate") == 0) {log.error(" --mutation-rate flag is not supported by the milp algorithm! ");}
+            if (arg.find("--survivor-rate") == 0) {log.error(" --survivor-rate flag is not supported by the milp algorithm! ");}
+            if (arg.find("--population-size") == 0) {log.error(" ---population-size flag is not supported by the milp algorithm! ");}
             
         }
 
@@ -221,6 +244,11 @@
             if (arg.find("--cooling-factor=") == 0) {log.error(" --cooling-factor option is not supported by the grasp algorithm! ");}
             if (arg.find("--initial-temperature=") == 0) {log.error(" --initial-temperature option is not supported by the grasp algorithm! ");}
             if (arg.find("--final-temperature=") == 0) {log.error(" --final-temperature option is not supported by the grasp algorithm! ");}
+            if (arg.find("--improvement-time") == 0) {log.error(" --improvement-time flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--crossover-rate") == 0) {log.error(" --crossover-rate flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--mutation-rate") == 0) {log.error(" --mutation-rate flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--survivor-rate") == 0) {log.error(" --survivor-rate flag is not supported by the grasp algorithm! ");}
+            if (arg.find("--population-size") == 0) {log.error(" ---population-size flag is not supported by the grasp algorithm! ");}
             
         }
 
@@ -253,6 +281,11 @@
             if (arg.find("--cooling-factor=") == 0) {log.error(" --cooling-factor option is not supported by the ts algorithm! ");}
             if (arg.find("--initial-temperature=") == 0) {log.error(" --initial-temperature option is not supported by the ts algorithm! ");}
             if (arg.find("--final-temperature=") == 0) {log.error(" --final-temperature option is not supported by the ts algorithm! ");}
+            if (arg.find("--improvement-time") == 0) {log.error(" --improvement-time flag is not supported by the ts algorithm! ");}
+            if (arg.find("--crossover-rate") == 0) {log.error(" --crossover-rate flag is not supported by the ts algorithm! ");}
+            if (arg.find("--mutation-rate") == 0) {log.error(" --mutation-rate flag is not supported by the ts algorithm! ");}
+            if (arg.find("--survivor-rate") == 0) {log.error(" --survivor-rate flag is not supported by the ts algorithm! ");}
+            if (arg.find("--population-size") == 0) {log.error(" ---population-size flag is not supported by the ts algorithm! ");}
         }
 
 
@@ -277,11 +310,48 @@
             if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the sa algorithm! ");}
             if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the sa algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the sa algorithm! ");}
-            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the ts algorithm! ");}
+            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the sa algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the sa algorithm! ");}
             if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the sa algorithm! ");}
             if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the sa algorithm! ");}
             if (arg.find("--tabu-tenure") == 0) {log.error(" --tabu-tenure flag is not supported by the sa algorithm! ");}
+            if (arg.find("--improvement-time") == 0) {log.error(" --improvement-time flag is not supported by the sa algorithm! ");}
+            if (arg.find("--crossover-rate") == 0) {log.error(" --crossover-rate flag is not supported by the sa algorithm! ");}
+            if (arg.find("--mutation-rate") == 0) {log.error(" --mutation-rate flag is not supported by the sa algorithm! ");}
+            if (arg.find("--survivor-rate") == 0) {log.error(" --survivor-rate flag is not supported by the sa algorithm! ");}
+            if (arg.find("--population-size") == 0) {log.error(" ---population-size flag is not supported by the sa algorithm! ");}
+
+
+
+
+        }
+
+
+    }
+
+
+
+
+
+    void unsupportedOptionsGeneticAlgorithm(int argc, char** argv){
+        
+        Logger log; 
+
+        for(int i = 1; i < argc; i++){
+
+            std::string arg = argv[i];
+
+            if (arg.find("--warm-start") == 0) {log.error(" --warm-start flag is not supported by the genetic algorithm! ");}
+            if (arg.find("--solver=") == 0) {log.error(" --solver option is not supported by the genetic algorithm! ");}
+            if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the genetic algorithm! ");}
+            if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the genetic algorithm! ");}
+            if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the genetic algorithm! ");}
+            if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the genetic algorithm! ");}
+            if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the genetic algorithm! ");}
+            if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the genetic algorithm! ");}
+            if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the genetic algorithm! ");}
+            if (arg.find("--path-relinking=") == 0) {log.error(" --path-relinking option is not supported by the genetic algorithm! ");}
+            if (arg.find("--nb-elites=") == 0) {log.error(" --nb-elites option is not supported by the genetic algorithm! ");}
         }
 
 
@@ -608,6 +678,8 @@
             unsupportedOptionsSimulatedAnnealing(argc, argv);
         
         }
+
+        else if(params.algorithm == Algorithm::GeneticAlgorithm){unsupportedOptionsGeneticAlgorithm(argc, argv);}
 
 
 

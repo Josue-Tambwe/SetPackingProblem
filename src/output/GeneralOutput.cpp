@@ -61,7 +61,7 @@
                   << "  " << "--cooling-interval=value" << std::string(4, ' ')
                   << "Number of iterations between two temperature updates in the Simulated Annealing schedule\n\n"
 
-                  << "  " << "--population-size=value" << std::string(12, ' ')
+                  << "  " << "--population-size=value" << std::string(5, ' ')
                   << "Population size for the Genetic Algorithm \n\n"
 
                   << "  " << "--solver=value" << std::string(14, ' ')
@@ -129,7 +129,20 @@
                 << "Starting temperature of the Simulated Annealing schedule (higher values accept more worsening moves)\n\n"
 
                 << "  "  << "--final-temperature=value" << std::string(8, ' ')
-                << "Minimum temperature allowed by the cooling schedule. The algorithm stops when it is reached\n\n\n";
+                << "Minimum temperature allowed by the cooling schedule. The algorithm stops when it is reached\n\n"
+
+
+                << "  "  << "--improvement-time=value" << std::string(9, ' ')
+                << "Maximum time (in seconds) allocated to the local search improvement phase for each individual\n\n"
+
+                << "  "  << "--crossover-rate=value" << std::string(11, ' ')
+                << "Proportion in [0,1] of mating pairs that produce offspring through the Path-Relinking-based crossover\n\n"
+
+                << "  "  << "--mutation-rate=value" << std::string(12, ' ')
+                << "Proportion in [0,1] of offspring that receive the perturbation-based mutation (shaking + intensified VND)\n\n"
+
+                << "  "  << "--survivor-rate=value" << std::string(12, ' ')
+                << "Proportion in [0,1] of the best individuals preserved during the elitist replacement phase\n\n";
 
     }
 
@@ -154,11 +167,18 @@
             << "    ./bin/spp_solver --algorithm=sa "
             << "--instance=benchmarks/pb_1000rnd0700.dat --cooling-interval=100 --alpha=0.75 --cooling-factor=0.95  --simd\n\n"
 
+
             << "    ./bin/spp_solver --algorithm=bab "
             << "--instance=benchmarks/pb_1000rnd0700.dat  --intensification  --solver=gurobi --exploration=dfs\n\n"
 
             << "    ./bin/spp_solver --algorithm=milp "
-            << "--instance=benchmarks/pb_1000rnd0700.dat  --solver=highs  --simd  --time-limit=30 --warm-start\n\n";
+            << "--instance=benchmarks/pb_1000rnd0700.dat  --solver=highs  --simd  --time-limit=30 --warm-start\n\n"
+
+            << "    ./bin/spp_solver --algorithm=genetic "
+            << "--instance=benchmarks/pb_1000rnd0700.dat --pruning-rate=0.4 --cooling-interval=100  --initial-temperature=200 "
+            << "--cooling-factor=0.95 --restart-interval=100 --tabu-tenure=7 --nb-threads=4 --population-size=100  --iterations=5 "
+            << "--improvement-time=1 --crossover-rate=0.6 --mutation-rate=0.3 --survivor-rate=0.2 --simd\n\n";
+
 
 
 

@@ -98,6 +98,49 @@ Finally, the classical **Boltzmann acceptance function** has been **replaced by 
 ![](docs/images/boltzmann_vs_polynomial.png)
 
 
+## 8. Memetic Genetic Algorithm with Selection Hyper‑heuristic
+
+The Genetic Algorithm follows a **memetic structure**: every newly generated individual is systematically refined through a **low‑level local search** (restricted Variable Neighborhood Descent, Tabu Search or Simulated Annealing).
+
+The population generation is inspired by the **greedy randomized construction** of GRASP.  A **discrete set of 10 $\alpha$‑values** is used to control the balance between greediness and randomness during construction.  The population is **evenly distributed across the 10 α‑values**, ensuring strong **diversity** among individuals.
+
+For each $\alpha$‑value, the solver generates **N $_\alpha$  individuals**, each refined by one of the three low‑level metaheuristics:
+
+- **Variable Neighborhood Descent (VND)**  
+- **Tabu Search (TS)**  
+- **Simulated Annealing (SA)**
+
+A **selection hyper‑heuristic** dynamically adjusts the proportions of VND, TS and SA applied to the N $_\alpha$ individuals.  After each generation, the solver computes the **average fitness** obtained by each low-level local search method and updates their selection probabilities accordingly.  
+This adaptive mechanism—similar in spirit to **Reactive GRASP** which allows the Genetic Algorithm to progressively favor the most effective low‑level heuristics while maintaining controlled exploration.
+
+
+Parent selection is performed using a **stochastic universal sampling** (SUS) mechanism.  
+Given the **number of mating pairs** to generate, the method determines how many times each individual participates in the crossover process. To increase selection pressure while preserving diversity, **the fitness of each individual is first shifted by subtracting the minimum fitness** in the population, **then squared**.
+ 
+This quadratic bias amplifies differences between individuals and increases the likelihood of selecting high‑quality parents while still allowing weaker individuals to contribute occasionally.  
+The stochastic universal sampling then distributes parent participations using evenly spaced pointers on the cumulative probability interval, ensuring proportional selection of the best individuals.
+
+The crossover operator is inspired by the **Path‑Relinking** intensification strategy.  
+For each mating pair, the parent with the lower fitness is designated as the **initial solution**, while the fitter parent becomes the **guiding solution**. 
+
+The solver then explores the path between these two solutions by progressively aligning the initial solution toward the guiding one. Whenever an intermediate solution becomes promising which means **better than the initial parent**, then an **intensified VND** is applied to fully exploit this state, and the **resulting improved solution is retained as an offspring**.
+
+The crossover stops either when the path exploration is complete or as soon as **two offspring** have been generated. This early‑stop mechanism ensures that the next generation contains individuals at least superior to the weaker parents, while preventing the computational cost of Path‑Relinking from dominating the runtime of the Genetic Algorithm.
+
+
+
+A mutation step is applied to a proportion of the offspring, using a **perturbation mechanism** inspired by **Iterated Local Search**. 
+Each selected child is perturbed by randomly **deactivating 20% of its active variables**, which introduces a controlled disruption in the solution. An **intensified VND is then applied** to this perturbed child to rebuild a coherent structure and explore a new area of the search space. 
+
+This mutation process can produce better individuals than those obtained through crossover alone, and also helps avoid premature convergence toward the guiding parent created by the Path‑Relinking‑based crossover.
+
+The replacement phase follows an **elitist strategy**. The entire set of parents and offspring (both mutated and non‑mutated) is considered and only the best individuals are kept to form the next generation. 
+
+This ensures that high‑quality solutions are always preserved while allowing new individuals produced by crossover and mutation to compete fairly for a place in the population. By retaining only a portion of elites, the Genetic Algorithm maintains steady progress across generations without letting weaker individuals accumulate.
+
+
+
+
 ## 9. Branch & Bound
 
 
@@ -361,6 +404,31 @@ Total GRASP iterations = update-interval $\times$ nb-cycles.
 
 ![](docs/images/run_simulated_annealing.png)
 
+
+
+
+## Run Genetic Algorithm
+
+```bash
+./bin/spp_solver --algorithm=genetic --instance=benchmarks/pb_1000rnd0700.dat  --pruning-rate=0.4 --cooling-interval=100  --initial-temperature=200 --cooling-factor=0.95 --restart-interval=100 --tabu-tenure=7 --nb-threads=4 --population-size=100  --iterations=5 --improvement-time=1 --crossover-rate=0.6 --mutation-rate=0.3 --survivor-rate=0.2 --simd
+```
+
+- **--population-size** (mandatory) : Defines the number of individuals in the population.
+
+- **--improvement-time** (optional) : Maximum time (in seconds) allocated to the local search improvement phase applied to each newly generated individual. This controls how intensively VND, TS or SA refine the solutions.
+
+- **--crossover-rate** (optional) : Proportion of mating pairs that will produce offspring through the Path‑Relinking‑based crossover.
+
+- **--mutation-rate** (optional) : Proportion of offspring that receive the perturbation‑based mutation (20% shaking + intensified VND). This helps diversify the population and avoid premature convergence.
+
+
+- **--survivor-rate** (optional) : Fraction of the best individuals (parents + offspring) preserved during the elitist replacement phase.
+
+
+- additional options : **--simd** , **iterations** , **time-limit**, **--cooling-interval**, **--cooling-factor**, **--pruning-rate**, **--restart-interval**, **--tabu-tenure**, **--initial-temperature**, **--final-temperature**, **--nb-threads** 
+
+
+![](docs/images/run_genetic_algorithm.png)
 
 
 

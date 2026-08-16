@@ -82,6 +82,14 @@
 
 
 
+
+    /**
+    * @brief checks that no unsupported options are given for the Genetic algorithm
+    */
+    void unsupportedOptionsGeneticAlgorithm(int argc, char** argv);
+
+
+
     /**
     * @brief performs the parsing of all options given by the user
     */
