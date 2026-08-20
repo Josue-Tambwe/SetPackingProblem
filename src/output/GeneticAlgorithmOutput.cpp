@@ -327,7 +327,7 @@ namespace spp{
 
 
                         // line 4
-                        std::cout << std::setw(72) << std::left << " "
+                        std::cout << std::setw(64) << std::left << " "
                                 << std::string(69, '-')
                                 << "\n";
 
