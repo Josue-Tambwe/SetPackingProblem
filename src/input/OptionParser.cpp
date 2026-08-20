@@ -346,7 +346,6 @@
             if (arg.find("--gap=") == 0) {log.error(" --gap option is not supported by the genetic algorithm! ");}
             if (arg.find("--branching-rule=") == 0) {log.error(" --branching-rule option is not supported by the genetic algorithm! ");}
             if (arg.find("--nb-cycles=") == 0) {log.error(" --nb-cycles option is not supported by the genetic algorithm! ");}
-            if (arg.find("--nb-threads=") == 0) {log.error(" --nb-threads option is not supported by the genetic algorithm! ");}
             if (arg.find("--exploration=") == 0) {log.error(" --exploration option is not supported by the genetic algorithm! ");}
             if (arg.find("--bias=") == 0) {log.error(" --bias option is not supported by the genetic algorithm! ");}
             if (arg.find("--update-interval=") == 0) {log.error(" --update-interval option is not supported by the genetic algorithm! ");}
