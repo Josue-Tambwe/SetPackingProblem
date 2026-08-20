@@ -323,6 +323,7 @@ namespace spp{
                                 << std::setw(2) << std::right << " : ";
                         
                         for(double proba : VND){std::cout << std::fixed << std::setprecision(2) << proba << " | ";}
+                        std::cout << "\n";
 
 
                         // line 4
